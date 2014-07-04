@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">GoodThingMap</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_good_list">GoodListActivity</string>
-    <string name="title_activity_detail">DetailActivity</string>
-    <string name="title_activity_fravor">FravorActivity</string>
-    <string name="title_activity_about">AboutActivity</string>
-    <string name="action_about">About Me</string>
-    <string name="action_my_fravor">My Fravor</string>
+    <string name="app_name">好事地圖</string>
+    <string name="title_activity_good_list">好事清單</string>
+    <string name="title_activity_detail">店家資訊</string>
+    <string name="title_activity_fravor">我的最愛</string>
+    <string name="title_activity_about">關於我們</string>
+    <string name="action_about">關於我們</string>
+    <string name="action_my_fravor">我的最愛</string>
 
 </resources>

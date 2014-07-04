@@ -52,7 +52,7 @@
                 android:id="@+id/detail_cover_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scaleType="center"
+                android:scaleType="centerCrop"
                 android:src="@drawable/placeholder_detail_cover" />
 
             <LinearLayout
