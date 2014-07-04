@@ -13,12 +13,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Gallery;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 public class DetailActivity extends ActionBarActivity {
 
@@ -35,7 +40,6 @@ public class DetailActivity extends ActionBarActivity {
                     .commit();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -71,6 +75,7 @@ public class DetailActivity extends ActionBarActivity {
 
         private GoodThing mGoodThing;
         private CommentAdapter mCommentAdapter;
+        private LayoutInflater mInflater;
 
         public PlaceholderFragment() {
         }
@@ -79,6 +84,7 @@ public class DetailActivity extends ActionBarActivity {
         public void onCreate(Bundle savedStateInstance) {
             super.onCreate(savedStateInstance);
             mGoodThing = getArguments().getParcelable(GoodThing.EXTRA_GOODTHING);
+            mInflater = LayoutInflater.from(getActivity());
         }
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,7 +94,8 @@ public class DetailActivity extends ActionBarActivity {
             ((TextView)rootView.findViewById(R.id.detail_title)).setText(mGoodThing.getTitle());
             ((TextView)rootView.findViewById(R.id.detail_story)).setText(mGoodThing.getStory());
             ((TextView)rootView.findViewById(R.id.detail_memo)).setText(mGoodThing.getMemo());
-
+            LinearLayout hsv = (LinearLayout) rootView.findViewById(R.id.detail_images);
+            setupImages(hsv, mGoodThing.getImages());
             Picasso.with(getActivity()).load(mGoodThing.getDetailImageUrl()).into(
                     ((ImageView) rootView.findViewById(R.id.detail_cover_image)), new Callback.EmptyCallback() {
                         @Override
@@ -104,6 +111,26 @@ public class DetailActivity extends ActionBarActivity {
             }
             mCommentAdapter.notifyDataSetChanged();
             return rootView;
+        }
+
+        private void setupImages(final ViewGroup hsv, List<String> images) {
+            if (images != null) {
+                for (String url : images) {
+                    final ImageView iv = (ImageView) mInflater.inflate(R.layout.item_image, null);
+                    Picasso.with(getActivity())
+                            .load(url)
+                            .placeholder(R.drawable.btn_new_image)
+                            .error(R.drawable.btn_new_image)
+                            .into(iv);
+                    hsv.addView(iv);
+                }
+            }
+            int count = (images == null) ? 0 : images.size();
+            for (int i = count ; i < 5 ; i++) {
+                ImageView iv = new ImageView(getActivity());
+                iv.setImageResource(R.drawable.btn_new_image);
+                hsv.addView(iv);
+            }
         }
 
         public static class CommentAdapter extends ArrayAdapter<UserMessage> {
@@ -124,8 +151,8 @@ public class DetailActivity extends ActionBarActivity {
                     view = convertView;
                 }
                 UserMessage comment = getItem(i);
+                ((TextView)view.findViewById(R.id.list_seq_id)).setText("#" + (i + 1));
                 ((TextView)view.findViewById(R.id.list_comment)).setText(comment.getMessage());
-                ((TextView)view.findViewById(R.id.list_user_id)).setText(comment.getUserId());
                 ((TextView)view.findViewById(R.id.list_time)).setText(String.valueOf(comment.getTime()));
                 return view;
             }

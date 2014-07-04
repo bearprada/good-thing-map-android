@@ -23,7 +23,4 @@
         <item name="android:textColor">@color/ab_text_color</item>
         <!-- The textColor property is backward compatible with the Support Library -->
     </style>
-
-    <color name="ab_background">#DF274C</color>
-    <color name="ab_text_color">#FFFFFF</color>
 </resources>

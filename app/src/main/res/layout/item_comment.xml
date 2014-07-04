@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="80dp">
+
+    <TextView
+        android:id="@+id/list_seq_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14dp"
+        android:textColor="@color/sub_text_color"
+        android:text="#1" />
 
     <TextView
         android:id="@+id/list_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:text="comment"
-        android:layout_marginTop="20dp" />
-    <TextView
-        android:id="@+id/list_time"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="4dp"
-        android:gravity="right"
-        android:maxLines="1"
-        android:text="12312313"/>
+        android:textSize="14dp"
+        android:text="comment"
+        android:layout_below="@id/list_seq_id"/>
+
     <TextView
-        android:id="@+id/list_user_id"
+        android:id="@+id/list_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_centerInParent="true"
-        android:text="D342sdf" />
+        android:layout_alignParentBottom="true"
+        android:textSize="14dp"
+        android:textColor="@color/sub_text_color"
+        android:visibility="gone"
+        android:text="12312312312" />
 
 </RelativeLayout>

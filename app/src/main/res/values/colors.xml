@@ -2,4 +2,12 @@
 <resources>
     <color name="white">#FFFFFF</color>
     <color name="sub_text_color">#FF444444</color>
+    <color name="text_distance">#FF0000</color>
+    <color name="bn_detail_normal">#D2D3D5</color>
+    <color name="bn_detail_selected">#EA385D</color>
+    <color name="ab_background">#DF274C</color>
+    <color name="ab_text_color">#FFFFFF</color>
+
+    <drawable name="drawable_bn_detail">#D2D3D5</drawable>
+    <drawable name="drawable_bn_detail_selected">#EA385D</drawable>
 </resources>

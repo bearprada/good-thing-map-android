@@ -209,8 +209,8 @@ public class GoodThing implements Parcelable {
         story = in.readString();
         address = in.readString();
         memo = in.readString();
-        longtitude = in.readLong();
-        latitude = in.readLong();
+        longtitude = in.readFloat();
+        latitude = in.readFloat();
         time = in.readLong();
         businessTime = in.readString();
         content = in.readString();
