@@ -82,6 +82,7 @@ public class GoodListActivity extends ActionBarActivity {
             super.onCreate(savedStateInstance);
             int typeId = getArguments().getInt(EXTRA_TYPE, 0);
             mType = HomeActivity.PlaceholderFragment.GoodThingType.values()[typeId];
+            getActivity().setTitle(mType.getName());
         }
 
         @Override
