@@ -1,0 +1,144 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="goodthingmap.android.prada.lab.goodthingmap.DetailActivity$PlaceholderFragment"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+                <TextView
+                    android:id="@+id/detail_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="鍋貼爺爺" />
+
+                <ImageButton
+                    android:id="@+id/detail_favor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/btn_favor_disable"
+                    android:layout_alignParentRight="true" />
+
+                <ImageButton
+                    android:id="@+id/detail_const_place"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/icon_place"
+                    android:layout_toLeftOf="@+id/detail_distance" />
+
+                <TextView
+                    android:id="@+id/detail_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="100m"
+                    android:layout_marginRight="4dp"
+                    android:layout_toLeftOf="@+id/detail_favor" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/detail_cover_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="center"
+                android:src="@drawable/placeholder_detail_cover" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+                <Button
+                    android:id="@+id/btn_detail_like"
+                    android:layout_weight="1"
+                    android:textSize="16dp"
+                    android:text="喜歡"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/btn_detail_share"
+                    android:layout_weight="1"
+                    android:text="分享"
+                    android:textSize="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/btn_detail_map"
+                    android:layout_weight="1"
+                    android:textSize="16dp"
+                    android:text="導引地圖"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/detail_const_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="詳細資料"/>
+
+            <TextView
+                android:id="@+id/detail_memo"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:text="地點:..."/>
+
+            <TextView
+                android:id="@+id/detail_const_story"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="攤販故事" />
+
+            <TextView
+                android:id="@+id/detail_story"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:text="攤販故事攤販故事"
+                android:maxLines="6" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+                <Button
+                    android:id="@+id/btn_detail_new_image"
+                    android:layout_weight="1"
+                    android:text="新增照片"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <Button
+                    android:id="@+id/btn_detail_comment"
+                    android:layout_weight="1"
+                    android:text="新增留言"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="500dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_chat" />
+                <ListView
+                    android:id="@+id/detail_list_comments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+            <Button
+                android:id="@+id/btn_detail_report"
+                android:text="回報資訊錯誤"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
