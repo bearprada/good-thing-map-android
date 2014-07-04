@@ -3,13 +3,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="100dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:layout_width="75dp"
         android:layout_height="75dp"
         android:id="@+id/list_image_view"
         android:scaleType="centerCrop"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
         android:src="@drawable/placeholder_icon" />
@@ -28,25 +31,28 @@
         android:layout_height="wrap_content"
         android:textSize="18dp"
         android:text="TITLE"
+        android:textStyle="bold"
         android:layout_marginTop="20dp"
+        android:layout_marginLeft="4dp"
         android:layout_toRightOf="@+id/list_image_view" />
     <TextView
         android:id="@+id/list_address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/list_image_view"
-        android:layout_toLeftOf="@id/list_flavor"
         android:layout_below="@id/list_title"
         android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
         android:maxLines="1"
-        android:text="DESC"/>
+        android:textColor="@color/sub_text_color"
+        android:text="address"/>
     <TextView
         android:id="@+id/list_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/list_flavor"
         android:text="10m" />
 
 </RelativeLayout>
