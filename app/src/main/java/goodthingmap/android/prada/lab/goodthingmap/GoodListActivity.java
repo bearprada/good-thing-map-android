@@ -100,9 +100,16 @@ public class GoodListActivity extends BaseActivity {
             lv.setOnItemClickListener(this);
 
             if (mLocation != null) {
-                mService.listStory(mType.getTypeId(), mLocation.getLatitude(), mLocation.getLongitude(), this);
+                // FIXME refactor this later
+                if (mType == HomeActivity.PlaceholderFragment.GoodThingType.NEAR)
+                    mService.listStory(mLocation.getLatitude(), mLocation.getLongitude(), this);
+                else
+                    mService.listStory(mType.getTypeId(), mLocation.getLatitude(), mLocation.getLongitude(), this);
             } else {
-                mService.listStory(mType.getTypeId(), this);
+                if (mType == HomeActivity.PlaceholderFragment.GoodThingType.NEAR)
+                    mService.listStory(this);
+                else
+                    mService.listStory(mType.getTypeId(), this);
             }
             return rootView;
         }
