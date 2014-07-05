@@ -14,5 +14,7 @@
     <string name="cancel">取消</string>
     <string name="confirm">確認</string>
     <string name="subject_report">問題回報</string>
+    <string name="share_to_target_error_message">沒有安裝該應用程式</string>
+    <string name="msg_like_successful">喜歡好事成功</string>
 
 </resources>

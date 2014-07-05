@@ -3,12 +3,14 @@ package goodthingmap.android.prada.lab.goodthingmap;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.LikeResult;
 import android.prada.lab.goodthingmap.model.UserMessage;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +28,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.CommentAdapter;
 import goodthingmap.android.prada.lab.goodthingmap.component.ListDialogFragment;
@@ -79,6 +82,8 @@ public class DetailActivity extends BaseActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends BaseServiceFragment implements View.OnClickListener {
+
+        public static final String FACEBOOK_PACKAGE_NAME = "com.facebook.katana";
 
         private GoodThing mGoodThing;
         private CommentAdapter mCommentAdapter;
@@ -144,6 +149,61 @@ public class DetailActivity extends BaseActivity {
             }
         }
 
+
+        private ActivityInfo getActivityInfo(String packageName) {
+            PackageManager pm = getActivity().getPackageManager();
+            final Intent sendIntent = new Intent(Intent.ACTION_SEND);
+            sendIntent.setType("text/plain");
+            final List<ResolveInfo> otherActs = pm.queryIntentActivities(sendIntent, 0);
+            for (ResolveInfo resolveInfo : otherActs) {
+                ActivityInfo info = resolveInfo.activityInfo;
+                String string = info.packageName;
+                if (string.equalsIgnoreCase(packageName)) {
+                    return info;
+                }
+            }
+            return null;
+        }
+
+        private void shareToTarget(ActivityInfo info, String uri) {
+            final Intent intent = new Intent(Intent.ACTION_SEND);
+            intent.setType("text/plain");
+            intent.putExtra(Intent.EXTRA_SUBJECT, "分享好事");
+            intent.putExtra(Intent.EXTRA_TEXT, uri);
+            intent.setClassName(info.packageName, info.name);
+            startActivity(intent);
+        }
+
+        private void shareTo(String packageName, String appName) {
+            ActivityInfo info = getActivityInfo(packageName);
+            if (info != null) {
+                shareToTarget(info, getGoogleMapUri());
+            } else {
+                final String packageNameF = packageName;
+                AlertDialogFragment mAlertDialogFragment = AlertDialogFragment.newInstance(
+                        null,
+                        getString(R.string.share_to_target_error_message, appName, appName),
+                        getString(android.R.string.yes),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(Intent.ACTION_VIEW);
+                                intent.setData(Uri.parse("market://details?id=" + packageNameF));
+                                startActivity(intent);
+                            }
+                        },
+                        getString(android.R.string.no), null);
+                try {
+                    mAlertDialogFragment.show(getFragmentManager(), "download_warning");
+                } catch (IllegalStateException e) {
+                }
+            }
+        }
+
+        private String getGoogleMapUri() {
+            return String.format("https://maps.google.com/maps?q=%f,%f", mGoodThing.getLatitude(), mGoodThing.getLongtitude());
+        }
+
         @Override
         public void onClick(View view) {
             switch(view.getId()) {
@@ -166,7 +226,7 @@ public class DetailActivity extends BaseActivity {
                     mService.likeGoodThing(Amplitude.getDeviceId(), mGoodThing.getId(), new retrofit.Callback<LikeResult>() {
                         @Override
                         public void success(LikeResult s, Response response) {
-                            Toast.makeText(getActivity(), "喜歡好事成功", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.msg_like_successful, Toast.LENGTH_SHORT).show();
                             mLikeBtnText.setText("喜歡(" + s.getResult() + ")");
                         }
 
@@ -198,7 +258,7 @@ public class DetailActivity extends BaseActivity {
                     dialog.show();
                     break;
                 case R.id.btn_detail_share:
-                    // TODO add facebook sdk
+                    shareTo(FACEBOOK_PACKAGE_NAME, "Facebook");
                     break;
                 default:
                     break;
