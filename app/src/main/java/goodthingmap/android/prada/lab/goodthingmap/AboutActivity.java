@@ -62,7 +62,7 @@ public class AboutActivity extends BaseActivity {
             rootView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String url = "http://www.yahoo.com";
+                    String url = "http://www.facebook.com/GoodMaps2013";
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse(url));
                     startActivity(i);
