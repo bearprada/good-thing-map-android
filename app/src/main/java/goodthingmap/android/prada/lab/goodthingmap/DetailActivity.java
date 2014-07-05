@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.amplitude.api.Amplitude;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment;
@@ -136,10 +137,26 @@ public class DetailActivity extends BaseActivity {
             return rootView;
         }
 
+        private ArrayList<Uri> getImageUris() {
+            ArrayList<Uri> uris = new ArrayList<Uri>();
+            for (String url : mGoodThing.getImages()) {
+                uris.add(Uri.parse(url));
+            }
+            return uris;
+        }
+
         private void setupImages(final ViewGroup hsv, List<String> images) {
             if (images != null) {
                 for (String url : images) {
                     final ImageView iv = (ImageView) mInflater.inflate(R.layout.item_image, null);
+                    iv.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getActivity(), ImageViewerActivity.class);
+                            intent.putParcelableArrayListExtra(ImageViewerActivity.EXTRA_PHOTOS, getImageUris());
+                            startActivity(intent);
+                        }
+                    });
                     Picasso.with(getActivity()).load(url).placeholder(R.drawable.btn_new_image)
                             .error(R.drawable.btn_new_image).into(iv);
                     hsv.addView(iv);
@@ -149,6 +166,13 @@ public class DetailActivity extends BaseActivity {
             for (int i = count ; i < 5 ; i++) {
                 ImageView iv = new ImageView(getActivity());
                 iv.setImageResource(R.drawable.btn_new_image);
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ListDialogFragment fragment = ListDialogFragment.newInstance();
+                        fragment.show(getFragmentManager(), "");
+                    }
+                });
                 hsv.addView(iv);
             }
         }
