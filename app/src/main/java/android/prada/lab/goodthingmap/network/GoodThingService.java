@@ -37,4 +37,7 @@ public interface GoodThingService {
 
     @POST("/good_thing/mobile/addLike")
     void likeGoodThing(@Query("uid") String uid, @Query("rid") int rid, Callback<LikeResult> callback);
+
+    @POST("/good_thing/mobile/post")
+    void postComment(@Query("uid") String uid, @Query("rid") int rid, @Query("message") String message, Callback<LikeResult> callback);
 }

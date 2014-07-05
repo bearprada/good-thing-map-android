@@ -19,6 +19,18 @@ public class UserMessage implements Parcelable {
     @SerializedName("time")
     private long time;
 
+    private UserMessage(String comment) {
+        id = -1;
+        userId = "";
+        time = System.currentTimeMillis();
+        message = comment;
+    }
+
+    public static UserMessage newInstance(String comment) {
+        UserMessage instance = new UserMessage(comment);
+        return instance;
+    }
+
     public long getTime() {
         return time;
     }

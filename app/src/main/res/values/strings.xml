@@ -19,5 +19,8 @@
     <string name="title_activity_image_viewer">ImageViewerActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="enter_comment">請輸入留言</string>
+    <string name="post_comment_fail">留言失敗</string>
+    <string name="post_comment_successful">留言成功</string>
 
 </resources>

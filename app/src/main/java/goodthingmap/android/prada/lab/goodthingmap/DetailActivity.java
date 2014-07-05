@@ -12,12 +12,14 @@ import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.LikeResult;
 import android.prada.lab.goodthingmap.model.UserMessage;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -35,6 +37,7 @@ import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment
 import goodthingmap.android.prada.lab.goodthingmap.component.CommentAdapter;
 import goodthingmap.android.prada.lab.goodthingmap.component.ListDialogFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.Utility;
+import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -84,7 +87,7 @@ public class DetailActivity extends BaseActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends BaseServiceFragment implements View.OnClickListener {
+    public static class PlaceholderFragment extends BaseServiceFragment implements View.OnClickListener, Callback<LikeResult> {
 
         public static final String FACEBOOK_PACKAGE_NAME = "com.facebook.katana";
 
@@ -94,6 +97,8 @@ public class DetailActivity extends BaseActivity {
         private View mLikeBtn;
         private Button mLikeBtnText;
         private Location mLocation;
+        // TODO remove this value later.. bad design
+        private String mCurrentComment;
 
         public PlaceholderFragment() {
             super();
@@ -234,6 +239,7 @@ public class DetailActivity extends BaseActivity {
 
         @Override
         public void onClick(View view) {
+            AlertDialog dialog;
             switch(view.getId()) {
                 case R.id.btn_detail_report:
                     Intent intent = new Intent(Intent.ACTION_SENDTO);
@@ -247,7 +253,26 @@ public class DetailActivity extends BaseActivity {
                     fragment.show(getFragmentManager(), "");
                     break;
                 case R.id.btn_detail_comment:
-                    // show input dialog
+                    final EditText input = new EditText(getActivity());
+                    dialog = new AlertDialog.Builder(getActivity())
+                            .setTitle(R.string.enter_comment)
+                            .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    String comment = input.getText().toString();
+                                    if (TextUtils.isEmpty(comment) == false) {
+                                        mCurrentComment = comment;
+                                        mService.postComment(Amplitude.getDeviceId(), mGoodThing.getId(), comment, PlaceholderFragment.this);
+                                    }
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, null).create();
+                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.MATCH_PARENT);
+                    input.setLayoutParams(lp);
+                    dialog.setView(input); // uncomment this line
+                    dialog.show();
                     break;
                 case R.id.btn_detail_like:
                     mLikeBtn.setSelected(true);
@@ -266,7 +291,7 @@ public class DetailActivity extends BaseActivity {
                     break;
                 case R.id.btn_detail_map:
                     int messageId = mGoodThing.isBigIssue() ? R.string.warning_tbi_navigation : R.string.warning_navigation;
-                    AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                    dialog = new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.warning_navigation_title)
                             .setMessage(messageId)
                             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -292,6 +317,17 @@ public class DetailActivity extends BaseActivity {
                 default:
                     break;
             }
+        }
+
+        @Override
+        public void success(LikeResult likeResult, Response response) {
+            Toast.makeText(getActivity(), R.string.post_comment_successful, Toast.LENGTH_SHORT).show();
+            mCommentAdapter.add(UserMessage.newInstance(mCurrentComment));
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            Toast.makeText(getActivity(), R.string.post_comment_fail, Toast.LENGTH_SHORT).show();
         }
     }
 }
