@@ -15,28 +15,32 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".HomeActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".GoodListActivity"
-            android:label="@string/title_activity_good_list" >
+            android:label="@string/title_activity_good_list"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".DetailActivity"
-            android:label="@string/title_activity_detail" >
+            android:label="@string/title_activity_detail"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".FavorActivity"
-            android:label="@string/title_activity_fravor" >
+            android:label="@string/title_activity_fravor"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about" >
+            android:label="@string/title_activity_about"
+            android:screenOrientation="portrait" >
         </activity>
 
         <provider
@@ -48,7 +52,8 @@
 
         <activity
             android:name=".ImageViewerActivity"
-            android:label="@string/title_activity_image_viewer" >
+            android:label="@string/title_activity_image_viewer"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 
