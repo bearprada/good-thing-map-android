@@ -15,3 +15,17 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+-keepattributes Signature
+-keep class retrofit.** { *; }
+-keep class com.google.gson.** { *; }
+-keep class com.google.inject.** { *; }
+-keep class android.prada.lab.goodthingmap.model.** { *;}
+-dontwarn rx.**
+-dontwarn com.squareup.okhttp.**
+-dontwarn com.google.appengine.**
+-dontwarn rx.**
+-dontwarn okio.**
+-dontwarn com.squareup.okhttp.**
+-dontwarn com.squareup.picasso.**
+-dontwarn com.amplitude.**
+
