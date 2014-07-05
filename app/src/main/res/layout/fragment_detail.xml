@@ -73,15 +73,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="2dp"
-                    android:background="@color/bn_detail_normal"
+                    android:clickable="true"
+                    android:background="@drawable/selector_bn_detail"
                     android:layout_weight="1" >
                     <Button
+                        android:id="@+id/btn_detail_like_text"
                         android:textSize="16dp"
                         android:text="喜歡"
                         android:drawableLeft="@drawable/icon_like"
-                        android:background="@color/bn_detail_normal"
+                        android:background="@android:color/transparent"
                         android:textColor="@color/white"
-                        android:enabled="false"
+                        android:clickable="false"
                         android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -90,16 +92,17 @@
                     android:id="@+id/btn_detail_share"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/bn_detail_normal"
+                    android:background="@drawable/selector_bn_detail"
+                    android:clickable="true"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1" >
                     <Button
                         android:drawableLeft="@drawable/icon_share"
                         android:text="分享"
                         android:textSize="16dp"
-                        android:background="@color/bn_detail_normal"
+                        android:background="@android:color/transparent"
                         android:textColor="@color/white"
-                        android:enabled="false"
+                        android:clickable="false"
                         android:layout_centerInParent="true"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -108,16 +111,17 @@
                     android:id="@+id/btn_detail_map"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/bn_detail_normal"
+                    android:clickable="true"
+                    android:background="@drawable/selector_bn_detail"
                     android:layout_marginRight="2dp"
                     android:layout_weight="1" >
                     <Button
                         android:drawableLeft="@drawable/icon_direction"
                         android:textSize="16dp"
                         android:text="導引地圖"
-                        android:enabled="false"
+                        android:clickable="false"
                         android:layout_centerInParent="true"
-                        android:background="@color/bn_detail_normal"
+                        android:background="@android:color/transparent"
                         android:textColor="@color/white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"/>
@@ -176,7 +180,7 @@
                     android:id="@+id/btn_detail_new_image"
                     android:layout_weight="1"
                     android:text="新增照片"
-                    android:background="@color/bn_detail_normal"
+                    android:background="@drawable/selector_bn_detail"
                     android:textColor="@color/white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -184,7 +188,7 @@
                     android:id="@+id/btn_detail_comment"
                     android:layout_weight="1"
                     android:text="新增留言"
-                    android:background="@color/bn_detail_normal"
+                    android:background="@drawable/selector_bn_detail"
                     android:textColor="@color/white"
                     android:layout_marginLeft="2dp"
                     android:layout_width="wrap_content"
@@ -215,7 +219,7 @@
                 android:id="@+id/btn_detail_report"
                 android:text="回報資訊錯誤"
                 android:textColor="@color/white"
-                android:background="@color/bn_detail_normal"
+                android:background="@drawable/selector_bn_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>

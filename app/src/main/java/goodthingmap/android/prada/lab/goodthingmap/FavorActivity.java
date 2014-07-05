@@ -25,7 +25,7 @@ import bolts.Task;
 import goodthingmap.android.prada.lab.goodthingmap.R;
 import goodthingmap.android.prada.lab.goodthingmap.component.GoodThingAdapter;
 
-public class FavorActivity extends ActionBarActivity {
+public class FavorActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

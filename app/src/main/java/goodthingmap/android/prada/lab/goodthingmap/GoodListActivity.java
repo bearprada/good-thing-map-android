@@ -20,7 +20,7 @@ import bolts.Task;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.GoodThingAdapter;
 
-public class GoodListActivity extends ActionBarActivity {
+public class GoodListActivity extends BaseActivity {
 
     public static final String EXTRA_TYPE = "extra_type";
 

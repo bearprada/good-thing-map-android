@@ -23,7 +23,7 @@ import bolts.Task;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
