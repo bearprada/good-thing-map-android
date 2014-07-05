@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
@@ -32,6 +33,7 @@ import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.CommentAdapter;
 import goodthingmap.android.prada.lab.goodthingmap.component.ListDialogFragment;
+import goodthingmap.android.prada.lab.goodthingmap.component.Utility;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
@@ -90,6 +92,7 @@ public class DetailActivity extends BaseActivity {
         private LayoutInflater mInflater;
         private View mLikeBtn;
         private Button mLikeBtnText;
+        private Location mLocation;
 
         public PlaceholderFragment() {
             super();
@@ -99,13 +102,14 @@ public class DetailActivity extends BaseActivity {
         public void onCreate(Bundle savedStateInstance) {
             super.onCreate(savedStateInstance);
             mGoodThing = getArguments().getParcelable(GoodThing.EXTRA_GOODTHING);
+            mLocation = getArguments().getParcelable(GoodListActivity.EXTRA_LOCATION);
             mInflater = LayoutInflater.from(getActivity());
         }
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
-            // ((TextView)rootView.findViewById(R.id.detail_distance)); // FIXME
+            ((TextView)rootView.findViewById(R.id.detail_distance)).setText(Utility.calDistance(mLocation, mGoodThing));
             ((TextView)rootView.findViewById(R.id.detail_title)).setText(mGoodThing.getTitle());
             ((TextView)rootView.findViewById(R.id.detail_story)).setText(mGoodThing.getStory());
             ((TextView)rootView.findViewById(R.id.detail_memo)).setText(mGoodThing.getMemo());
@@ -249,9 +253,10 @@ public class DetailActivity extends BaseActivity {
                             .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                                            // FIXME correct the geo location
-                                            Uri.parse("http://maps.google.com/maps?saddr=20.344,34.34&daddr=20.5666,45.345"));
+                                    String url = String.format("http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f",
+                                            mLocation.getLatitude(), mLocation.getLongitude(), mGoodThing.getLatitude(),
+                                            mGoodThing.getLongtitude());
+                                    Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
                                     PlaceholderFragment.this.startActivity(intent);
                                 }
                             }).create();

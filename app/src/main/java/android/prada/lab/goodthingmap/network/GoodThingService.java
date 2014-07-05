@@ -23,7 +23,11 @@ public interface GoodThingService {
     GoodThingData getTopStory();
 
     @GET("/good_thing/mobile/findGoodThings")
-    GoodThingsData listStory(@Query("type") int type);
+    void listStory(@Query("type") int type, Callback<GoodThingsData> callback);
+
+    @GET("/good_thing/mobile/findGoodThings")
+    void listStory(@Query("type") int type, @Query("lat") double latitude, @Query("lon") double longitude
+        ,Callback<GoodThingsData> callback);
 
     @POST("/good_thing/mobile/addLike")
     void likeGoodThing(@Query("uid") String uid, @Query("rid") int rid, Callback<LikeResult> callback);

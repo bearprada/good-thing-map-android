@@ -1,6 +1,11 @@
 package goodthingmap.android.prada.lab.goodthingmap;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingData;
@@ -63,9 +68,33 @@ public class HomeActivity extends BaseActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends BaseServiceFragment implements View.OnClickListener {
+    public static class PlaceholderFragment extends BaseServiceFragment implements View.OnClickListener
+            , LocationListener {
+        private Location mCurrentLocation;
+        private LocationManager lm;
+        private String provider;
+
         public PlaceholderFragment() {
             super();
+        }
+
+        public void onCreate(Bundle savedStateInstance) {
+            super.onCreate(savedStateInstance);
+            lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            Criteria criteria = new Criteria();
+            provider = lm.getBestProvider(criteria, false);
+            mCurrentLocation = lm.getLastKnownLocation(provider);
+            // lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+        }
+
+        public void onResume() {
+            super.onResume();
+            lm.requestLocationUpdates(provider, 10000, 0, this);
+        }
+
+        public void onPause() {
+            super.onPause();
+            lm.removeUpdates(this);
         }
 
         @Override
@@ -110,6 +139,7 @@ public class HomeActivity extends BaseActivity {
                     if (tag != null && tag instanceof GoodThing) {
                         Intent intent = new Intent(getActivity(), DetailActivity.class);
                         intent.putExtra(GoodThing.EXTRA_GOODTHING, (GoodThing)tag);
+                        intent.putExtra(GoodListActivity.EXTRA_LOCATION, mCurrentLocation);
                         startActivity(intent);
                     }
                     break;
@@ -137,7 +167,28 @@ public class HomeActivity extends BaseActivity {
         private void moveList(GoodThingType type) {
             Intent intent = new Intent(getActivity(), GoodListActivity.class);
             intent.putExtra(GoodListActivity.EXTRA_TYPE, type.ordinal());
+            intent.putExtra(GoodListActivity.EXTRA_LOCATION, mCurrentLocation);
             startActivity(intent);
+        }
+
+        @Override
+        public void onLocationChanged(Location location) {
+            mCurrentLocation = location;
+        }
+
+        @Override
+        public void onStatusChanged(String s, int i, Bundle bundle) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String s) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String s) {
+
         }
 
         public enum GoodThingType {

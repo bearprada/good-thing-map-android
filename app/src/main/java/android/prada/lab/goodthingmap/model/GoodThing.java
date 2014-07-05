@@ -1,5 +1,6 @@
 package android.prada.lab.goodthingmap.model;
 
+import android.location.Location;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -51,6 +52,13 @@ public class GoodThing implements Parcelable {
     private List<String> images = new ArrayList<String>();
 
     public GoodThing() {
+    }
+
+    public Location getLocation() {
+        Location loc = new Location(getTitle());
+        loc.setLongitude(getLongtitude());
+        loc.setLatitude(getLatitude());
+        return loc;
     }
 
     @Override

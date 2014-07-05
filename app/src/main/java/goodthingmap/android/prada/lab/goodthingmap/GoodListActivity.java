@@ -1,10 +1,10 @@
 package goodthingmap.android.prada.lab.goodthingmap;
 
 import android.content.Intent;
+import android.location.Location;
+import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingsData;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,16 +13,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.concurrent.Callable;
-
-import bolts.Continuation;
-import bolts.Task;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.GoodThingAdapter;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 
 public class GoodListActivity extends BaseActivity {
 
     public static final String EXTRA_TYPE = "extra_type";
+    public static final String EXTRA_LOCATION = "extra_location";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +68,12 @@ public class GoodListActivity extends BaseActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends BaseServiceFragment implements AdapterView.OnItemClickListener {
+    public static class PlaceholderFragment extends BaseServiceFragment
+            implements AdapterView.OnItemClickListener, Callback<GoodThingsData> {
 
         private HomeActivity.PlaceholderFragment.GoodThingType mType;
         private GoodThingAdapter mAdapter;
+        private Location mLocation;
 
         public PlaceholderFragment() {
             super();
@@ -82,7 +84,9 @@ public class GoodListActivity extends BaseActivity {
             super.onCreate(savedStateInstance);
             int typeId = getArguments().getInt(EXTRA_TYPE, 0);
             mType = HomeActivity.PlaceholderFragment.GoodThingType.values()[typeId];
+            mLocation = getArguments().getParcelable(EXTRA_LOCATION);
             getActivity().setTitle(mType.getName());
+
         }
 
         @Override
@@ -90,32 +94,16 @@ public class GoodListActivity extends BaseActivity {
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_good_list, container, false);
             mAdapter = new GoodThingAdapter(getActivity());
+            mAdapter.setLocation(mLocation);
             ListView lv = (ListView)rootView.findViewById(R.id.list_view);
             lv.setAdapter(mAdapter);
             lv.setOnItemClickListener(this);
-            Task.callInBackground(new Callable<GoodThingsData>() {
-                @Override
-                public GoodThingsData call() throws Exception {
-                    return mService.listStory(mType.getTypeId());
-                }
-            }).onSuccess(new Continuation<GoodThingsData, Object>() {
-                @Override
-                public Object then(Task<GoodThingsData> task) throws Exception {
-                    for (GoodThing thing : task.getResult().getGoodThingList()) {
-                        mAdapter.add(thing);
-                    }
-                    mAdapter.notifyDataSetChanged();
-                    return null;
-                }
-            }, Task.UI_THREAD_EXECUTOR).continueWith(new Continuation<Object, Object>() {
-                @Override
-                public Object then(Task<Object> task) throws Exception {
-                    if (task.isFaulted() || task.isCancelled()) {
-                        task.getError().printStackTrace();
-                    }
-                    return null;
-                }
-            });
+
+            if (mLocation != null) {
+                mService.listStory(mType.getTypeId(), mLocation.getLatitude(), mLocation.getLongitude(), this);
+            } else {
+                mService.listStory(mType.getTypeId(), this);
+            }
             return rootView;
         }
 
@@ -125,8 +113,22 @@ public class GoodListActivity extends BaseActivity {
             if (item != null) {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra(GoodThing.EXTRA_GOODTHING, item);
+                intent.putExtra(EXTRA_LOCATION, mLocation);
                 startActivity(intent);
             }
+        }
+
+        @Override
+        public void success(GoodThingsData data, Response response) {
+            for (GoodThing thing : data.getGoodThingList()) {
+                mAdapter.add(thing);
+            }
+            mAdapter.notifyDataSetChanged();
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            error.printStackTrace();
         }
     }
 }

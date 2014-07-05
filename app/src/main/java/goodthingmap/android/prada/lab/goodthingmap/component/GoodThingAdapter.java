@@ -1,6 +1,7 @@
 package goodthingmap.android.prada.lab.goodthingmap.component;
 
 import android.content.Context;
+import android.location.Location;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import goodthingmap.android.prada.lab.goodthingmap.R;
 public class GoodThingAdapter extends ArrayAdapter<GoodThing> {
 
     private final LayoutInflater mInflater;
+    private Location mCurrentLocation;
 
     public GoodThingAdapter(Context context) {
         super(context, 0);
@@ -37,7 +39,7 @@ public class GoodThingAdapter extends ArrayAdapter<GoodThing> {
         GoodThing thing = getItem(i);
         ((TextView)view.findViewById(R.id.list_address)).setText(thing.getAddress());
         ((TextView)view.findViewById(R.id.list_title)).setText(thing.getTitle());
-        // ((TextView)view.findViewById(R.id.list_distance)).setText(thing.getStory()); // FIXME
+        ((TextView)view.findViewById(R.id.list_distance)).setText(Utility.calDistance(mCurrentLocation, thing));
         // ((ImageView)view.findViewById(R.id.list_flavor)); // FIXME
 
         ImageView iv = ((ImageView) view.findViewById(R.id.list_image_view));
@@ -45,5 +47,9 @@ public class GoodThingAdapter extends ArrayAdapter<GoodThing> {
             @Override public void onSuccess() {}
         });
         return view;
+    }
+
+    public void setLocation(Location location) {
+        mCurrentLocation = location;
     }
 }
