@@ -91,14 +91,18 @@ public class DetailActivity extends BaseActivity {
 
         public static final String FACEBOOK_PACKAGE_NAME = "com.facebook.katana";
 
+        public static final int MAX_STORY_TEXT_LINES = 6;
+
         private GoodThing mGoodThing;
         private CommentAdapter mCommentAdapter;
         private LayoutInflater mInflater;
+        private TextView mStoryText;
         private View mLikeBtn;
         private Button mLikeBtnText;
         private Location mLocation;
         // TODO remove this value later.. bad design
         private String mCurrentComment;
+
 
         public PlaceholderFragment() {
             super();
@@ -117,8 +121,12 @@ public class DetailActivity extends BaseActivity {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
             ((TextView)rootView.findViewById(R.id.detail_distance)).setText(Utility.calDistance(mLocation, mGoodThing));
             ((TextView)rootView.findViewById(R.id.detail_title)).setText(mGoodThing.getTitle());
-            ((TextView)rootView.findViewById(R.id.detail_story)).setText(mGoodThing.getStory());
+           // ((TextView)rootView.findViewById(R.id.detail_story)).setText(mGoodThing.getStory());
             ((TextView)rootView.findViewById(R.id.detail_memo)).setText(mGoodThing.getMemo());
+            mStoryText =  ((TextView)rootView.findViewById(R.id.detail_story));
+
+            setStoryTextView();
+
             LinearLayout hsv = (LinearLayout) rootView.findViewById(R.id.detail_images);
             setupImages(hsv, mGoodThing.getImages());
             Picasso.with(getActivity()).load(mGoodThing.getDetailImageUrl()).into(
@@ -139,7 +147,46 @@ public class DetailActivity extends BaseActivity {
             rootView.findViewById(R.id.btn_detail_new_image).setOnClickListener(this);
             rootView.findViewById(R.id.btn_detail_report).setOnClickListener(this);
             rootView.findViewById(R.id.btn_detail_share).setOnClickListener(this);
+
             return rootView;
+        }
+
+        private void setStoryTextView() {
+            mStoryText.setText(mGoodThing.getStory());
+
+            mStoryText.setOnClickListener(new View.OnClickListener() {
+                int storyLines;
+
+                @Override
+                public void onClick(View view) {
+                    LinearLayout.LayoutParams oldLayoutParams = (LinearLayout.LayoutParams)
+                            mStoryText.getLayoutParams();
+
+                    int currentLines = mStoryText.getLineCount();
+                    storyLines = (currentLines > storyLines) ? currentLines : storyLines;
+
+                    if(storyLines <= MAX_STORY_TEXT_LINES) {
+                        return;
+                    }
+
+                    if(currentLines > MAX_STORY_TEXT_LINES) {
+                        mStoryText.setMaxLines(MAX_STORY_TEXT_LINES);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                mStoryText.getLineHeight() * (MAX_STORY_TEXT_LINES + 1));
+                        layoutParams.setMargins(oldLayoutParams.leftMargin, oldLayoutParams.topMargin, 0, 0);
+
+                        mStoryText.setLayoutParams(layoutParams);
+                    } else {
+                        mStoryText.setMaxLines(storyLines + 1);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                mStoryText.getLineHeight() * (storyLines + 1));
+                        layoutParams.setMargins(oldLayoutParams.leftMargin, oldLayoutParams.topMargin, 0, 0);
+
+                        mStoryText.setLayoutParams(layoutParams);
+                    }
+
+                }
+            });
         }
 
         private ArrayList<Uri> getImageUris() {
