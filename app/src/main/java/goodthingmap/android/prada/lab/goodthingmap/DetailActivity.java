@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.LikeResult;
+import android.prada.lab.goodthingmap.model.Result;
 import android.prada.lab.goodthingmap.model.UserMessage;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -99,9 +100,13 @@ public class DetailActivity extends BaseActivity {
         private TextView mStoryText;
         private View mLikeBtn;
         private Button mLikeBtnText;
+        private View mShareBtn;
+        private Button mShareBtnText;
         private Location mLocation;
         // TODO remove this value later.. bad design
         private String mCurrentComment;
+
+        private int mStoryLines;
 
 
         public PlaceholderFragment() {
@@ -123,9 +128,11 @@ public class DetailActivity extends BaseActivity {
             ((TextView)rootView.findViewById(R.id.detail_title)).setText(mGoodThing.getTitle());
            // ((TextView)rootView.findViewById(R.id.detail_story)).setText(mGoodThing.getStory());
             ((TextView)rootView.findViewById(R.id.detail_memo)).setText(mGoodThing.getMemo());
-            mStoryText =  ((TextView)rootView.findViewById(R.id.detail_story));
 
-            setStoryTextView();
+            mStoryText =  ((TextView)rootView.findViewById(R.id.detail_story));
+            mStoryText.setText(mGoodThing.getStory());
+            mStoryText.setOnClickListener(this);
+
 
             LinearLayout hsv = (LinearLayout) rootView.findViewById(R.id.detail_images);
             setupImages(hsv, mGoodThing.getImages());
@@ -143,51 +150,46 @@ public class DetailActivity extends BaseActivity {
             mLikeBtn = rootView.findViewById(R.id.btn_detail_like);
             mLikeBtn.setOnClickListener(this);
             mLikeBtnText = (Button) rootView.findViewById(R.id.btn_detail_like_text);
+            mShareBtn = rootView.findViewById(R.id.btn_detail_share);
+            mShareBtnText =  (Button) rootView.findViewById(R.id.btn_detail_share_text);
+
             rootView.findViewById(R.id.btn_detail_map).setOnClickListener(this);
             rootView.findViewById(R.id.btn_detail_new_image).setOnClickListener(this);
             rootView.findViewById(R.id.btn_detail_report).setOnClickListener(this);
             rootView.findViewById(R.id.btn_detail_share).setOnClickListener(this);
 
+            setupLikeNum();
+            setupCheckinNum();
+
             return rootView;
         }
 
-        private void setStoryTextView() {
-            mStoryText.setText(mGoodThing.getStory());
-
-            mStoryText.setOnClickListener(new View.OnClickListener() {
-                int storyLines;
+        private void setupLikeNum() {
+            mService.requestLikeNum(mGoodThing.getId(), new retrofit.Callback<Result>() {
+                @Override
+                public void success(Result s, Response response) {
+                    mLikeBtnText.setText("喜歡(" + s.getResult() + ")");
+                }
 
                 @Override
-                public void onClick(View view) {
-                    LinearLayout.LayoutParams oldLayoutParams = (LinearLayout.LayoutParams)
-                            mStoryText.getLayoutParams();
-
-                    int currentLines = mStoryText.getLineCount();
-                    storyLines = (currentLines > storyLines) ? currentLines : storyLines;
-
-                    if(storyLines <= MAX_STORY_TEXT_LINES) {
-                        return;
-                    }
-
-                    if(currentLines > MAX_STORY_TEXT_LINES) {
-                        mStoryText.setMaxLines(MAX_STORY_TEXT_LINES);
-                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                mStoryText.getLineHeight() * (MAX_STORY_TEXT_LINES + 1));
-                        layoutParams.setMargins(oldLayoutParams.leftMargin, oldLayoutParams.topMargin, 0, 0);
-
-                        mStoryText.setLayoutParams(layoutParams);
-                    } else {
-                        mStoryText.setMaxLines(storyLines + 1);
-                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                                mStoryText.getLineHeight() * (storyLines + 1));
-                        layoutParams.setMargins(oldLayoutParams.leftMargin, oldLayoutParams.topMargin, 0, 0);
-
-                        mStoryText.setLayoutParams(layoutParams);
-                    }
-
+                public void failure(RetrofitError error) {
                 }
             });
         }
+
+        private void setupCheckinNum() {
+            mService.requestCheckinNum(mGoodThing.getId(), new retrofit.Callback<Result>() {
+                @Override
+                public void success(Result s, Response response) {
+                    mShareBtnText.setText("分享(" + s.getResult() + ")");
+                }
+
+                @Override
+                public void failure(RetrofitError error) {
+                }
+            });
+        }
+
 
         private ArrayList<Uri> getImageUris() {
             ArrayList<Uri> uris = new ArrayList<Uri>();
@@ -323,6 +325,7 @@ public class DetailActivity extends BaseActivity {
                     break;
                 case R.id.btn_detail_like:
                     mLikeBtn.setSelected(true);
+
                     mService.likeGoodThing(Amplitude.getDeviceId(), mGoodThing.getId(), new retrofit.Callback<LikeResult>() {
                         @Override
                         public void success(LikeResult s, Response response) {
@@ -349,6 +352,7 @@ public class DetailActivity extends BaseActivity {
                             .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
+
                                     String url = String.format("http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f",
                                             mLocation.getLatitude(), mLocation.getLongitude(), mGoodThing.getLatitude(),
                                             mGoodThing.getLongtitude());
@@ -360,6 +364,33 @@ public class DetailActivity extends BaseActivity {
                     break;
                 case R.id.btn_detail_share:
                     shareTo(FACEBOOK_PACKAGE_NAME, "Facebook");
+                    break;
+                case R.id.detail_story:
+                    LinearLayout.LayoutParams oldLayoutParams = (LinearLayout.LayoutParams)
+                            mStoryText.getLayoutParams();
+
+                    int currentLines = mStoryText.getLineCount();
+                    mStoryLines = (currentLines > mStoryLines) ? currentLines : mStoryLines;
+
+                    if(mStoryLines <= MAX_STORY_TEXT_LINES) {
+                        return;
+                    }
+
+                    if(currentLines > MAX_STORY_TEXT_LINES) {
+                        mStoryText.setMaxLines(MAX_STORY_TEXT_LINES);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                mStoryText.getLineHeight() * (MAX_STORY_TEXT_LINES + 1));
+                        layoutParams.setMargins(oldLayoutParams.leftMargin, oldLayoutParams.topMargin, 0, 0);
+
+                        mStoryText.setLayoutParams(layoutParams);
+                    } else {
+                        mStoryText.setMaxLines(mStoryLines + 1);
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+                                mStoryText.getLineHeight() * (mStoryLines + 1));
+                        layoutParams.setMargins(oldLayoutParams.leftMargin, oldLayoutParams.topMargin, 0, 0);
+
+                        mStoryText.setLayoutParams(layoutParams);
+                    }
                     break;
                 default:
                     break;

@@ -4,6 +4,7 @@ import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingData;
 import android.prada.lab.goodthingmap.model.GoodThingsData;
 import android.prada.lab.goodthingmap.model.LikeResult;
+import android.prada.lab.goodthingmap.model.Result;
 
 import org.json.JSONObject;
 
@@ -34,6 +35,12 @@ public interface GoodThingService {
 
     @GET("/good_thing/mobile/findGoodThings")
     void listStory(Callback<GoodThingsData> callback);
+
+    @GET("/good_thing/mobile/getLikeNum")
+    void requestLikeNum(@Query("rid") int rid,  Callback<Result> callback);
+
+    @GET("/good_thing/mobile/getCheckinNum")
+    void requestCheckinNum(@Query("rid") int rid, Callback<Result> callback);
 
     @POST("/good_thing/mobile/addLike")
     void likeGoodThing(@Query("uid") String uid, @Query("rid") int rid, Callback<LikeResult> callback);

@@ -32,7 +32,7 @@ public class GoodListActivity extends BaseActivity {
         if (savedInstanceState == null) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             fragment.setArguments(getIntent().getExtras());
-            getSupportFragmentManager().beginTransaction()
+            int commit = getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, fragment)
                     .commit();
         }

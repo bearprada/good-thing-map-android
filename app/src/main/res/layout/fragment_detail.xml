@@ -98,6 +98,7 @@
                     android:layout_marginRight="2dp"
                     android:layout_weight="1" >
                     <Button
+                        android:id="@+id/btn_detail_share_text"
                         android:drawableLeft="@drawable/icon_share"
                         android:text="分享"
                         android:textSize="16dp"
