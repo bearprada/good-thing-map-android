@@ -14,6 +14,7 @@ import android.prada.lab.goodthingmap.model.LikeResult;
 import android.prada.lab.goodthingmap.model.Result;
 import android.prada.lab.goodthingmap.model.UserMessage;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,9 +29,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amplitude.api.Amplitude;
+import com.facebook.Session;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.widget.FacebookDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment;
@@ -92,6 +98,8 @@ public class DetailActivity extends BaseActivity {
 
         public static final String FACEBOOK_PACKAGE_NAME = "com.facebook.katana";
 
+        private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
+
         public static final int MAX_STORY_TEXT_LINES = 6;
 
         private GoodThing mGoodThing;
@@ -106,6 +114,8 @@ public class DetailActivity extends BaseActivity {
         // TODO remove this value later.. bad design
         private String mCurrentComment;
 
+        private UiLifecycleHelper mFBUiHelper;
+
         private int mStoryLines;
 
 
@@ -119,7 +129,35 @@ public class DetailActivity extends BaseActivity {
             mGoodThing = getArguments().getParcelable(GoodThing.EXTRA_GOODTHING);
             mLocation = getArguments().getParcelable(GoodListActivity.EXTRA_LOCATION);
             mInflater = LayoutInflater.from(getActivity());
+
+            mFBUiHelper = new UiLifecycleHelper(this.getActivity(), null);
+            mFBUiHelper.onCreate(savedStateInstance);
         }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            mFBUiHelper.onResume();
+        }
+
+        @Override
+        public void onSaveInstanceState(Bundle outState) {
+            super.onSaveInstanceState(outState);
+            mFBUiHelper.onSaveInstanceState(outState);
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            mFBUiHelper.onPause();
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            mFBUiHelper.onDestroy();
+        }
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
@@ -200,23 +238,24 @@ public class DetailActivity extends BaseActivity {
         }
 
         private void setupImages(final ViewGroup hsv, List<String> images) {
-            if (images != null) {
-                for (String url : images) {
-                    final ImageView iv = (ImageView) mInflater.inflate(R.layout.item_image, null);
-                    iv.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(getActivity(), ImageViewerActivity.class);
-                            intent.putParcelableArrayListExtra(ImageViewerActivity.EXTRA_PHOTOS, getImageUris());
-                            startActivity(intent);
-                        }
-                    });
-                    Picasso.with(getActivity()).load(url).placeholder(R.drawable.btn_new_image)
-                            .error(R.drawable.btn_new_image).into(iv);
-                    hsv.addView(iv);
-                }
-            }
             int count = (images == null) ? 0 : images.size();
+            for (int i = 0 ; i < count ; i++) {
+                String url = images.get(i);
+                final ImageView iv = (ImageView) mInflater.inflate(R.layout.item_image, null);
+                final int index = i;
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(getActivity(), ImageViewerActivity.class);
+                        intent.putExtra(ImageViewerActivity.PHOTO_INDEX, index);
+                        intent.putParcelableArrayListExtra(ImageViewerActivity.EXTRA_PHOTOS, getImageUris());
+                        startActivity(intent);
+                    }
+                });
+                Picasso.with(getActivity()).load(url).placeholder(R.drawable.btn_new_image)
+                        .error(R.drawable.btn_new_image).into(iv);
+                hsv.addView(iv);
+            }
             for (int i = count ; i < 5 ; i++) {
                 ImageView iv = new ImageView(getActivity());
                 iv.setImageResource(R.drawable.btn_new_image);
@@ -282,8 +321,75 @@ public class DetailActivity extends BaseActivity {
             }
         }
 
+        private void shareToFacebook() {
+            Session facebookSession = Session.getActiveSession();
+            if(facebookSession != null && facebookSession.isOpened()) {
+                List<String> permissions = facebookSession.getPermissions();
+
+                if (!isSubsetOf(PERMISSIONS, permissions)) {
+                    Session.NewPermissionsRequest newPermissionsRequest = new Session
+                            .NewPermissionsRequest(this, PERMISSIONS);
+                    facebookSession.requestNewPublishPermissions(newPermissionsRequest);
+                    return;
+                }
+
+                FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(getActivity())
+                        .setLink(getGoogleMapUri())
+                        .setPicture(mGoodThing.getImageUrl())
+                        .setName(mGoodThing.getTitle())
+                        .setCaption(mGoodThing.getMemo())
+                        .setDescription(mGoodThing.getStory())
+                        .build();
+                mFBUiHelper.trackPendingDialogCall(shareDialog.present());
+            } else {
+                Intent intent = new Intent(getActivity(), FacebookLoginActivity.class);
+                startActivity(intent);
+            }
+        }
+
+        private boolean isSubsetOf(Collection<String> subset, Collection<String> superset) {
+            for (String string : subset) {
+                if (!superset.contains(string)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         private String getGoogleMapUri() {
             return String.format("https://maps.google.com/maps?q=%f,%f", mGoodThing.getLatitude(), mGoodThing.getLongtitude());
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            mFBUiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
+                @Override
+                public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
+                    Log.e("Activity", String.format("Error: %s", error.toString()));
+                }
+
+                @Override
+                public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
+                    boolean didComplete = FacebookDialog.getNativeDialogDidComplete(data);
+                    String completionGesture = FacebookDialog.getNativeDialogCompletionGesture(data);
+                    String postId = FacebookDialog.getNativeDialogPostId(data);
+
+                    if(didComplete && postId != null) {
+                        mService.reportCheckin(Amplitude.getDeviceId(), mGoodThing.getId(), Integer.parseInt(postId), new retrofit.Callback<Result>() {
+
+                            @Override
+                            public void success(Result result, Response response) {
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                            }
+                        });
+                    }
+                }
+            });
         }
 
         @Override
@@ -352,10 +458,10 @@ public class DetailActivity extends BaseActivity {
                             .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    String url = String.format("http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f",
-                                            mLocation.getLatitude(), mLocation.getLongitude(), mGoodThing.getLatitude(),
-                                            mGoodThing.getLongtitude());
+                                    String url = (mLocation == null) ? getGoogleMapUri() :
+                                            String.format("http://maps.google.com/maps?saddr=%f,%f&daddr=%f,%f",
+                                                    mLocation.getLatitude(), mLocation.getLongitude(), mGoodThing.getLatitude(),
+                                                    mGoodThing.getLongtitude());
                                     Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
                                     PlaceholderFragment.this.startActivity(intent);
                                 }
@@ -363,7 +469,8 @@ public class DetailActivity extends BaseActivity {
                     dialog.show();
                     break;
                 case R.id.btn_detail_share:
-                    shareTo(FACEBOOK_PACKAGE_NAME, "Facebook");
+                    //shareTo(FACEBOOK_PACKAGE_NAME, "Facebook");
+                    shareToFacebook();
                     break;
                 case R.id.detail_story:
                     LinearLayout.LayoutParams oldLayoutParams = (LinearLayout.LayoutParams)

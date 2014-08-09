@@ -42,6 +42,9 @@ public interface GoodThingService {
     @GET("/good_thing/mobile/getCheckinNum")
     void requestCheckinNum(@Query("rid") int rid, Callback<Result> callback);
 
+    @POST("/good_thing/mobile/addCheckin")
+    void reportCheckin(@Query("uid") String uid, @Query("rid") int rid, @Query("cid") int checkinId, Callback<Result> callback);
+
     @POST("/good_thing/mobile/addLike")
     void likeGoodThing(@Query("uid") String uid, @Query("rid") int rid, Callback<LikeResult> callback);
 

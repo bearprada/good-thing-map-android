@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.GoodThingAdapter;
 import retrofit.Callback;
@@ -32,7 +36,7 @@ public class GoodListActivity extends BaseActivity {
         if (savedInstanceState == null) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             fragment.setArguments(getIntent().getExtras());
-            int commit = getSupportFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, fragment)
                     .commit();
         }
@@ -127,7 +131,21 @@ public class GoodListActivity extends BaseActivity {
 
         @Override
         public void success(GoodThingsData data, Response response) {
-            for (GoodThing thing : data.getGoodThingList()) {
+            List<GoodThing> goodThings = data.getGoodThingList();
+
+            // temp: sorted by distance
+            if(mLocation != null) {
+                Collections.sort(goodThings, new Comparator<GoodThing>() {
+                    @Override
+                    public int compare(GoodThing goodThing, GoodThing goodThing2) {
+                        float dist = mLocation.distanceTo(goodThing.getLocation());
+                        float dist2 = mLocation.distanceTo(goodThing2.getLocation());
+                        return (int) (dist - dist2);
+                    }
+                });
+            }
+
+            for (GoodThing thing : goodThings) {
                 mAdapter.add(thing);
             }
             mAdapter.notifyDataSetChanged();

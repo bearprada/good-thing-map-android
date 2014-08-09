@@ -59,15 +59,16 @@ public class AboutActivity extends BaseActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_about, container, false);
-            rootView.setOnClickListener(new View.OnClickListener() {
+            rootView.findViewById(R.id.btn_about_link).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String url = "http://www.facebook.com/GoodMaps2013";
+                    String url = "https://www.facebook.com/GoodthingMap";
                     Intent i = new Intent(Intent.ACTION_VIEW);
                     i.setData(Uri.parse(url));
                     startActivity(i);
                 }
             });
+
             return rootView;
         }
     }

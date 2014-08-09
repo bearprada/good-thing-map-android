@@ -167,12 +167,14 @@
 
             <HorizontalScrollView
                 android:layout_width="match_parent"
-                android:layout_height="80dp" >
+                android:layout_height="80dp"
+                android:layout_marginTop="4dp">
                 <LinearLayout
                     android:id="@+id/detail_images"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
                 </LinearLayout>
             </HorizontalScrollView>
 
