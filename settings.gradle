@@ -1,1 +1,2 @@
-include ':app', ':facebook'
+include ':app'
+include ':facebook-android-sdk:facebook'
