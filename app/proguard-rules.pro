@@ -20,6 +20,8 @@
 -keep class com.google.gson.** { *; }
 -keep class com.google.inject.** { *; }
 -keep class android.prada.lab.goodthingmap.model.** { *;}
+-keep class com.flurry.** { *; }
+
 -dontwarn rx.**
 -dontwarn com.squareup.okhttp.**
 -dontwarn com.google.appengine.**
@@ -28,4 +30,4 @@
 -dontwarn com.squareup.okhttp.**
 -dontwarn com.squareup.picasso.**
 -dontwarn com.amplitude.**
-
+-dontwarn com.flurry.**
