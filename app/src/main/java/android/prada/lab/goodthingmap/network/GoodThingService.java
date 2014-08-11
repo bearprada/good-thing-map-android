@@ -1,19 +1,13 @@
 package android.prada.lab.goodthingmap.network;
 
-import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingData;
 import android.prada.lab.goodthingmap.model.GoodThingsData;
 import android.prada.lab.goodthingmap.model.LikeResult;
-import android.prada.lab.goodthingmap.model.Result;
-
-import org.json.JSONObject;
-
-import java.util.List;
+import android.prada.lab.goodthingmap.model.CheckinResult;
 
 import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.POST;
-import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -37,13 +31,13 @@ public interface GoodThingService {
     void listStory(Callback<GoodThingsData> callback);
 
     @GET("/good_thing/mobile/getLikeNum")
-    void requestLikeNum(@Query("rid") int rid,  Callback<Result> callback);
+    void requestLikeNum(@Query("rid") int rid,  Callback<LikeResult> callback);
 
     @GET("/good_thing/mobile/getCheckinNum")
-    void requestCheckinNum(@Query("rid") int rid, Callback<Result> callback);
+    void requestCheckinNum(@Query("rid") int rid, Callback<CheckinResult> callback);
 
     @POST("/good_thing/mobile/addCheckin")
-    void reportCheckin(@Query("uid") String uid, @Query("rid") int rid, @Query("cid") int checkinId, Callback<Result> callback);
+    void reportCheckin(@Query("uid") String uid, @Query("rid") int rid, @Query("cid") int checkinId, Callback<CheckinResult> callback);
 
     @POST("/good_thing/mobile/addLike")
     void likeGoodThing(@Query("uid") String uid, @Query("rid") int rid, Callback<LikeResult> callback);

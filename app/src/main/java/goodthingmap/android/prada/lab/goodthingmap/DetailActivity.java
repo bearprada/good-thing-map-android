@@ -11,7 +11,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.LikeResult;
-import android.prada.lab.goodthingmap.model.Result;
+import android.prada.lab.goodthingmap.model.CheckinResult;
 import android.prada.lab.goodthingmap.model.UserMessage;
 import android.text.TextUtils;
 import android.util.Log;
@@ -164,7 +164,6 @@ public class DetailActivity extends BaseActivity {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
             ((TextView)rootView.findViewById(R.id.detail_distance)).setText(Utility.calDistance(mLocation, mGoodThing));
             ((TextView)rootView.findViewById(R.id.detail_title)).setText(mGoodThing.getTitle());
-           // ((TextView)rootView.findViewById(R.id.detail_story)).setText(mGoodThing.getStory());
             ((TextView)rootView.findViewById(R.id.detail_memo)).setText(mGoodThing.getMemo());
 
             mStoryText =  ((TextView)rootView.findViewById(R.id.detail_story));
@@ -203,10 +202,10 @@ public class DetailActivity extends BaseActivity {
         }
 
         private void setupLikeNum() {
-            mService.requestLikeNum(mGoodThing.getId(), new retrofit.Callback<Result>() {
+            mService.requestLikeNum(mGoodThing.getId(), new retrofit.Callback<LikeResult>() {
                 @Override
-                public void success(Result s, Response response) {
-                    mLikeBtnText.setText("喜歡(" + s.getResult() + ")");
+                public void success(LikeResult s, Response response) {
+                    mLikeBtnText.setText(getString(R.string.like) + "(" +  s.getResult() + ")");
                 }
 
                 @Override
@@ -216,10 +215,10 @@ public class DetailActivity extends BaseActivity {
         }
 
         private void setupCheckinNum() {
-            mService.requestCheckinNum(mGoodThing.getId(), new retrofit.Callback<Result>() {
+            mService.requestCheckinNum(mGoodThing.getId(), new retrofit.Callback<CheckinResult>() {
                 @Override
-                public void success(Result s, Response response) {
-                    mShareBtnText.setText("分享(" + s.getResult() + ")");
+                public void success(CheckinResult s, Response response) {
+                    mShareBtnText.setText(getString(R.string.share) + "(" + s.getResult() + ")");
                 }
 
                 @Override
@@ -289,7 +288,7 @@ public class DetailActivity extends BaseActivity {
         private void shareToTarget(ActivityInfo info, String uri) {
             final Intent intent = new Intent(Intent.ACTION_SEND);
             intent.setType("text/plain");
-            intent.putExtra(Intent.EXTRA_SUBJECT, "分享好事");
+            intent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.share_to_target_share));
             intent.putExtra(Intent.EXTRA_TEXT, uri);
             intent.setClassName(info.packageName, info.name);
             startActivity(intent);
@@ -377,10 +376,12 @@ public class DetailActivity extends BaseActivity {
                     String postId = FacebookDialog.getNativeDialogPostId(data);
 
                     if(didComplete && postId != null) {
-                        mService.reportCheckin(Amplitude.getDeviceId(), mGoodThing.getId(), Integer.parseInt(postId), new retrofit.Callback<Result>() {
+                        Toast.makeText(getActivity(), R.string.share_successful, Toast.LENGTH_SHORT).show();
+
+                        mService.reportCheckin(Amplitude.getDeviceId(), mGoodThing.getId(), Integer.parseInt(postId), new retrofit.Callback<CheckinResult>() {
 
                             @Override
-                            public void success(Result result, Response response) {
+                            public void success(CheckinResult checkinResult, Response response) {
                             }
 
                             @Override
@@ -436,12 +437,12 @@ public class DetailActivity extends BaseActivity {
                         @Override
                         public void success(LikeResult s, Response response) {
                             Toast.makeText(getActivity(), R.string.msg_like_successful, Toast.LENGTH_SHORT).show();
-                            mLikeBtnText.setText("喜歡(" + s.getResult() + ")");
+                            mLikeBtnText.setText(getString(R.string.like) + "(" + s.getResult() + ")");
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
-                            Toast.makeText(getActivity(), "喜歡好事失敗:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.add_like_fail + ":" + error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                     break;

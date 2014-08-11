@@ -16,19 +16,4 @@ public class Utility {
         float distance = currentLocation.distanceTo(thing.getLocation());
         return (distance < 1000f) ? String.format("%.1fm", distance) : String.format("%.1fkm", distance / 1000);
     }
-
-    public static float convertDpToPixel(float dp, Context context){
-        float px = dp * getDensity(context);
-        return px;
-    }
-
-    public static float convertPixelToDp(float px, Context context){
-        float dp = px / getDensity(context);
-        return dp;
-    }
-
-    public static float getDensity(Context context){
-        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-        return metrics.density;
-    }
 }

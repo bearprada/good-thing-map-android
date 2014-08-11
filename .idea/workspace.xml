@@ -41,228 +41,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="adf0934e-4735-4455-90c2-93dea8356022" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facebook-android-sdk" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitmodules" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\.classpath" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\.project" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\TestApp\TestApp.iml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\build.gradle" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\build.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\facebook.iml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\libs\BUCK" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\libs\android-support-v4.jar" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\libs\bolts.jar" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\project.properties" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_button_blue_focused.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_button_blue_normal.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_button_blue_pressed.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_button_grey_focused.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_button_grey_normal.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_button_grey_pressed.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_close.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_inverse_icon.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_logo.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_picker_magnifier.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_tooltip_black_background.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_tooltip_black_bottomnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_tooltip_black_topnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_tooltip_black_xout.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_tooltip_blue_background.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_tooltip_blue_bottomnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_tooltip_blue_topnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-hdpi\com_facebook_tooltip_blue_xout.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-ldpi\com_facebook_close.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_button_blue_focused.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_button_blue_normal.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_button_blue_pressed.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_inverse_icon.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_picker_magnifier.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_tooltip_black_background.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_tooltip_black_bottomnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_tooltip_black_topnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_tooltip_black_xout.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_tooltip_blue_background.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_tooltip_blue_bottomnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_tooltip_blue_topnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-mdpi\com_facebook_tooltip_blue_xout.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_button_blue_focused.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_button_blue_normal.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_button_blue_pressed.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_button_grey_focused.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_button_grey_normal.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_button_grey_pressed.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_close.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_inverse_icon.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_logo.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_picker_magnifier.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_tooltip_black_background.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_tooltip_black_bottomnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_tooltip_black_topnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_tooltip_black_xout.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_tooltip_blue_background.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_tooltip_blue_bottomnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_tooltip_blue_topnub.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable-xhdpi\com_facebook_tooltip_blue_xout.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_button_blue.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_button_blue_focused.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_button_blue_normal.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_button_blue_pressed.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_button_check.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_button_check_off.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_button_check_on.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_button_grey_focused.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_button_grey_normal.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_button_grey_pressed.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_close.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_inverse_icon.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_list_divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_list_section_header_background.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_loginbutton_silver.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_logo.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_picker_item_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_picker_list_focused.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_picker_list_longpressed.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_picker_list_pressed.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_picker_list_selector.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_picker_list_selector_background_transition.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_picker_list_selector_disabled.9.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_picker_top_button.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_place_default_icon.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_profile_default_icon.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_profile_picture_blank_portrait.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_profile_picture_blank_square.png" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_top_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_top_button.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\drawable\com_facebook_usersettingsfragment_background_gradient.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_friendpickerfragment.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_login_activity_layout.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_picker_activity_circle_row.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_picker_checkbox.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_picker_image.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_picker_list_row.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_picker_list_section_header.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_picker_search_box.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_picker_title_bar.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_picker_title_bar_stub.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_placepickerfragment.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_placepickerfragment_list_row.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_search_bar_layout.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_tooltip_bubble.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\layout\com_facebook_usersettingsfragment.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values-es\strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values-hdpi\dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values-he\strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values-iw\strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values-ldpi\dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values-mdpi\dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values-xhdpi\dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values\attrs.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values\colors.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values\drawables.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values\strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\res\values\styles.xml" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\AccessToken.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\AccessTokenSource.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\AppEventsConstants.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\AppEventsLogger.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\AppLinkData.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\AuthorizationClient.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\BoltsMeasurementEventListener.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\FacebookAppLinkResolver.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\FacebookAuthorizationException.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\FacebookBroadcastReceiver.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\FacebookDialogException.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\FacebookException.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\FacebookGraphObjectException.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\FacebookOperationCanceledException.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\FacebookRequestError.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\FacebookSdkVersion.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\FacebookServiceException.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\GetTokenClient.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\HttpMethod.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\InsightsLogger.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\LegacyHelper.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\LoggingBehavior.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\LoginActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\NativeAppCallAttachmentStore.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\NativeAppCallContentProvider.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\NonCachingTokenCachingStrategy.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\ProgressNoopOutputStream.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\ProgressOutputStream.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\Request.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\RequestAsyncTask.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\RequestBatch.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\RequestOutputStream.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\RequestProgress.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\Response.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\Session.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\SessionDefaultAudience.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\SessionLoginBehavior.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\SessionState.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\Settings.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\SharedPreferencesTokenCachingStrategy.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\TestSession.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\TokenCachingStrategy.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\UiLifecycleHelper.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\android\AsyncFacebookRunner.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\android\DialogError.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\android\Facebook.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\android\FacebookError.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\android\FbDialog.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\android\Util.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\AnalyticsEvents.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\AttributionIdentifiers.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\CacheableRequestBatch.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\FileLruCache.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\ImageDownloader.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\ImageRequest.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\ImageResponse.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\ImageResponseCache.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\Logger.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\NativeProtocol.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\PlatformServiceClient.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\ServerProtocol.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\SessionAuthorizationType.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\SessionTracker.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\UrlRedirectCache.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\Utility.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\Validate.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\WorkQueue.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\internal\package-info.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\CreateGraphObject.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\GraphLocation.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\GraphMultiResult.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\GraphObject.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\GraphObjectList.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\GraphPlace.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\GraphUser.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\JsonUtil.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\OpenGraphAction.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\OpenGraphObject.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\model\PropertyName.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\FacebookDialog.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\FacebookFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\FriendPickerFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\GraphObjectAdapter.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\GraphObjectCursor.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\GraphObjectPagingLoader.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\LoginButton.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\PickerFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\PlacePickerFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\ProfilePictureView.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\SimpleGraphObjectCursor.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\ToolTipPopup.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\UserSettingsFragment.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\src\com\facebook\widget\WebDialog.java" afterPath="" />
-      <change type="DELETED" beforePath="G:\AndroidWorkspace\good-thing-map-android\facebook\tests\tests.iml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook-android-sdk/.gitignore" afterPath="$PROJECT_DIR$/facebook-android-sdk/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook-android-sdk" afterPath="$PROJECT_DIR$/facebook-android-sdk" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/DetailActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/DetailActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/network/GoodThingService.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/network/GoodThingService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook-android-sdk/LICENSE.txt" afterPath="$PROJECT_DIR$/facebook-android-sdk/LICENSE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facebook-android-sdk/NOTICE.txt" afterPath="$PROJECT_DIR$/facebook-android-sdk/NOTICE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/component/Utility.java" afterPath="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/component/Utility.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MOVED" beforePath="G:\AndroidWorkspace\good-thing-map-android\app\src\main\java\android\prada\lab\goodthingmap\model\Result.java" afterPath="$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/model/CheckinResult.java" />
     </list>
     <ignored path="good-thing-map-android.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -285,41 +73,61 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="DetailActivity.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="DetailActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/DetailActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="4731" max-vertical-offset="9956">
-              <caret line="249" column="80" selection-start-line="249" selection-start-column="80" selection-end-line="249" selection-end-column="80" />
-              <folding />
+            <state vertical-scroll-proportion="2.7102177" vertical-offset="3968" max-vertical-offset="8778">
+              <caret line="351" column="33" selection-start-line="351" selection-start-column="33" selection-end-line="351" selection-end-column="33" />
+              <folding>
+                <element signature="e#7967#7991#0" expanded="true" />
+                <element signature="e#8455#8480#0" expanded="true" />
+                <element signature="e#11476#11517#0" expanded="true" />
+                <element signature="e#12122#12189#0" expanded="true" />
+                <element signature="e#15763#15788#0" expanded="true" />
+                <element signature="e#16772#16795#0" expanded="true" />
+                <element signature="e#17384#17406#0" expanded="true" />
+                <element signature="e#17455#17471#0" expanded="true" />
+                <element signature="e#18168#18183#0" expanded="true" />
+                <element signature="e#18984#19012#0" expanded="true" />
+                <element signature="e#19091#19115#0" expanded="true" />
+                <element signature="e#19332#19354#0" expanded="true" />
+                <element signature="e#19592#19623#0" expanded="true" />
+                <element signature="e#19626#19653#0" expanded="true" />
+                <element signature="e#19761#19794#0" expanded="true" />
+                <element signature="e#19894#19909#0" expanded="true" />
+                <element signature="e#20199#20215#0" expanded="true" />
+                <element signature="e#23067#23099#0" expanded="true" />
+                <element signature="e#23326#23352#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ImageViewerActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/ImageViewerActivity.java">
+      <file leaf-file-name="strings.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1900" max-vertical-offset="2679">
-              <caret line="100" column="69" selection-start-line="100" selection-start-column="69" selection-end-line="100" selection-end-column="69" />
+            <state vertical-scroll-proportion="-22.04" vertical-offset="0" max-vertical-offset="722">
+              <caret line="29" column="34" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="34" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GoodListActivity.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/GoodListActivity.java">
+      <file leaf-file-name="GoodThingService.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/network/GoodThingService.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1976" max-vertical-offset="3135">
-              <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+            <state vertical-scroll-proportion="-19.0" vertical-offset="0" max-vertical-offset="855">
+              <caret line="33" column="79" selection-start-line="33" selection-start-column="79" selection-end-line="33" selection-end-column="79" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.608" vertical-offset="0" max-vertical-offset="836">
-              <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+            <state vertical-scroll-proportion="-25.08" vertical-offset="0" max-vertical-offset="817">
+              <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -328,7 +136,7 @@
       <file leaf-file-name=".gitmodules" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitmodules">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="171">
+            <state vertical-scroll-proportion="-1.52" vertical-offset="0" max-vertical-offset="171">
               <caret line="2" column="45" selection-start-line="2" selection-start-column="45" selection-end-line="2" selection-end-column="45" />
               <folding />
             </state>
@@ -338,18 +146,8 @@
       <file leaf-file-name="settings.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="133">
+            <state vertical-scroll-proportion="-0.76" vertical-offset="0" max-vertical-offset="133">
               <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Utility.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/component/Utility.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="285" max-vertical-offset="760">
-              <caret line="15" column="51" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -1956,7 +1754,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="8446375970288" />
+        <entry key="$PROJECT_DIR$" value="8446376336493" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2528,13 +2326,10 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/component/Utility.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/model/Result.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/model/LikeResult.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/network/GoodThingService.java" />
         <option value="$PROJECT_DIR$/facebook/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/component/FacbookLoginActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_facebook_login.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/FacebookLoginActivity.java" />
@@ -2542,12 +2337,15 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_about.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/AboutActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/item_image.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/DetailActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/ImageViewerActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/BaseActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_detail.xml" />
         <option value="$PROJECT_DIR$/settings.gradle" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/component/Utility.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/network/GoodThingService.java" />
+        <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/DetailActivity.java" />
       </list>
     </option>
   </component>
@@ -2812,6 +2610,44 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="goodthingmap" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="good-thing-map-android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="good-thing-map-android" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="goodthingmap" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="component" />
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -3213,13 +3049,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329718" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20065077" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -3239,9 +3077,7 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -3345,6 +3181,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.753915" vertical-offset="16139" max-vertical-offset="30172">
           <caret line="1098" column="32" selection-start-line="1098" selection-start-column="32" selection-end-line="1098" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3410,14 +3247,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7330247" vertical-offset="0" max-vertical-offset="648">
-          <caret line="25" column="56" selection-start-line="25" selection-start-column="56" selection-end-line="25" selection-end-column="56" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/FacebookLoginActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.70679015" vertical-offset="188" max-vertical-offset="836">
@@ -3448,6 +3277,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.4691358" vertical-offset="0" max-vertical-offset="648">
           <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3455,20 +3285,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33225808" vertical-offset="725" max-vertical-offset="3914">
           <caret line="56" column="24" selection-start-line="56" selection-start-column="20" selection-end-line="56" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/model/Result.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4398148" vertical-offset="0" max-vertical-offset="648">
-          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/network/GoodThingService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09104938" vertical-offset="207" max-vertical-offset="855">
-          <caret line="28" column="45" selection-start-line="28" selection-start-column="45" selection-end-line="28" selection-end-column="45" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3476,6 +3293,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.6481481" vertical-offset="226" max-vertical-offset="874">
           <caret line="47" column="11" selection-start-line="47" selection-start-column="11" selection-end-line="47" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -3627,52 +3445,60 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/model/CheckinResult.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23539823" vertical-offset="0" max-vertical-offset="565">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_detail.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.0011876" vertical-offset="0" max-vertical-offset="4541">
+          <caret line="133" column="51" selection-start-line="133" selection-start-column="51" selection-end-line="133" selection-end-column="51" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/component/Utility.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.34982738" vertical-offset="0" max-vertical-offset="869">
+          <caret line="19" column="0" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/GoodListActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1328" max-vertical-offset="2603">
-          <caret line="104" column="0" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+        <state vertical-scroll-proportion="-6.09434" vertical-offset="0" max-vertical-offset="2603">
+          <caret line="38" column="49" selection-start-line="38" selection-start-column="49" selection-end-line="38" selection-end-column="49" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/ImageViewerActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="570" max-vertical-offset="2204">
+        <state vertical-scroll-proportion="0.6501726" vertical-offset="917" max-vertical-offset="2204">
           <caret line="100" column="69" selection-start-line="100" selection-start-column="69" selection-end-line="100" selection-end-column="69" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/DetailActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="4256" max-vertical-offset="9690">
-          <caret line="249" column="80" selection-start-line="249" selection-start-column="80" selection-end-line="249" selection-end-column="80" />
+        <state vertical-scroll-proportion="-25.08" vertical-offset="0" max-vertical-offset="817">
+          <caret line="33" column="45" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
           <folding />
         </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/component/Utility.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="703">
-          <caret line="15" column="51" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="51" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_detail.xml">
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1446" max-vertical-offset="4484">
-          <caret line="101" column="67" selection-start-line="101" selection-start-column="67" selection-end-line="101" selection-end-column="67" />
-          <folding />
-        </state>
-      </provider>
-      <provider selected="true" editor-type-id="android-designer">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitmodules">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="171">
+        <state vertical-scroll-proportion="-1.52" vertical-offset="0" max-vertical-offset="171">
           <caret line="2" column="45" selection-start-line="2" selection-start-column="45" selection-end-line="2" selection-end-column="45" />
           <folding />
         </state>
@@ -3680,17 +3506,53 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="133">
+        <state vertical-scroll-proportion="-0.76" vertical-offset="0" max-vertical-offset="133">
           <caret line="1" column="40" selection-start-line="1" selection-start-column="40" selection-end-line="1" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.608" vertical-offset="0" max-vertical-offset="836">
-          <caret line="20" column="0" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+        <state vertical-scroll-proportion="-22.04" vertical-offset="0" max-vertical-offset="722">
+          <caret line="29" column="34" selection-start-line="29" selection-start-column="18" selection-end-line="29" selection-end-column="34" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/android/prada/lab/goodthingmap/network/GoodThingService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-19.0" vertical-offset="0" max-vertical-offset="855">
+          <caret line="33" column="79" selection-start-line="33" selection-start-column="79" selection-end-line="33" selection-end-column="79" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/goodthingmap/android/prada/lab/goodthingmap/DetailActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="2.7102177" vertical-offset="3968" max-vertical-offset="8778">
+          <caret line="351" column="33" selection-start-line="351" selection-start-column="33" selection-end-line="351" selection-end-column="33" />
+          <folding>
+            <element signature="e#7967#7991#0" expanded="true" />
+            <element signature="e#8455#8480#0" expanded="true" />
+            <element signature="e#11476#11517#0" expanded="true" />
+            <element signature="e#12122#12189#0" expanded="true" />
+            <element signature="e#15763#15788#0" expanded="true" />
+            <element signature="e#16772#16795#0" expanded="true" />
+            <element signature="e#17384#17406#0" expanded="true" />
+            <element signature="e#17455#17471#0" expanded="true" />
+            <element signature="e#18168#18183#0" expanded="true" />
+            <element signature="e#18984#19012#0" expanded="true" />
+            <element signature="e#19091#19115#0" expanded="true" />
+            <element signature="e#19332#19354#0" expanded="true" />
+            <element signature="e#19592#19623#0" expanded="true" />
+            <element signature="e#19626#19653#0" expanded="true" />
+            <element signature="e#19761#19794#0" expanded="true" />
+            <element signature="e#19894#19909#0" expanded="true" />
+            <element signature="e#20199#20215#0" expanded="true" />
+            <element signature="e#23067#23099#0" expanded="true" />
+            <element signature="e#23326#23352#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

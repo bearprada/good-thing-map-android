@@ -8,21 +8,25 @@
     <string name="title_activity_fravor">我的最愛</string>
     <string name="title_activity_about">關於我們</string>
     <string name="title_activity_facebook_login">登入</string>
+    <string name="title_activity_image_viewer">照片集</string>
     <string name="action_about">關於我們</string>
     <string name="action_my_fravor">我的最愛</string>
+    <string name="action_settings">設定</string>
     <string name="warning_navigation">如攤販沒有出現在導引位置上，則可能在附近。座標位置如有誤差，歡迎提供更正確的資訊！</string>
     <string name="warning_tbi_navigation">若攤販無確切地址，則導引座標為大概位置。\n歡迎網友供更正確的資訊！\n注意：販售員可能因個人因素不在該販賣時間內出現。\n歡迎網友提供更正確的資訊！</string>
     <string name="warning_navigation_title">提醒您</string>
     <string name="cancel">取消</string>
     <string name="confirm">確認</string>
     <string name="subject_report">問題回報</string>
+    <string name="share_to_target_share">分享好事</string>
     <string name="share_to_target_error_message">沒有安裝該應用程式</string>
     <string name="msg_like_successful">喜歡好事成功</string>
-    <string name="title_activity_image_viewer">照片集</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
     <string name="enter_comment">請輸入留言</string>
     <string name="post_comment_fail">留言失敗</string>
     <string name="post_comment_successful">留言成功</string>
+    <string name="like">喜歡</string>
+    <string name="share">分享</string>
+    <string name="add_like_fail">喜歡好事失敗</string>
+    <string name="share_successful">分享好事成功</string>
 
 </resources>
