@@ -27,6 +27,8 @@ import goodthingmap.android.prada.lab.goodthingmap.R;
 public class ImageViewerActivity extends ActionBarActivity {
 
     public static final String EXTRA_PHOTOS = "extra_photos";
+    public static final String PHOTO_INDEX = "photo_index";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +70,7 @@ public class ImageViewerActivity extends ActionBarActivity {
         private ImagePagerAdapter mAdapter;
         private ViewPager mViewPager;
         private List<Uri> mImages = new ArrayList<Uri>();
+        private int mPhotoIndex;
 
         public PlaceholderFragment() {
         }
@@ -76,6 +79,7 @@ public class ImageViewerActivity extends ActionBarActivity {
         public void onCreate(Bundle savedStateInstance) {
             super.onCreate(savedStateInstance);
             mImages = getArguments().getParcelableArrayList(EXTRA_PHOTOS);
+            mPhotoIndex = getArguments().getInt(PHOTO_INDEX);
         }
 
         @Override
@@ -85,6 +89,8 @@ public class ImageViewerActivity extends ActionBarActivity {
             mViewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
             mAdapter = new ImagePagerAdapter(getActivity(), mImages);
             mViewPager.setAdapter(mAdapter);
+            mViewPager.setCurrentItem(mPhotoIndex);
+
             return rootView;
         }
 

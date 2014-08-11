@@ -1,7 +1,9 @@
 package goodthingmap.android.prada.lab.goodthingmap.component;
 
+import android.content.Context;
 import android.location.Location;
 import android.prada.lab.goodthingmap.model.GoodThing;
+import android.util.DisplayMetrics;
 
 /**
  * Created by prada on 2014/7/5.
