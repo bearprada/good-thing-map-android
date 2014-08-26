@@ -12,8 +12,9 @@
         android:id="@+id/about_icon_image"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:adjustViewBounds="false" />
+        android:layout_marginTop="35dp"
+        android:adjustViewBounds="false"
+        android:layout_alignParentEnd="false" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,10 +33,10 @@
         android:text="「好事地圖」提供大眾查閱弱勢攤販資訊，\nAPP中的資訊皆來自社群網站上網友熱心分享。\n我們希望更系統性地整合各方訊息，\n讓人人都可以順手一滑，隨時隨地做好事！"
         android:id="@+id/about_text1"
         android:gravity="center"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:layout_below="@+id/about_title"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+        android:layout_marginTop="15dp" />
 
     <Button
         android:layout_width="100dp"
@@ -44,10 +45,11 @@
         android:id="@+id/btn_about_link"
         android:background="#ffc70037"
         android:textColor="#ffffffff"
+        android:textSize="16sp"
         android:layout_below="@+id/about_text1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp" />
+        android:layout_alignLeft="@+id/about_icon_image"
+        android:layout_alignStart="@+id/about_icon_image"
+        android:layout_marginTop="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -55,7 +57,7 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="贊助單位：\n感謝Cacafly贊助其伺服器與頻寬\n感謝台大社工系更新與維護資訊"
         android:id="@+id/about_text2"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:gravity="center"
         android:layout_above="@+id/about_text3"
         android:layout_centerHorizontal="true"
@@ -82,7 +84,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/about_text2"
         android:layout_alignEnd="@+id/about_text2"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         android:textSize="12sp"
         android:gravity="center" />
 
