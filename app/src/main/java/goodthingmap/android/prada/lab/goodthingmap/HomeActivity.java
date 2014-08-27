@@ -9,6 +9,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingData;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -28,17 +29,24 @@ import bolts.Task;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+    private NavigationDrawerFragment mNavigationDrawerFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+//        if (savedInstanceState == null) {
+//            getSupportFragmentManager().beginTransaction()
+//                    .add(R.id.container, new PlaceholderFragment())
+//                    .commit();
+//        }
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
+
+        // Set up the drawer.
+        mNavigationDrawerFragment.setUp(
+                R.id.navigation_drawer,
+                (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     @Override
@@ -63,6 +71,13 @@ public class HomeActivity extends BaseActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new PlaceholderFragment())
+                .commit();
     }
 
     /**

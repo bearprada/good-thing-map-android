@@ -29,4 +29,10 @@
     <string name="add_like_fail">喜歡好事失敗</string>
     <string name="share_successful">分享好事成功</string>
 
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
 </resources>
