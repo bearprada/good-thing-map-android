@@ -3,6 +3,7 @@ package goodthingmap.android.prada.lab.goodthingmap.component;
 import android.prada.lab.goodthingmap.network.GoodThingService;
 import android.support.v4.app.Fragment;
 
+import goodthingmap.android.prada.lab.goodthingmap.Consts;
 import retrofit.RestAdapter;
 
 /**
@@ -14,7 +15,7 @@ public abstract class BaseServiceFragment extends Fragment {
 
     public BaseServiceFragment() {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://60.199.245.21:8080/")
+                .setEndpoint(Consts.AUTHORITY)
                 .build();
         mService = restAdapter.create(GoodThingService.class);
     }
