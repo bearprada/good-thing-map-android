@@ -32,6 +32,7 @@ import com.amplitude.api.Amplitude;
 import com.facebook.Session;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.widget.FacebookDialog;
+import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -132,6 +133,18 @@ public class DetailActivity extends BaseActivity {
 
             mFBUiHelper = new UiLifecycleHelper(this.getActivity(), null);
             mFBUiHelper.onCreate(savedStateInstance);
+        }
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            FlurryAgent.logEvent("PageDetail", true);
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            FlurryAgent.endTimedEvent("PageDetail");
         }
 
         @Override
@@ -299,30 +312,40 @@ public class DetailActivity extends BaseActivity {
             if (info != null) {
                 shareToTarget(info, getGoogleMapUri());
             } else {
-                final String packageNameF = packageName;
-                AlertDialogFragment mAlertDialogFragment = AlertDialogFragment.newInstance(
-                        null,
-                        getString(R.string.share_to_target_error_message, appName, appName),
-                        getString(android.R.string.yes),
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(Intent.ACTION_VIEW);
-                                intent.setData(Uri.parse("market://details?id=" + packageNameF));
-                                startActivity(intent);
-                            }
-                        },
-                        getString(android.R.string.no), null);
-                try {
-                    mAlertDialogFragment.show(getFragmentManager(), "download_warning");
-                } catch (IllegalStateException e) {
-                }
+                shareToAppNotFound(packageName, appName);
+            }
+        }
+
+        private void shareToAppNotFound(String packageName, String appName) {
+            final String packageNameF = packageName;
+            AlertDialogFragment mAlertDialogFragment = AlertDialogFragment.newInstance(
+                    null,
+                    getString(R.string.share_to_target_error_message, appName, appName),
+                    getString(android.R.string.yes),
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("market://details?id=" + packageNameF));
+                            startActivity(intent);
+                        }
+                    },
+                    getString(android.R.string.no), null);
+            try {
+                mAlertDialogFragment.show(getFragmentManager(), "download_warning");
+            } catch (IllegalStateException e) {
             }
         }
 
         private void shareToFacebook() {
+            if (!FacebookDialog.canPresentShareDialog(getActivity(),
+                    FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
+                shareToAppNotFound("market://details?id=com.facebook.katana", "Facebook");
+                return;
+            }
+
             Session facebookSession = Session.getActiveSession();
-            if(facebookSession != null && facebookSession.isOpened()) {
+            if (facebookSession != null && facebookSession.isOpened()) {
                 List<String> permissions = facebookSession.getPermissions();
 
                 if (!isSubsetOf(PERMISSIONS, permissions)) {
@@ -345,6 +368,7 @@ public class DetailActivity extends BaseActivity {
                 startActivity(intent);
             }
         }
+
 
         private boolean isSubsetOf(Collection<String> subset, Collection<String> superset) {
             for (String string : subset) {
@@ -398,6 +422,7 @@ public class DetailActivity extends BaseActivity {
             AlertDialog dialog;
             switch(view.getId()) {
                 case R.id.btn_detail_report:
+                    FlurryAgent.logEvent("Event_Click_Detail_Report", false);
                     Intent intent = new Intent(Intent.ACTION_SENDTO);
                     intent.setData(Uri.fromParts("mailto", "goodmaps2013@gmail.com", null));
                     intent.putExtra(Intent.EXTRA_SUBJECT, R.string.subject_report);
@@ -405,10 +430,12 @@ public class DetailActivity extends BaseActivity {
                     startActivity(mailer);
                     break;
                 case R.id.btn_detail_new_image:
+                    FlurryAgent.logEvent("Event_Click_Detail_New_Image", false);
                     ListDialogFragment fragment = ListDialogFragment.newInstance();
                     fragment.show(getFragmentManager(), "");
                     break;
                 case R.id.btn_detail_comment:
+                    FlurryAgent.logEvent("Event_Click_Detail_Comment", false);
                     final EditText input = new EditText(getActivity());
                     dialog = new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.enter_comment)
@@ -431,6 +458,7 @@ public class DetailActivity extends BaseActivity {
                     dialog.show();
                     break;
                 case R.id.btn_detail_like:
+                    FlurryAgent.logEvent("Event_Click_Detail_Like", false);
                     mLikeBtn.setSelected(true);
 
                     mService.likeGoodThing(Amplitude.getDeviceId(), mGoodThing.getId(), new retrofit.Callback<LikeResult>() {
@@ -447,6 +475,7 @@ public class DetailActivity extends BaseActivity {
                     });
                     break;
                 case R.id.btn_detail_map:
+                    FlurryAgent.logEvent("Event_Click_Detail_Map", false);
                     int messageId = mGoodThing.isBigIssue() ? R.string.warning_tbi_navigation : R.string.warning_navigation;
                     dialog = new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.warning_navigation_title)
@@ -470,10 +499,11 @@ public class DetailActivity extends BaseActivity {
                     dialog.show();
                     break;
                 case R.id.btn_detail_share:
-                    //shareTo(FACEBOOK_PACKAGE_NAME, "Facebook");
+                    FlurryAgent.logEvent("Event_Click_Detail_Share", false);
                     shareToFacebook();
                     break;
                 case R.id.detail_story:
+                    FlurryAgent.logEvent("Event_Click_Detail_Story", false);
                     LinearLayout.LayoutParams oldLayoutParams = (LinearLayout.LayoutParams)
                             mStoryText.getLayoutParams();
 

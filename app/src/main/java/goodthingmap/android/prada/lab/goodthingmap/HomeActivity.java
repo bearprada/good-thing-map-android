@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -87,6 +88,18 @@ public class HomeActivity extends BaseActivity {
             // lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
 
+        @Override
+        public void onStart() {
+            super.onStart();
+            FlurryAgent.logEvent("PageHome", true);
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            FlurryAgent.endTimedEvent("PageHome");
+        }
+
         public void onResume() {
             super.onResume();
             lm.requestLocationUpdates(provider, 10000, 0, this);
@@ -144,21 +157,27 @@ public class HomeActivity extends BaseActivity {
                     }
                     break;
                 case R.id.good_thing_01:
+                    FlurryAgent.logEvent("Event_Click_Home_Main", false);
                     moveList(GoodThingType.MAIN);
                     break;
                 case R.id.good_thing_02:
+                    FlurryAgent.logEvent("Event_Click_Home_Snack", false);
                     moveList(GoodThingType.SNACK);
                     break;
                 case R.id.good_thing_03:
+                    FlurryAgent.logEvent("Event_Click_Home_Fruit", false);
                     moveList(GoodThingType.FRUIT);
                     break;
                 case R.id.good_thing_04:
+                    FlurryAgent.logEvent("Event_Click_Home_Other", false);
                     moveList(GoodThingType.OTHER);
                     break;
                 case R.id.good_thing_05:
+                    FlurryAgent.logEvent("Event_Click_Home_TBI", false);
                     moveList(GoodThingType.TBI);
                     break;
                 case R.id.good_thing_06:
+                    FlurryAgent.logEvent("Event_Click_Home_Near", false);
                     moveList(GoodThingType.NEAR);
                     break;
             }

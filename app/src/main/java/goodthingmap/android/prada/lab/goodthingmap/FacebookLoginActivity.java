@@ -7,6 +7,7 @@ import android.util.Log;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.widget.UserSettingsFragment;
+import com.flurry.android.FlurryAgent;
 
 import goodthingmap.android.prada.lab.goodthingmap.BaseActivity;
 import goodthingmap.android.prada.lab.goodthingmap.R;
@@ -15,6 +16,18 @@ import goodthingmap.android.prada.lab.goodthingmap.R;
  * Created by 123 on 8/9/2014.
  */
 public class FacebookLoginActivity extends BaseActivity {
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        FlurryAgent.logEvent("PageFacebookLogin", true);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        FlurryAgent.endTimedEvent("PageFacebookLogin");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

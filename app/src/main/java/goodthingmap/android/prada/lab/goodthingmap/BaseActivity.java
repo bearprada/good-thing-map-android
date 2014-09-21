@@ -21,6 +21,7 @@ public abstract class BaseActivity extends ActionBarActivity {
     {
         super.onStart();
         FlurryAgent.onStartSession(this, "D7N4PTHF6BJZK2BBRKFV");
+        FlurryAgent.onPageView();
     }
 
     @Override
