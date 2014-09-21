@@ -14,7 +14,7 @@ public abstract class BaseServiceFragment extends Fragment {
 
     public BaseServiceFragment() {
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://60.199.245.21:8080/")
+                .setEndpoint("http://goodthing.tw:8080/")
                 .build();
         mService = restAdapter.create(GoodThingService.class);
     }
