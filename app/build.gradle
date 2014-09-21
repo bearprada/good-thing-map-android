@@ -4,11 +4,11 @@ android {
     compileSdkVersion 19
     buildToolsVersion '19.1.0'
     defaultConfig {
-        applicationId 'lab.prada.android.goodthingmap'
+        applicationId 'lab.prada.android.goodthingsmap'
         minSdkVersion 10
         targetSdkVersion 19
-        versionCode 3
-        versionName '1.0.2'
+        versionCode 4
+        versionName '1.0.3'
     }
     buildTypes {
         release {
