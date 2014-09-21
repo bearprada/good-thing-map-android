@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.flurry.android.FlurryAgent;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -81,6 +83,18 @@ public class GoodListActivity extends BaseActivity {
 
         public PlaceholderFragment() {
             super();
+        }
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            FlurryAgent.logEvent("PageGoodList", true);
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            FlurryAgent.endTimedEvent("PageGoodList");
         }
 
         @Override

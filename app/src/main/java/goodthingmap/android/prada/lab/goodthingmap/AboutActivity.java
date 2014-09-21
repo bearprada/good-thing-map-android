@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.flurry.android.FlurryAgent;
+
 public class AboutActivity extends BaseActivity {
 
     @Override
@@ -51,6 +53,18 @@ public class AboutActivity extends BaseActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            FlurryAgent.logEvent("PageAbout", true);
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            FlurryAgent.endTimedEvent("PageAbout");
+        }
 
         public PlaceholderFragment() {
         }

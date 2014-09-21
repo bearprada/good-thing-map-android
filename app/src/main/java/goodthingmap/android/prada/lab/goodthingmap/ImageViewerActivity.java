@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.ImageView;
 
+import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -71,6 +72,18 @@ public class ImageViewerActivity extends ActionBarActivity {
         private ViewPager mViewPager;
         private List<Uri> mImages = new ArrayList<Uri>();
         private int mPhotoIndex;
+
+        @Override
+        public void onStart() {
+            super.onStart();
+            FlurryAgent.logEvent("PageImageViewer", true);
+        }
+
+        @Override
+        public void onStop() {
+            super.onStop();
+            FlurryAgent.endTimedEvent("PageImageViewer");
+        }
 
         public PlaceholderFragment() {
         }

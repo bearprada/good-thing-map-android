@@ -76,7 +76,8 @@
                     android:layout_marginRight="2dp"
                     android:clickable="true"
                     android:background="@drawable/selector_bn_detail"
-                    android:layout_weight="1" >
+                    android:layout_weight="1"
+                    android:visibility="gone">
                     <Button
                         android:id="@+id/btn_detail_like_text"
                         android:textSize="16dp"
