@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/item_vendor_icon"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Title"
+        android:id="@+id/item_vendor_title"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/item_vendor_icon"
+        android:textColor="#ffe95e7b"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Address"
+        android:id="@+id/item_vendor_address"
+        android:layout_below="@+id/item_vendor_title"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_alignLeft="@+id/item_vendor_title"
+        android:layout_marginTop="4dp"
+        android:layout_alignRight="@+id/item_vendor_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Business Hour"
+        android:id="@+id/item_vendor_business_hour"
+        android:layout_below="@+id/item_vendor_address"
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:layout_alignLeft="@+id/item_vendor_address"
+        android:layout_alignRight="@+id/item_vendor_address" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Brief Description"
+        android:id="@+id/item_vendor_brief_description"
+        android:layout_below="@+id/item_vendor_business_hour"
+        android:lines="2"
+        android:ellipsize="end"
+        android:layout_alignLeft="@+id/item_vendor_business_hour"
+        android:layout_marginTop="8dp"
+        android:layout_alignRight="@+id/item_vendor_business_hour" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Distance"
+        android:id="@+id/item_vendor_distance"
+        android:layout_alignBottom="@+id/item_vendor_navi"
+        android:layout_toLeftOf="@+id/item_vendor_navi" />
+
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:id="@+id/item_vendor_navi"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="false"
+        android:layout_alignBottom="@+id/item_vendor_icon"
+        android:layout_marginRight="4dp" />
+
+</RelativeLayout>

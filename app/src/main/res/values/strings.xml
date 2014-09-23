@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="facebook_app_id">149672028575255</string>　
+    <string name="parse_app_id">vRgutJGNaqr9sgjrCp5z6ltoyOr47QOqkiwQD9q2</string>
+    <string name="parse_client_key">JKY8xoJeJa1vEK7h4dma6aJuTZrWm00E589BTwFC</string>
+    <string name="parse_rest_api_key">QZOzLqgfsZFpwXFx86O4emGNWcVED6YlEG88aPzG</string>
+    <string name="parse_javascript_key">9urAGbTvVsTSvTkqjAWeL0xxiUfnEbIz7W3MfbEm</string>
+    <string name="flurry_app_id">D7N4PTHF6BJZK2BBRKFV</string>
 
     <string name="app_name">好事地圖</string>
     <string name="title_activity_good_list">好事清單</string>
@@ -10,7 +15,7 @@
     <string name="title_activity_facebook_login">登入</string>
     <string name="title_activity_image_viewer">照片集</string>
     <string name="action_about">關於我們</string>
-    <string name="action_my_fravor">我的最愛</string>
+    <string name="action_my_favor">我的最愛</string>
     <string name="action_settings">設定</string>
     <string name="warning_navigation">如攤販沒有出現在導引位置上，則可能在附近。座標位置如有誤差，歡迎提供更正確的資訊！</string>
     <string name="warning_tbi_navigation">若攤販無確切地址，則導引座標為大概位置。\n歡迎網友供更正確的資訊！\n注意：販售員可能因個人因素不在該販賣時間內出現。\n歡迎網友提供更正確的資訊！</string>
@@ -31,8 +36,15 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="title_section1">首頁</string>
+    <string name="title_section2">新增弱勢攤販</string>
+    <string name="title_section3">我的最愛</string>
+    <string name="title_section4">我新增的攤販</string>
+    <string name="title_section5">關於好事地圖</string>
+    <string name="title_section6">問題回報</string>
+
+    <string name="search_hint">搜尋...</string>
+    <string name="action_add_to_favor">加入我的最愛</string>
+
 
 </resources>

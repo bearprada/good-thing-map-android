@@ -1,6 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="goodthingmap.android.prada.lab.goodthingmap.DetailActivity" >
+    tools:context=".HomeActivity" >
 
+    <item android:id="@+id/action_add_to_favorite"
+        android:title="@string/action_add_to_favor"
+        android:icon="@drawable/icon_favorite_false"
+        android:visible="true"
+        app:showAsAction="always" />
 </menu>

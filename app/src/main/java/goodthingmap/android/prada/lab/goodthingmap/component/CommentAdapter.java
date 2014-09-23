@@ -1,11 +1,12 @@
 package goodthingmap.android.prada.lab.goodthingmap.component;
 
 import android.content.Context;
-import android.prada.lab.goodthingmap.model.UserMessage;
+import android.prada.lab.goodthingmap.model.VendorComment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import goodthingmap.android.prada.lab.goodthingmap.R;
@@ -13,7 +14,7 @@ import goodthingmap.android.prada.lab.goodthingmap.R;
 /**
  * Created by prada on 2014/7/5.
  */
-public class CommentAdapter extends ArrayAdapter<UserMessage> {
+public class CommentAdapter extends ArrayAdapter<VendorComment> {
 
     private final LayoutInflater mInflater;
 
@@ -30,10 +31,11 @@ public class CommentAdapter extends ArrayAdapter<UserMessage> {
         } else {
             view = convertView;
         }
-        UserMessage comment = getItem(i);
-        ((TextView)view.findViewById(R.id.list_seq_id)).setText("#" + (i + 1));
-        ((TextView)view.findViewById(R.id.list_comment)).setText(comment.getMessage());
-        ((TextView)view.findViewById(R.id.list_time)).setText(String.valueOf(comment.getTime()));
+        VendorComment comment = getItem(i);
+        ((TextView)ViewHolder.get(view, R.id.item_comment)).setText(comment.getComment());
+        ImageView iv = ViewHolder.get(view, R.id.item_comment_icon);
+
+
         return view;
     }
 

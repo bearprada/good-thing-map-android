@@ -4,4 +4,296 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal">
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="紅色項目"
+                android:id="@+id/new_vendor_const_1"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:textColor="#ffff0000"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="為必填項目"
+                android:id="@+id/new_vendor_const_2"
+                android:layout_gravity="center_horizontal"
+                android:layout_alignParentLeft="false"
+                android:layout_toRightOf="@+id/new_vendor_const_1"
+                android:layout_alignParentTop="false"
+                android:layout_alignTop="@+id/new_vendor_const_1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="攤販照片"
+                android:id="@+id/new_vendor_const_pic"
+                android:layout_alignParentLeft="false"
+                android:layout_below="@+id/new_vendor_const_1"
+                android:layout_alignLeft="@+id/new_vendor_const_1"
+                android:background="#ffff0000"
+                android:textColor="#ffffffff"
+                android:layout_marginTop="25dp" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/horizontalScrollView"
+                android:layout_below="@+id/new_vendor_const_pic"
+                android:layout_alignLeft="@+id/new_vendor_const_pic"
+                android:layout_marginTop="12dp"
+                android:layout_marginRight="10dp">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/layout_new_vendor_pic">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/new_vendor_add_pic"
+                        android:src="@drawable/btn_new_image" />
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="攤販資訊"
+                android:id="@+id/new_vendor_const_info"
+                android:layout_below="@+id/horizontalScrollView"
+                android:layout_alignLeft="@+id/horizontalScrollView"
+                android:background="#ffff0000"
+                android:textColor="#ffffffff"
+                android:layout_marginTop="25dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="攤販名稱："
+                android:id="@+id/new_vendor_const_title"
+                android:layout_below="@+id/new_vendor_const_info"
+                android:layout_alignLeft="@+id/new_vendor_const_info"
+                android:layout_marginTop="12dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/new_vendor_title"
+                android:layout_alignBaseline="@+id/new_vendor_const_title"
+                android:layout_toRightOf="@+id/new_vendor_const_title"
+                android:layout_alignRight="@+id/horizontalScrollView"
+                android:singleLine="true"
+                android:hint="（例：公館豆花伯）" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="攤販地址："
+                android:id="@+id/new_vendor_const_address"
+                android:layout_alignLeft="@+id/new_vendor_const_title"
+                android:layout_below="@+id/new_vendor_const_title"
+                android:layout_marginTop="12dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/new_vendor_address"
+                android:layout_alignParentBottom="false"
+                android:layout_toRightOf="@+id/new_vendor_const_address"
+                android:layout_alignBaseline="@+id/new_vendor_const_address"
+                android:layout_alignRight="@+id/new_vendor_title"
+                android:singleLine="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="營業時間："
+                android:id="@+id/new_vendor_const_business_hour"
+                android:layout_alignLeft="@+id/new_vendor_const_address"
+                android:layout_below="@+id/new_vendor_const_address"
+                android:layout_marginTop="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="08:00"
+                android:id="@+id/new_vendor_business_hour_open"
+                android:layout_below="@+id/new_vendor_const_business_hour"
+                android:layout_marginTop="12dp"
+                android:layout_alignLeft="@+id/new_vendor_const_business_hour" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="-"
+                android:id="@+id/detail_const_comment"
+                android:layout_alignTop="@+id/new_vendor_business_hour_open"
+                android:layout_toRightOf="@+id/new_vendor_business_hour_open"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="24:00"
+                android:id="@+id/new_vendor_business_hour_close"
+                android:layout_alignParentTop="false"
+                android:layout_alignTop="@+id/new_vendor_business_hour_open"
+                android:layout_toRightOf="@+id/detail_const_comment" />
+
+            <TableLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/tableLayout"
+                android:layout_below="@+id/new_vendor_business_hour_open"
+                android:layout_marginTop="12dp"
+                android:layout_alignLeft="@+id/new_vendor_business_hour_open"
+                android:layout_alignRight="@+id/new_vendor_address">
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期一"
+                        android:id="@+id/btn_new_vendor_mon"
+                        android:layout_column="0"
+                        android:layout_weight="1.0"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期二"
+                        android:id="@+id/btn_new_vendor_tue"
+                        android:layout_column="1"
+                        android:layout_weight="1.0"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期三"
+                        android:id="@+id/btn_new_vendor_wen"
+                        android:layout_column="2"
+                        android:layout_weight="1.0"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期四"
+                        android:id="@+id/btn_new_vendor_thu"
+                        android:layout_column="3"
+                        android:layout_weight="1.0"
+                        android:textSize="14sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent">
+
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期五"
+                        android:id="@+id/btn_new_vendor_fri"
+                        android:layout_column="0"
+                        android:layout_weight="1.0"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期六"
+                        android:id="@+id/btn_new_vendor_sat"
+                        android:layout_column="1"
+                        android:layout_weight="1.0"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="星期日"
+                        android:id="@+id/btn_new_vendor_sun"
+                        android:layout_column="2"
+                        android:layout_weight="1.0"
+                        android:textSize="14sp" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="備註時間"
+                        android:id="@+id/btn_new_vendor_extra"
+                        android:layout_column="3"
+                        android:layout_weight="1.0"
+                        android:textSize="14sp" />
+                </TableRow>
+
+            </TableLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="攤販故事"
+                android:id="@+id/new_vendor_const_stroy"
+                android:layout_below="@+id/tableLayout"
+                android:layout_marginTop="25dp"
+                android:textColor="#ffffffff"
+                android:background="#ff000000"
+                android:layout_alignLeft="@+id/tableLayout" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
+                android:ems="10"
+                android:id="@+id/new_vendor_stroy"
+                android:layout_below="@+id/new_vendor_const_stroy"
+                android:layout_marginTop="12dp"
+                android:layout_alignLeft="@+id/new_vendor_business_hour_open"
+                android:layout_toRightOf="@+id/tableLayout" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="送出\n故事"
+                android:id="@+id/btn_new_vendor_submit"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/new_vendor_stroy"
+                android:layout_marginTop="25dp" />
+
+        </RelativeLayout>
+    </ScrollView>
+
 </LinearLayout>

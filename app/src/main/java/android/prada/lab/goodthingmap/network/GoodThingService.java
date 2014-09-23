@@ -6,7 +6,11 @@ import android.prada.lab.goodthingmap.model.LikeResult;
 import android.prada.lab.goodthingmap.model.CheckinResult;
 
 import retrofit.Callback;
+import retrofit.client.Response;
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Header;
 import retrofit.http.POST;
 import retrofit.http.Query;
 
@@ -44,4 +48,20 @@ public interface GoodThingService {
 
     @POST("/good_thing/mobile/post")
     void postComment(@Query("uid") String uid, @Query("rid") int rid, @Query("message") String message, Callback<LikeResult> callback);
+
+    @FormUrlEncoded
+    @POST("/setFavorite")
+    void setFavorite(@Field("userId") String userId, @Field("vendorId") String vendorId, @Field("like") boolean favorite, Callback<Response> callback);
+
+    @FormUrlEncoded
+    @POST("/setLike")
+    void setLike(@Field("userId") String userId, @Field("vendorId") String vendorId, @Field("like") boolean favorite, Callback<Response> callback);
+
+    @FormUrlEncoded
+    @POST("/setShare")
+    void setShare(@Field("userId") String userId, @Field("vendorId") String vendorId, @Field("type") int type, @Field("postId") String postId, Callback<Response> callback);
+
+    @FormUrlEncoded
+    @POST("/addComment")
+    void addComment(@Field("userId") String userId, @Field("vendorId") String vendorId, @Field("comment") String comment, Callback<Response> callback);
 }
