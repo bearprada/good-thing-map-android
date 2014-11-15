@@ -7,13 +7,11 @@ import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingsData;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.flurry.android.FlurryAgent;
 
@@ -50,7 +48,7 @@ public class GoodListActivity extends BaseActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends BaseServiceFragment
-            implements AdapterView.OnItemClickListener, Callback<GoodThingsData> {
+            implements GoodThingAdapter.GoodThingItemListener, Callback<GoodThingsData> {
 
         private HomeActivity.PlaceholderFragment.GoodThingType mType;
         private GoodThingAdapter mAdapter;
@@ -86,11 +84,13 @@ public class GoodListActivity extends BaseActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_good_list, container, false);
-            mAdapter = new GoodThingAdapter(getActivity());
+            mAdapter = new GoodThingAdapter(getActivity(), this);
             mAdapter.setLocation(mLocation);
-            ListView lv = (ListView)rootView.findViewById(R.id.list_view);
-            lv.setAdapter(mAdapter);
-            lv.setOnItemClickListener(this);
+            RecyclerView rv = (RecyclerView)rootView.findViewById(R.id.list_view);
+            LinearLayoutManager lm = new LinearLayoutManager(getActivity());
+            lm.setOrientation(LinearLayoutManager.VERTICAL);
+            rv.setLayoutManager(lm);
+            rv.setAdapter(mAdapter);
 
             if (mLocation != null) {
                 // FIXME refactor this later
@@ -105,20 +105,6 @@ public class GoodListActivity extends BaseActivity {
                     mService.listStory(mType.getTypeId(), this);
             }
             return rootView;
-        }
-
-        @Override
-        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            GoodThing item = mAdapter.getItem(i);
-            if (item != null) {
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra(GoodThing.EXTRA_GOODTHING, item);
-                intent.putExtra(EXTRA_LOCATION, mLocation);
-                ActivityOptionsCompat options = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.list_image_view), DetailActivity.EXTRA_COVER_IMAGE)
-                        .makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.list_title), DetailActivity.EXTRA_TITLE);
-                ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
-            }
         }
 
         @Override
@@ -146,6 +132,24 @@ public class GoodListActivity extends BaseActivity {
         @Override
         public void failure(RetrofitError error) {
             error.printStackTrace();
+        }
+
+        @Override
+        public void onItemClick(View view, GoodThing item) {
+            if (item != null) {
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra(GoodThing.EXTRA_GOODTHING, item);
+                intent.putExtra(EXTRA_LOCATION, mLocation);
+                ActivityOptionsCompat options = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.list_image_view), DetailActivity.EXTRA_COVER_IMAGE)
+                        .makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.list_title), DetailActivity.EXTRA_TITLE);
+                ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
+            }
+        }
+
+        @Override
+        public void onFavorClick(View view, GoodThing goodthing) {
+            // TODO
         }
     }
 }
