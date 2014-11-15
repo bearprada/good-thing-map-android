@@ -8,7 +8,7 @@
         app:showAsAction="never" />
     <item android:id="@+id/action_my_fravor"
         android:title="@string/action_my_fravor"
+        android:icon="@drawable/ic_favorite_white"
         android:orderInCategory="200"
-        android:visible="false"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>

@@ -19,8 +19,6 @@ import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -66,33 +64,6 @@ public class DetailActivity extends BaseActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, fragment)
                     .commit();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.action_about:
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_my_fravor:
-                intent = new Intent(this, FavorActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 

@@ -28,5 +28,6 @@
     <string name="share">分享</string>
     <string name="add_like_fail">喜歡好事失敗</string>
     <string name="share_successful">分享好事成功</string>
+    <string name="coming_soon">正在開發中，敬請期待</string>
 
 </resources>

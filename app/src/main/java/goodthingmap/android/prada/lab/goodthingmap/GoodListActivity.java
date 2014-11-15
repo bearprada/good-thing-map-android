@@ -46,33 +46,6 @@ public class GoodListActivity extends BaseActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-            case R.id.action_about:
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_my_fravor:
-                intent = new Intent(this, FavorActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     /**
      * A placeholder fragment containing a simple view.
      */

@@ -29,6 +29,7 @@ import java.util.concurrent.Callable;
 import bolts.Continuation;
 import bolts.Task;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
+import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils;
 
 
 public class HomeActivity extends BaseActivity {
@@ -41,30 +42,6 @@ public class HomeActivity extends BaseActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-            case R.id.action_about:
-                intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
-                return true;
-            case R.id.action_my_fravor:
-                intent = new Intent(this, FavorActivity.class);
-                startActivity(intent);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -161,27 +138,27 @@ public class HomeActivity extends BaseActivity {
                     }
                     break;
                 case R.id.good_thing_01:
-                    FlurryAgent.logEvent("Event_Click_Home_Main", false);
+                    LogEventUtils.sendEvent("Event_Click_Home_Main");
                     moveList(GoodThingType.MAIN);
                     break;
                 case R.id.good_thing_02:
-                    FlurryAgent.logEvent("Event_Click_Home_Snack", false);
+                    LogEventUtils.sendEvent("Event_Click_Home_Snack");
                     moveList(GoodThingType.SNACK);
                     break;
                 case R.id.good_thing_03:
-                    FlurryAgent.logEvent("Event_Click_Home_Fruit", false);
+                    LogEventUtils.sendEvent("Event_Click_Home_Fruit");
                     moveList(GoodThingType.FRUIT);
                     break;
                 case R.id.good_thing_04:
-                    FlurryAgent.logEvent("Event_Click_Home_Other", false);
+                    LogEventUtils.sendEvent("Event_Click_Home_Other");
                     moveList(GoodThingType.OTHER);
                     break;
                 case R.id.good_thing_05:
-                    FlurryAgent.logEvent("Event_Click_Home_TBI", false);
+                    LogEventUtils.sendEvent("Event_Click_Home_TBI");
                     moveList(GoodThingType.TBI);
                     break;
                 case R.id.good_thing_06:
-                    FlurryAgent.logEvent("Event_Click_Home_Near", false);
+                    LogEventUtils.sendEvent("Event_Click_Home_Near");
                     moveList(GoodThingType.NEAR);
                     break;
             }
