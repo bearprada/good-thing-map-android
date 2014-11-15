@@ -1,5 +1,6 @@
 package goodthingmap.android.prada.lab.goodthingmap;
 
+import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -13,6 +14,8 @@ import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.LikeResult;
 import android.prada.lab.goodthingmap.model.CheckinResult;
 import android.prada.lab.goodthingmap.model.UserMessage;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -261,7 +264,8 @@ public class DetailActivity extends BaseActivity {
                         Intent intent = new Intent(getActivity(), ImageViewerActivity.class);
                         intent.putExtra(ImageViewerActivity.PHOTO_INDEX, index);
                         intent.putParcelableArrayListExtra(ImageViewerActivity.EXTRA_PHOTOS, getImageUris());
-                        startActivity(intent);
+                        ActivityOptionsCompat options = ActivityOptionsCompat.makeScaleUpAnimation(view, 0, 0, view.getWidth(), view.getHeight());
+                        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
                     }
                 });
                 Picasso.with(getActivity()).load(url).placeholder(R.drawable.btn_new_image)
