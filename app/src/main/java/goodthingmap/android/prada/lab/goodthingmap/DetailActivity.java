@@ -1,6 +1,5 @@
 package goodthingmap.android.prada.lab.goodthingmap;
 
-import android.app.ActivityOptions;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +15,7 @@ import android.prada.lab.goodthingmap.model.CheckinResult;
 import android.prada.lab.goodthingmap.model.UserMessage;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -53,6 +53,9 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class DetailActivity extends BaseActivity {
+
+    public static final String EXTRA_COVER_IMAGE = "extra_cover_image";
+    public static final String EXTRA_TITLE = "extra_title";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,6 +181,10 @@ public class DetailActivity extends BaseActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+
+            ViewCompat.setTransitionName(rootView.findViewById(R.id.detail_cover_image), EXTRA_COVER_IMAGE);
+            ViewCompat.setTransitionName(rootView.findViewById(R.id.detail_title), EXTRA_TITLE);
+
             ((TextView)rootView.findViewById(R.id.detail_distance)).setText(Utility.calDistance(mLocation, mGoodThing));
             ((TextView)rootView.findViewById(R.id.detail_title)).setText(mGoodThing.getTitle());
             ((TextView)rootView.findViewById(R.id.detail_memo)).setText(mGoodThing.getMemo());

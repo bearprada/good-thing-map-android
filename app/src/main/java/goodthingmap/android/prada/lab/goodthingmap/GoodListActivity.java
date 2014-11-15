@@ -5,6 +5,8 @@ import android.location.Location;
 import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingsData;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -139,7 +141,10 @@ public class GoodListActivity extends BaseActivity {
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra(GoodThing.EXTRA_GOODTHING, item);
                 intent.putExtra(EXTRA_LOCATION, mLocation);
-                startActivity(intent);
+                ActivityOptionsCompat options = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.list_image_view), DetailActivity.EXTRA_COVER_IMAGE)
+                        .makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.list_title), DetailActivity.EXTRA_TITLE);
+                ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
             }
         }
 

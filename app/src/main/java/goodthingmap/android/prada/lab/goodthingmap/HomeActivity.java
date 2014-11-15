@@ -9,6 +9,8 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingData;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -153,7 +155,9 @@ public class HomeActivity extends BaseActivity {
                         Intent intent = new Intent(getActivity(), DetailActivity.class);
                         intent.putExtra(GoodThing.EXTRA_GOODTHING, (GoodThing)tag);
                         intent.putExtra(GoodListActivity.EXTRA_LOCATION, mCurrentLocation);
-                        startActivity(intent);
+                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                getActivity(), view, DetailActivity.EXTRA_COVER_IMAGE);
+                        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
                     }
                     break;
                 case R.id.good_thing_01:
