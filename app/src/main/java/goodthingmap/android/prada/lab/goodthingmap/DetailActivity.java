@@ -27,7 +27,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +44,6 @@ import java.util.List;
 
 import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
-import goodthingmap.android.prada.lab.goodthingmap.component.CommentAdapter;
 import goodthingmap.android.prada.lab.goodthingmap.component.ListDialogFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.Utility;
 import retrofit.Callback;
@@ -103,19 +101,15 @@ public class DetailActivity extends BaseActivity {
      */
     public static class PlaceholderFragment extends BaseServiceFragment implements View.OnClickListener, Callback<LikeResult> {
 
-        public static final String FACEBOOK_PACKAGE_NAME = "com.facebook.katana";
-
         private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
 
         public static final int MAX_STORY_TEXT_LINES = 6;
 
         private GoodThing mGoodThing;
-        private CommentAdapter mCommentAdapter;
         private LayoutInflater mInflater;
         private TextView mStoryText;
         private View mLikeBtn;
         private Button mLikeBtnText;
-        private View mShareBtn;
         private Button mShareBtnText;
         private Location mLocation;
         // TODO remove this value later.. bad design
@@ -124,6 +118,7 @@ public class DetailActivity extends BaseActivity {
         private UiLifecycleHelper mFBUiHelper;
 
         private int mStoryLines;
+        private LinearLayout commentList;
 
 
         public PlaceholderFragment() {
@@ -139,6 +134,14 @@ public class DetailActivity extends BaseActivity {
 
             mFBUiHelper = new UiLifecycleHelper(this.getActivity(), null);
             mFBUiHelper.onCreate(savedStateInstance);
+        }
+
+        private View getCommentView(int i, ViewGroup parent, UserMessage comment) {
+            View view = mInflater.inflate(R.layout.item_comment, parent, false);
+            ((TextView)view.findViewById(R.id.list_seq_id)).setText("#" + i);
+            ((TextView)view.findViewById(R.id.list_comment)).setText(comment.getMessage());
+            ((TextView)view.findViewById(R.id.list_time)).setText(String.valueOf(comment.getTime()));
+            return view;
         }
 
         @Override
@@ -198,21 +201,15 @@ public class DetailActivity extends BaseActivity {
             setupImages(hsv, mGoodThing.getImages());
             Picasso.with(getActivity()).load(mGoodThing.getDetailImageUrl()).into(
                     ((ImageView) rootView.findViewById(R.id.detail_cover_image)));
-            ListView commentList = (ListView) rootView.findViewById(R.id.detail_list_comments);
-            mCommentAdapter = new CommentAdapter(getActivity());
-            commentList.setAdapter(mCommentAdapter);
-            for (UserMessage message : mGoodThing.getMessage()) {
-                mCommentAdapter.add(message);
-            }
-            mCommentAdapter.notifyDataSetChanged();
+            commentList = (LinearLayout) rootView.findViewById(R.id.detail_list_comments);
+            refreshCommentList(container);
 
-            rootView.findViewById(R.id.btn_detail_comment).setOnClickListener(this);
             mLikeBtn = rootView.findViewById(R.id.btn_detail_like);
             mLikeBtn.setOnClickListener(this);
             mLikeBtnText = (Button) rootView.findViewById(R.id.btn_detail_like_text);
-            mShareBtn = rootView.findViewById(R.id.btn_detail_share);
             mShareBtnText =  (Button) rootView.findViewById(R.id.btn_detail_share_text);
 
+            rootView.findViewById(R.id.btn_detail_comment).setOnClickListener(this);
             rootView.findViewById(R.id.btn_detail_map).setOnClickListener(this);
             rootView.findViewById(R.id.btn_detail_new_image).setOnClickListener(this);
             rootView.findViewById(R.id.btn_detail_report).setOnClickListener(this);
@@ -549,7 +546,16 @@ public class DetailActivity extends BaseActivity {
         @Override
         public void success(LikeResult likeResult, Response response) {
             Toast.makeText(getActivity(), R.string.post_comment_successful, Toast.LENGTH_SHORT).show();
-            mCommentAdapter.add(UserMessage.newInstance(mCurrentComment));
+            mGoodThing.getMessage().add(0, UserMessage.newInstance(mCurrentComment));
+            refreshCommentList((ViewGroup) getView());
+        }
+
+        private void refreshCommentList(ViewGroup container) {
+            int count = 1;
+            commentList.removeAllViews();
+            for (UserMessage message : mGoodThing.getMessage()) {
+                commentList.addView(getCommentView(count++, container, message));
+            }
         }
 
         @Override
