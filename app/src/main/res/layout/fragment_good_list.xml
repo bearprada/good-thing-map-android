@@ -7,5 +7,8 @@
         android:id="@+id/list_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dividerHeight="4dp" />
+        android:dividerHeight="@dimen/divider_height"
+        android:divider="@android:color/transparent"
+        android:padding="4dp"
+        tools:listitem="@layout/item_good_thing" />
 </RelativeLayout>
