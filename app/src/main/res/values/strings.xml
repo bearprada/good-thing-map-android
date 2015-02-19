@@ -29,5 +29,8 @@
     <string name="add_like_fail">喜歡好事失敗</string>
     <string name="share_successful">分享好事成功</string>
     <string name="coming_soon">正在開發中，敬請期待</string>
-
+    <string name="trans_cover_image">extra_cover_image</string>
+    <string name="trans_title">extra_title</string>
+    <string name="trans_distance">extra_distance</string>
+    <string name="trans_preview_image">extra_preview_image</string>
 </resources>

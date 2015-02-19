@@ -20,6 +20,7 @@
                 android:textStyle="bold"
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="4dp"
+                android:transitionName="@string/trans_title"
                 android:text="鍋貼爺爺" />
 
             <ImageButton
@@ -50,6 +51,7 @@
                 android:textColor="@color/text_distance"
                 android:layout_marginRight="4dp"
                 android:layout_centerVertical="true"
+                android:transitionName="@string/trans_distance"
                 android:layout_toLeftOf="@+id/detail_favor" />
         </RelativeLayout>
 
@@ -58,7 +60,8 @@
             android:layout_width="match_parent"
             android:layout_height="116dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/placeholder_detail_cover" />
+            android:src="@drawable/placeholder_detail_cover"
+            android:transitionName="@string/trans_cover_image" />
 
         <LinearLayout
             android:layout_width="match_parent"

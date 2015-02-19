@@ -2,6 +2,7 @@ package goodthingmap.android.prada.lab.goodthingmap;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -24,6 +25,12 @@ import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.Callable;
 
 import bolts.Continuation;
@@ -38,6 +45,9 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
@@ -133,7 +143,7 @@ public class HomeActivity extends BaseActivity {
                         intent.putExtra(GoodThing.EXTRA_GOODTHING, (GoodThing)tag);
                         intent.putExtra(GoodListActivity.EXTRA_LOCATION, mCurrentLocation);
                         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                getActivity(), view, DetailActivity.EXTRA_COVER_IMAGE);
+                                getActivity(), view, getString(R.string.trans_cover_image));
                         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
                     }
                     break;

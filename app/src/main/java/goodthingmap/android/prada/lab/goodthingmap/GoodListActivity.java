@@ -7,6 +7,7 @@ import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingsData;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -141,8 +142,10 @@ public class GoodListActivity extends BaseActivity {
                 intent.putExtra(GoodThing.EXTRA_GOODTHING, item);
                 intent.putExtra(EXTRA_LOCATION, mLocation);
                 ActivityOptionsCompat options = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.list_image_view), DetailActivity.EXTRA_COVER_IMAGE)
-                        .makeSceneTransitionAnimation(getActivity(), view.findViewById(R.id.list_title), DetailActivity.EXTRA_TITLE);
+                        .makeSceneTransitionAnimation(getActivity(),
+                                new Pair<>(view.findViewById(R.id.list_image_view), getString(R.string.trans_cover_image)),
+                                new Pair<>(view.findViewById(R.id.list_distance), getString(R.string.trans_distance)),
+                                new Pair<>(view.findViewById(R.id.list_title), getString(R.string.trans_title)));
                 ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
             }
         }
