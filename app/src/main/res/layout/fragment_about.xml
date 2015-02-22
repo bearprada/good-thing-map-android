@@ -1,89 +1,99 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context="goodthingmap.android.prada.lab.goodthingmap.AboutActivity$PlaceholderFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E5E4E3"
-    tools:context="goodthingmap.android.prada.lab.goodthingmap.AboutActivity$PlaceholderFragment" >
+    android:background="#E5E4E3">
 
-    <ImageView
-        android:src="@drawable/icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/about_icon_image"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:adjustViewBounds="false" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="好事地圖"
-        android:id="@+id/about_title"
-        android:layout_below="@+id/about_icon_image"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp" />
+            <ImageView
+                android:src="@drawable/icon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:id="@+id/about_icon_image"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:adjustViewBounds="false" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="「好事地圖」提供大眾查閱弱勢攤販資訊，\nAPP中的資訊皆來自社群網站上網友熱心分享。\n我們希望更系統性地整合各方訊息，\n讓人人都可以順手一滑，隨時隨地做好事！"
-        android:id="@+id/about_text1"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:layout_below="@+id/about_title"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="好事地圖"
+                android:id="@+id/about_title"
+                android:layout_below="@+id/about_icon_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="5dp" />
 
-    <Button
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:text="前往粉絲團"
-        android:id="@+id/btn_about_link"
-        android:background="#ffc70037"
-        android:textColor="#ffffffff"
-        android:layout_below="@+id/about_text1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="「好事地圖」提供大眾查閱弱勢攤販資訊，\nAPP中的資訊皆來自社群網站上網友熱心分享。\n我們希望更系統性地整合各方訊息，\n讓人人都可以順手一滑，隨時隨地做好事！"
+                android:id="@+id/about_text1"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_below="@+id/about_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="25dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="贊助單位：\n感謝Cacafly贊助其伺服器與頻寬\n感謝台大社工系更新與維護資訊"
-        android:id="@+id/about_text2"
-        android:textSize="16sp"
-        android:gravity="center"
-        android:layout_above="@+id/about_text3"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp" />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:text="前往粉絲團"
+                android:id="@+id/btn_about_link"
+                android:background="#ffc70037"
+                android:textColor="#ffffffff"
+                android:layout_below="@+id/about_text1"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="如果圖片版權上的侵犯，可透過攤販資訊頁面\n的「回報資訊錯誤」告知我們，我們將立即改善"
-        android:id="@+id/about_text3"
-        android:layout_above="@+id/about_text4"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="5dp"
-        android:textSize="12sp"
-        android:gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="贊助單位：\n感謝Cacafly贊助其伺服器與頻寬\n感謝台大社工系更新與維護資訊"
+                android:id="@+id/about_text2"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/btn_about_link"
+                android:layout_marginTop="10dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="©2013 Prada Hsiung, Diego Cheung,\nBRANDSUGAR Digital Agency"
-        android:id="@+id/about_text4"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/about_text2"
-        android:layout_alignEnd="@+id/about_text2"
-        android:layout_marginBottom="20dp"
-        android:textSize="12sp"
-        android:gravity="center" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="如果圖片版權上的侵犯，可透過攤販資訊頁面\n的「回報資訊錯誤」告知我們，我們將立即改善"
+                android:id="@+id/about_text3"
+                android:layout_centerHorizontal="true"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_below="@+id/about_text2"
+                android:layout_marginTop="10dp" />
 
-</RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="©2013 Prada Hsiung, Diego Cheung,\nBRANDSUGAR Digital Agency"
+                android:id="@+id/about_text4"
+                android:layout_alignParentBottom="false"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_below="@+id/about_text3"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
+
+        </RelativeLayout>
+
+    </ScrollView>
+</FrameLayout>
