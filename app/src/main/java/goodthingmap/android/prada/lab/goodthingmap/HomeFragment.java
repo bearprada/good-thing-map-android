@@ -3,6 +3,7 @@ package goodthingmap.android.prada.lab.goodthingmap;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.UserAddedVendor;
 import android.prada.lab.goodthingmap.model.UserFavorite;
 import android.prada.lab.goodthingmap.model.VendorData;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -40,7 +42,11 @@ import goodthingmap.android.prada.lab.goodthingmap.component.VendorAdapter;
 /**
  * Created by 123 on 8/31/2014.
  */
-public class HomeFragment extends BaseServiceFragment implements LocationListener, View.OnClickListener, AdapterView.OnItemClickListener, SearchView.OnQueryTextListener {
+public class HomeFragment extends BaseServiceFragment implements LocationListener, View.OnClickListener,
+        AdapterView.OnItemClickListener, SearchView.OnQueryTextListener {
+
+    public static final String TAG = "HomeFragment";
+
     public static final String EXTRA_LOCATION = "extra_location";
     public static final String EXTRA_VENDOR_ID = "extra_vendor_id";
 
@@ -108,6 +114,8 @@ public class HomeFragment extends BaseServiceFragment implements LocationListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        mPerformSearch = false;
+
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         mAdapter = new VendorAdapter(getActivity());
         mAdapter.setLocation(mCurrentLocation);
@@ -239,8 +247,7 @@ public class HomeFragment extends BaseServiceFragment implements LocationListene
     }
 
     protected void updateListView(List<VendorData> list) {
-        mPerformSearch = false;
-
+        System.out.println("updateListView");
         if(mCurrentLocation != null) {
             Collections.sort(list, new Comparator<VendorData>() {
                 @Override
@@ -308,13 +315,10 @@ public class HomeFragment extends BaseServiceFragment implements LocationListene
         Bundle bundle = new Bundle();
         bundle.putString(EXTRA_VENDOR_ID, vendorId);
         bundle.putParcelable(EXTRA_LOCATION, mCurrentLocation);
-        BaseServiceFragment detailFragment = new DetailFragment();
-        detailFragment.setArguments(bundle);
 
-        this.getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, detailFragment)
-                .addToBackStack(detailFragment.getTag())
-                .commit();
+        Intent intent = new Intent(getActivity(), DetailActivity.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 
     @Override

@@ -14,6 +14,7 @@ import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment
  * Created by 123 on 9/5/2014.
  */
 public class AboutFragment extends BaseServiceFragment {
+    public static final String TAG = "AboutFragment";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

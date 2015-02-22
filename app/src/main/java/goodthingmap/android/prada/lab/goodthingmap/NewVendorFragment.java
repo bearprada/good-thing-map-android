@@ -13,6 +13,7 @@ import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment
  * Created by 123 on 9/7/2014.
  */
 public class NewVendorFragment extends BaseServiceFragment {
+    public static final String TAG = "NewVendorFragment";
 
 
     @Override

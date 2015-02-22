@@ -35,7 +35,6 @@ public class CommentAdapter extends ArrayAdapter<VendorComment> {
         ((TextView)ViewHolder.get(view, R.id.item_comment)).setText(comment.getComment());
         ImageView iv = ViewHolder.get(view, R.id.item_comment_icon);
 
-
         return view;
     }
 

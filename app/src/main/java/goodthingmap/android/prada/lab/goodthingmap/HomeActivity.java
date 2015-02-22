@@ -3,6 +3,8 @@ package goodthingmap.android.prada.lab.goodthingmap;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +14,7 @@ import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment
 
 public class HomeActivity extends BaseActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private NavigationDrawerFragment mNavigationDrawerFragment;
+    private boolean onHome = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,22 +27,26 @@ public class HomeActivity extends BaseActivity implements NavigationDrawerFragme
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+    }
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, new HomeFragment())
-                .commit();
+    @Override
+    public void onBackPressed() {
+        if (!onHome) {
+            mNavigationDrawerFragment.selectItem(0);
+        }
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
+        onHome = false;
+
         BaseServiceFragment fragment = null;
         Bundle bundle = null;
-
-        System.out.println("Tab: " + position);
 
         switch(position) {
             case 0:
                 fragment = new HomeFragment();
+                onHome = true;
                 break;
             case 1:
                 fragment = new NewVendorFragment();
@@ -72,9 +79,9 @@ public class HomeActivity extends BaseActivity implements NavigationDrawerFragme
                 return;
         }
 
-        getSupportFragmentManager().beginTransaction()
+        getSupportFragmentManager()
+                .beginTransaction()
                 .replace(R.id.container, fragment)
-                .addToBackStack(fragment.getTag())
                 .commit();
     }
 }

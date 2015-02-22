@@ -39,6 +39,14 @@
             Read more: http://www.androidhub4you.com/2014/04/android-action-bar-search-inside.html#ixzz3C4tOJU7j
         </activity>
 
+        <activity
+            android:name=".DetailActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".HomeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden" >
+        </activity>
+
         <provider
             android:name=".FavorContentProvider"
             android:authorities="lab.prada.android.goodthingmap.favor"

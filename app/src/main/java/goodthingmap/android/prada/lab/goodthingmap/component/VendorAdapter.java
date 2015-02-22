@@ -43,22 +43,20 @@ public class VendorAdapter extends ArrayAdapter<VendorData> {
 
     @Override
     public void add(VendorData item) {
-        System.out.println("add!!!!!!!!!!");
-        super.add(item);
         mOriginalValues.add(item);
+        super.add(item);
     }
 
     @Override
     public void addAll(Collection<? extends VendorData> collection) {
-        super.addAll(collection);
         mOriginalValues.addAll(collection);
-
+        super.addAll(collection);
     }
 
     @Override
     public void addAll(VendorData... items) {
-        super.addAll(items);
         mOriginalValues.addAll(Arrays.asList(items));
+        super.addAll(items);
     }
 
     @Override
@@ -69,7 +67,6 @@ public class VendorAdapter extends ArrayAdapter<VendorData> {
 
     @Override
     public void clear() {
-        System.out.println("clear!!!!!!!!!!");
         super.clear();
         mOriginalValues.clear();
         mFilter.clear();
@@ -77,8 +74,8 @@ public class VendorAdapter extends ArrayAdapter<VendorData> {
 
     @Override
     public void insert(VendorData item, int index) {
-        super.insert(item, index);
         mOriginalValues.add(index, item);
+        super.insert(item, index);
     }
 
     @Override
@@ -112,9 +109,7 @@ public class VendorAdapter extends ArrayAdapter<VendorData> {
         ((TextView) ViewHolder.get(view,R.id.item_vendor_distance)).setText(Utility.calDistance(mCurrentLocation, vendorData.getLocation()));
 
         ImageView iv = ((ImageView) view.findViewById(R.id.item_vendor_icon));
-        Picasso.with(getContext()).load(vendorData.getIconUrl()).into(iv, new Callback.EmptyCallback() {
-            @Override public void onSuccess() {}
-        });
+        Picasso.with(getContext()).load(vendorData.getIconUrl()).into(iv);
         return view;
     }
 
@@ -129,7 +124,6 @@ public class VendorAdapter extends ArrayAdapter<VendorData> {
         private Set<VendorData.Type> typeFilterSet;
 
         public ItemFilter() {
-
             valueMaps = new HashMap<VendorData, Map<Integer, String>>();
         }
 
@@ -143,7 +137,9 @@ public class VendorAdapter extends ArrayAdapter<VendorData> {
         }
 
         private void publishResults(List<VendorData> list) {
-            if (typeFilterSet == null || typeFilterSet.isEmpty()) {
+            if (typeFilterSet == null) {
+                setFilteringItems(list);
+            } else if (typeFilterSet.isEmpty()) {
                 setFilteringItems(new ArrayList<VendorData>());
             } else {
                 ArrayList<VendorData> results = new ArrayList<VendorData>();

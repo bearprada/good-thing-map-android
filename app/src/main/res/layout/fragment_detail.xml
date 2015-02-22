@@ -54,7 +54,6 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="false"
                 android:layout_below="@+id/detail_cover_page"
-                android:layout_alignParentEnd="false"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp" />
 
