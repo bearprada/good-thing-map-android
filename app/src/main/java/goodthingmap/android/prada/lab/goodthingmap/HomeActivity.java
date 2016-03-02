@@ -71,9 +71,16 @@ public class HomeActivity extends BaseActivity {
         public void onCreate(Bundle savedStateInstance) {
             super.onCreate(savedStateInstance);
             lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            Criteria criteria = new Criteria();
-            provider = lm.getBestProvider(criteria, false);
+            // Criteria criteria = new Criteria();
+            // provider = lm.getBestProvider(criteria, false);
+            provider = LocationManager.GPS_PROVIDER;
             mCurrentLocation = lm.getLastKnownLocation(provider);
+            
+            // if gps enabled && cannot get location immediately from gps_provider, use network_provider
+            if(mCurrentLocation == null && lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+                provider = LocationManager.NETWORK_PROVIDER;
+                mCurrentLocation = lm.getLastKnownLocation(provider);
+            }
             // lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
 
@@ -91,6 +98,18 @@ public class HomeActivity extends BaseActivity {
 
         public void onResume() {
             super.onResume();
+            
+            // if gps enabled && cannot get location immediately from gps_provider, use network_provider
+            if(mCurrentLocation == null && lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+                provider = LocationManager.NETWORK_PROVIDER;
+                mCurrentLocation = lm.getLastKnownLocation(provider);
+            }
+            //if mCurrentLocation is not null, try to switch to gps_provider to get fine location
+            else if(lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                provider = LocationManager.GPS_PROVIDER;
+            }
+            
+            // Update mCurrentLocation onLocationChanged
             lm.requestLocationUpdates(provider, 10000, 0, this);
         }
 
