@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -411,6 +412,7 @@ public class DetailActivity extends BaseActivity {
                 case R.id.btn_detail_comment:
                     FlurryAgent.logEvent("Event_Click_Detail_Comment", false);
                     final EditText input = new EditText(getActivity());
+                    input.setTextColor(Color.BLACK);//in android 6.0 white text cannot be seen in white dialog
                     dialog = new AlertDialog.Builder(getActivity())
                             .setTitle(R.string.enter_comment)
                             .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
