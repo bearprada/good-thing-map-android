@@ -258,7 +258,7 @@ public class HomeActivity extends BaseActivity {
                     if(mCurrentLocation != null){
                         btn_location.setBackgroundResource(R.drawable.location_success);
                         btn_location.clearAnimation();
-                    }else{
+                    }else if(userClick){
                         btn_location.startAnimation(animAlpha);
                     }
                 } catch (PermissionException e) {
