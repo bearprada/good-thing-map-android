@@ -7,8 +7,8 @@ android {
         applicationId 'lab.prada.android.goodthingsmap'
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 8
-        versionName '1.1.3'
+        versionCode 9
+        versionName '1.1.4'
     }
     buildTypes {
         release {
