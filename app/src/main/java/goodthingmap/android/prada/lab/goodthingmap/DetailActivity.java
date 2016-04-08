@@ -1,6 +1,7 @@
 package goodthingmap.android.prada.lab.goodthingmap;
 
-import android.app.AlertDialog;
+
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -28,6 +29,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.amplitude.api.Amplitude;
 import com.facebook.Session;
 import com.facebook.UiLifecycleHelper;
@@ -150,7 +153,7 @@ public class DetailActivity extends BaseActivity {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
             ((TextView)rootView.findViewById(R.id.detail_distance)).setText(Utility.calDistance(mLocation, mGoodThing));
@@ -227,7 +230,9 @@ public class DetailActivity extends BaseActivity {
                 String url = images.get(i);
                 final ImageView iv = (ImageView) mInflater.inflate(R.layout.item_image, null);
                 final int index = i;
-                iv.setOnClickListener(new View.OnClickListener() {
+
+                /** Comment images scaling function **/
+                /*iv.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getActivity(), ImageViewerActivity.class);
@@ -237,7 +242,7 @@ public class DetailActivity extends BaseActivity {
                                 getActivity(), view, getString(R.string.trans_preview_image));
                         ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
                     }
-                });
+                });*/
                 Picasso.with(getActivity()).load(url).placeholder(R.drawable.btn_new_image)
                         .error(R.drawable.btn_new_image).into(iv);
                 hsv.addView(iv);
@@ -314,7 +319,7 @@ public class DetailActivity extends BaseActivity {
         private void shareToFacebook() {
             if (!FacebookDialog.canPresentShareDialog(getActivity(),
                     FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
-                shareToAppNotFound("market://details?id=com.facebook.katana", "Facebook");
+                shareToAppNotFound("com.facebook.katana", "Facebook");
                 return;
             }
 
@@ -393,7 +398,7 @@ public class DetailActivity extends BaseActivity {
 
         @Override
         public void onClick(View view) {
-            AlertDialog dialog;
+            Dialog dialog;
             switch(view.getId()) {
                 case R.id.btn_detail_report:
                     FlurryAgent.logEvent("Event_Click_Detail_Report", false);
@@ -410,25 +415,20 @@ public class DetailActivity extends BaseActivity {
                     break;
                 case R.id.btn_detail_comment:
                     FlurryAgent.logEvent("Event_Click_Detail_Comment", false);
-                    final EditText input = new EditText(getActivity());
-                    dialog = new AlertDialog.Builder(getActivity())
-                            .setTitle(R.string.enter_comment)
-                            .setPositiveButton(R.string.confirm, new DialogInterface.OnClickListener() {
+
+                    dialog = new MaterialDialog.Builder(getActivity())
+                            .title(R.string.enter_comment)
+                            .positiveText(R.string.confirm)
+                            .negativeText(R.string.cancel)
+                            .input(null, null, false, new MaterialDialog.InputCallback() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    String comment = input.getText().toString();
-                                    if (TextUtils.isEmpty(comment) == false) {
-                                        mCurrentComment = comment;
-                                        mService.postComment(Amplitude.getDeviceId(), mGoodThing.getId(), comment, PlaceholderFragment.this);
-                                    }
+                                public void onInput(MaterialDialog dialog, CharSequence input) {
+                                    String comment = input.toString();
+                                    mCurrentComment = comment;
+                                    mService.postComment(Amplitude.getDeviceId(), mGoodThing.getId(), comment, PlaceholderFragment.this);
                                 }
                             })
-                            .setNegativeButton(R.string.cancel, null).create();
-                    LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            LinearLayout.LayoutParams.MATCH_PARENT);
-                    input.setLayoutParams(lp);
-                    dialog.setView(input); // uncomment this line
+                            .build();
                     dialog.show();
                     break;
                 case R.id.btn_detail_like:
@@ -451,7 +451,7 @@ public class DetailActivity extends BaseActivity {
                 case R.id.btn_detail_map:
                     FlurryAgent.logEvent("Event_Click_Detail_Map", false);
                     int messageId = mGoodThing.isBigIssue() ? R.string.warning_tbi_navigation : R.string.warning_navigation;
-                    dialog = new AlertDialog.Builder(getActivity())
+                    dialog = new AlertDialogWrapper.Builder(getActivity())
                             .setTitle(R.string.warning_navigation_title)
                             .setMessage(messageId)
                             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

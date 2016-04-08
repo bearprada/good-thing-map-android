@@ -4,13 +4,14 @@ package goodthingmap.android.prada.lab.goodthingmap.component;
  * Created by prada on 2014/7/5.
  */
 
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.text.TextUtils;
+
+import com.afollestad.materialdialogs.AlertDialogWrapper;
+import com.afollestad.materialdialogs.AlertDialogWrapper.Builder;
 
 public class AlertDialogFragment extends DialogFragment {
 
@@ -80,7 +81,7 @@ public class AlertDialogFragment extends DialogFragment {
         String message = args.getString(KEY_MESSAGE);
         String positiveButtonTitle = args.getString(KEY_POSITIVE_BUTTON_TITLE);
 
-        Builder builder = new AlertDialog.Builder(getActivity())
+        Builder builder = new AlertDialogWrapper.Builder(getActivity())
                 .setPositiveButton(positiveButtonTitle, mPositiveListener)
                 .setCancelable(false);
 
@@ -88,16 +89,13 @@ public class AlertDialogFragment extends DialogFragment {
         if (!TextUtils.isEmpty(negativeButtonTitle)) {
             builder.setNegativeButton(negativeButtonTitle, mNegativeListener);
         }
-
-        AlertDialog dialog = builder.create();
         if (!TextUtils.isEmpty(title)) {
-            dialog.setTitle(title);
+            builder.setTitle(title);
         }
         if (!TextUtils.isEmpty(message)) {
-            dialog.setMessage(message);
+            builder.setMessage(message);
         }
-
-        return dialog;
+        return builder.create();
     }
 }
 

@@ -15,6 +15,7 @@
     <string name="warning_navigation">如攤販沒有出現在導引位置上，則可能在附近。座標位置如有誤差，歡迎提供更正確的資訊！</string>
     <string name="warning_tbi_navigation">若攤販無確切地址，則導引座標為大概位置。\n歡迎網友供更正確的資訊！\n注意：販售員可能因個人因素不在該販賣時間內出現。\n歡迎網友提供更正確的資訊！</string>
     <string name="warning_navigation_title">提醒您</string>
+    <string name="warning_open_gps">定位功能未開啟，前往開啟定位功能?</string>
     <string name="cancel">取消</string>
     <string name="confirm">確認</string>
     <string name="subject_report">問題回報</string>
