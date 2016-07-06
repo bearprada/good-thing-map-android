@@ -33,3 +33,6 @@
 -dontwarn com.amplitude.**
 -dontwarn com.flurry.**
 
+-dontwarn com.afollestad.materialdialogs.**
+-keep class com.afollestad.materialdialogs.** { *; }
+
