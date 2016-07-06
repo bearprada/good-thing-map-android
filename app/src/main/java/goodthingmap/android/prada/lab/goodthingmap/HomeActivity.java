@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -28,7 +27,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.flurry.android.FlurryAgent;
@@ -98,7 +96,6 @@ public class HomeActivity extends BaseActivity {
         public void onStart() {
             super.onStart();
             FlurryAgent.logEvent("PageHome", true);
-
         }
 
         @Override
@@ -235,7 +232,7 @@ public class HomeActivity extends BaseActivity {
             boolean isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (!(isGPSEnabled || isNetworkEnabled)){
-                if(userClick){
+                if(userClick){// user click R.id.btnLocation open gps_setting page
                     displayPromptForEnablingGPS(getActivity());
                 }
             }
@@ -272,16 +269,14 @@ public class HomeActivity extends BaseActivity {
         @Override
         public void onLocationChanged(Location location) {
             mCurrentLocation = location;
-            if(mCurrentLocation != null){
-                btn_location.clearAnimation();
-                btn_location.setBackgroundResource(R.drawable.location_success);
-            }
+            btn_location.clearAnimation();
+            btn_location.setBackgroundResource(R.drawable.location_success);
             try {
                 checkPermission(getActivity());
             } catch (PermissionException e) {
                 e.printStackTrace();
             }
-            lm.removeUpdates(this);
+            lm.removeUpdates(this);// stop update after get current location
         }
 
         @Override

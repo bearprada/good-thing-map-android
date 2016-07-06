@@ -14,16 +14,10 @@ import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.LikeResult;
 import android.prada.lab.goodthingmap.model.CheckinResult;
 import android.prada.lab.goodthingmap.model.UserMessage;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.view.ViewCompat;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,9 +26,10 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.amplitude.api.Amplitude;
-import com.facebook.Session;
-import com.facebook.UiLifecycleHelper;
-import com.facebook.widget.FacebookDialog;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Picasso;
 
@@ -86,8 +81,7 @@ public class DetailActivity extends BaseActivity {
         // TODO remove this value later.. bad design
         private String mCurrentComment;
 
-        private UiLifecycleHelper mFBUiHelper;
-
+        private ShareDialog shareDialog;
         private int mStoryLines;
         private LinearLayout commentList;
 
@@ -103,8 +97,9 @@ public class DetailActivity extends BaseActivity {
             mLocation = getArguments().getParcelable(GoodListActivity.EXTRA_LOCATION);
             mInflater = LayoutInflater.from(getActivity());
 
-            mFBUiHelper = new UiLifecycleHelper(this.getActivity(), null);
-            mFBUiHelper.onCreate(savedStateInstance);
+            // Initialize Facebook sdk and ShareDialog
+            FacebookSdk.sdkInitialize(getContext());
+            shareDialog = new ShareDialog(this);
         }
 
         private View getCommentView(int i, ViewGroup parent, UserMessage comment) {
@@ -130,25 +125,27 @@ public class DetailActivity extends BaseActivity {
         @Override
         public void onResume() {
             super.onResume();
-            mFBUiHelper.onResume();
+
+            // Logs 'install' and 'app activate' App Events.
+            AppEventsLogger.activateApp(getContext());
         }
 
         @Override
         public void onSaveInstanceState(Bundle outState) {
             super.onSaveInstanceState(outState);
-            mFBUiHelper.onSaveInstanceState(outState);
         }
 
         @Override
         public void onPause() {
             super.onPause();
-            mFBUiHelper.onPause();
+
+            // Logs 'app deactivate' App Event.
+            AppEventsLogger.deactivateApp(getContext());
         }
 
         @Override
         public void onDestroy() {
             super.onDestroy();
-            mFBUiHelper.onDestroy();
         }
 
         @Override
@@ -193,7 +190,7 @@ public class DetailActivity extends BaseActivity {
             mService.requestLikeNum(mGoodThing.getId(), new retrofit.Callback<LikeResult>() {
                 @Override
                 public void success(LikeResult s, Response response) {
-                    mLikeBtnText.setText(getString(R.string.like) + "(" +  s.getResult() + ")");
+                    mLikeBtnText.setText(getString(R.string.like) + "(" + s.getResult() + ")");
                 }
 
                 @Override
@@ -317,34 +314,17 @@ public class DetailActivity extends BaseActivity {
         }
 
         private void shareToFacebook() {
-            if (!FacebookDialog.canPresentShareDialog(getActivity(),
-                    FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
+            if (ShareDialog.canShow(ShareLinkContent.class)) {
+                ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                        .setContentTitle(mGoodThing.getTitle())
+                        .setContentUrl(Uri.parse(getGoogleMapUri()))
+                        .setImageUrl(Uri.parse(mGoodThing.getImageUrl()))
+                        .setContentDescription(mGoodThing.getMemo() + "   " + mGoodThing.getStory())
+                        .build();
+                shareDialog.show(linkContent);
+            }else {
                 shareToAppNotFound("com.facebook.katana", "Facebook");
                 return;
-            }
-
-            Session facebookSession = Session.getActiveSession();
-            if (facebookSession != null && facebookSession.isOpened()) {
-                List<String> permissions = facebookSession.getPermissions();
-
-                if (!isSubsetOf(PERMISSIONS, permissions)) {
-                    Session.NewPermissionsRequest newPermissionsRequest = new Session
-                            .NewPermissionsRequest(this, PERMISSIONS);
-                    facebookSession.requestNewPublishPermissions(newPermissionsRequest);
-                    return;
-                }
-
-                FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(getActivity())
-                        .setLink(getGoogleMapUri())
-                        .setPicture(mGoodThing.getImageUrl())
-                        .setName(mGoodThing.getTitle())
-                        .setCaption(mGoodThing.getMemo())
-                        .setDescription(mGoodThing.getStory())
-                        .build();
-                mFBUiHelper.trackPendingDialogCall(shareDialog.present());
-            } else {
-                Intent intent = new Intent(getActivity(), FacebookLoginActivity.class);
-                startActivity(intent);
             }
         }
 
@@ -360,40 +340,6 @@ public class DetailActivity extends BaseActivity {
 
         private String getGoogleMapUri() {
             return String.format("https://maps.google.com/maps?q=%f,%f", mGoodThing.getLatitude(), mGoodThing.getLongtitude());
-        }
-
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-
-            mFBUiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
-                @Override
-                public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
-                    Log.e("Activity", String.format("Error: %s", error.toString()));
-                }
-
-                @Override
-                public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
-                    boolean didComplete = FacebookDialog.getNativeDialogDidComplete(data);
-                    String completionGesture = FacebookDialog.getNativeDialogCompletionGesture(data);
-                    String postId = FacebookDialog.getNativeDialogPostId(data);
-
-                    if(didComplete && postId != null) {
-                        Toast.makeText(getActivity(), R.string.share_successful, Toast.LENGTH_SHORT).show();
-
-                        mService.reportCheckin(Amplitude.getDeviceId(), mGoodThing.getId(), Integer.parseInt(postId), new retrofit.Callback<CheckinResult>() {
-
-                            @Override
-                            public void success(CheckinResult checkinResult, Response response) {
-                            }
-
-                            @Override
-                            public void failure(RetrofitError error) {
-                            }
-                        });
-                    }
-                }
-            });
         }
 
         @Override

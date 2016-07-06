@@ -5,7 +5,7 @@ android {
     buildToolsVersion '23.0.2'
     defaultConfig {
         applicationId 'lab.prada.android.goodthingsmap'
-        minSdkVersion 10
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 9
         versionName '1.1.4'
@@ -25,6 +25,10 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.+'
@@ -36,7 +40,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.3.2'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.amplitude:android-sdk:1.4'
-    compile project(':facebook-android-sdk:facebook')
+    compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile('com.github.afollestad.material-dialogs:core:0.8.5.7@aar') {
         transitive = true
     }
