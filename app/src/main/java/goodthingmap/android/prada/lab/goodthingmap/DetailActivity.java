@@ -23,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import bolts.Continuation;
+import bolts.Task;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.amplitude.api.Amplitude;
@@ -37,14 +39,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.ListDialogFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.Utility;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailActivity extends BaseActivity {
 
@@ -187,38 +190,31 @@ public class DetailActivity extends BaseActivity {
         }
 
         private void setupLikeNum() {
-            mService.requestLikeNum(mGoodThing.getId(), new retrofit.Callback<LikeResult>() {
+            mService.requestLikeNum(mGoodThing.getId()).enqueue(new Callback<LikeResult>() {
                 @Override
-                public void success(LikeResult s, Response response) {
-                    mLikeBtnText.setText(getString(R.string.like) + "(" + s.getResult() + ")");
+                public void onResponse(Call<LikeResult> call, Response<LikeResult> response) {
+                    mLikeBtnText.setText(getString(R.string.like) + "(" + response.body().getResult() + ")");
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
+                public void onFailure(Call<LikeResult> call, Throwable t) {
+
                 }
             });
         }
 
         private void setupCheckinNum() {
-            mService.requestCheckinNum(mGoodThing.getId(), new retrofit.Callback<CheckinResult>() {
+            mService.requestCheckinNum(mGoodThing.getId()).enqueue(new Callback<CheckinResult>() {
                 @Override
-                public void success(CheckinResult s, Response response) {
-                    mShareBtnText.setText(getString(R.string.share) + "(" + s.getResult() + ")");
+                public void onResponse(Call<CheckinResult> call, Response<CheckinResult> response) {
+                    mShareBtnText.setText(getString(R.string.share) + "(" + response.body().getResult() + ")");
                 }
 
                 @Override
-                public void failure(RetrofitError error) {
+                public void onFailure(Call<CheckinResult> call, Throwable t) {
+
                 }
             });
-        }
-
-
-        private ArrayList<Uri> getImageUris() {
-            ArrayList<Uri> uris = new ArrayList<Uri>();
-            for (String url : mGoodThing.getImages()) {
-                uris.add(Uri.parse(url));
-            }
-            return uris;
         }
 
         private void setupImages(final ViewGroup hsv, List<String> images) {
@@ -296,7 +292,7 @@ public class DetailActivity extends BaseActivity {
             final String packageNameF = packageName;
             AlertDialogFragment mAlertDialogFragment = AlertDialogFragment.newInstance(
                     null,
-                    getString(R.string.share_to_target_error_message, appName, appName),
+                    getString(R.string.share_to_target_error_message),
                     getString(android.R.string.yes),
                     new DialogInterface.OnClickListener() {
                         @Override
@@ -371,7 +367,7 @@ public class DetailActivity extends BaseActivity {
                                 public void onInput(MaterialDialog dialog, CharSequence input) {
                                     String comment = input.toString();
                                     mCurrentComment = comment;
-                                    mService.postComment(Amplitude.getDeviceId(), mGoodThing.getId(), comment, PlaceholderFragment.this);
+                                    mService.postComment(Amplitude.getDeviceId(), mGoodThing.getId(), comment).enqueue(PlaceholderFragment.this);
                                 }
                             })
                             .build();
@@ -381,16 +377,16 @@ public class DetailActivity extends BaseActivity {
                     FlurryAgent.logEvent("Event_Click_Detail_Like", false);
                     mLikeBtn.setSelected(true);
 
-                    mService.likeGoodThing(Amplitude.getDeviceId(), mGoodThing.getId(), new retrofit.Callback<LikeResult>() {
+                    mService.likeGoodThing(Amplitude.getDeviceId(), mGoodThing.getId()).enqueue(new Callback<LikeResult>() {
                         @Override
-                        public void success(LikeResult s, Response response) {
+                        public void onResponse(Call<LikeResult> call, Response<LikeResult> response) {
                             Toast.makeText(getActivity(), R.string.msg_like_successful, Toast.LENGTH_SHORT).show();
-                            mLikeBtnText.setText(getString(R.string.like) + "(" + s.getResult() + ")");
+                            mLikeBtnText.setText(getString(R.string.like) + "(" + response.body().getResult() + ")");
                         }
 
                         @Override
-                        public void failure(RetrofitError error) {
-                            Toast.makeText(getActivity(), R.string.add_like_fail + ":" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                        public void onFailure(Call<LikeResult> call, Throwable t) {
+                            Toast.makeText(getActivity(), R.string.add_like_fail + ":" + t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                     break;
@@ -455,13 +451,6 @@ public class DetailActivity extends BaseActivity {
             }
         }
 
-        @Override
-        public void success(LikeResult likeResult, Response response) {
-            Toast.makeText(getActivity(), R.string.post_comment_successful, Toast.LENGTH_SHORT).show();
-            mGoodThing.getMessage().add(0, UserMessage.newInstance(mCurrentComment));
-            refreshCommentList((ViewGroup) getView());
-        }
-
         private void refreshCommentList(ViewGroup container) {
             int count = 1;
             commentList.removeAllViews();
@@ -471,7 +460,14 @@ public class DetailActivity extends BaseActivity {
         }
 
         @Override
-        public void failure(RetrofitError error) {
+        public void onResponse(Call<LikeResult> call, Response<LikeResult> response) {
+            Toast.makeText(getActivity(), R.string.post_comment_successful, Toast.LENGTH_SHORT).show();
+            mGoodThing.getMessage().add(0, UserMessage.newInstance(mCurrentComment));
+            refreshCommentList((ViewGroup) getView());
+        }
+
+        @Override
+        public void onFailure(Call<LikeResult> call, Throwable t) {
             Toast.makeText(getActivity(), R.string.post_comment_fail, Toast.LENGTH_SHORT).show();
         }
     }

@@ -56,13 +56,6 @@
             android:screenOrientation="portrait" >
         </activity>
 
-        <!-- Using Facebook Login or Share -->
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/title_activity_facebook_login" />
-
         <!-- Sharing links, images or video on Facebook -->
         <provider android:authorities="com.facebook.app.FacebookContentProvider149672028575255"
             android:name="com.facebook.FacebookContentProvider"

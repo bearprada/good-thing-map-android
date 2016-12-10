@@ -78,8 +78,12 @@ public class GoodThingAdapter extends RecyclerView.Adapter<GoodThingViewHolder> 
         mGoodThings.add(thing);
     }
 
+    public void addAll(List<GoodThing> things) {
+        mGoodThings.addAll(things);
+    }
+
     public interface GoodThingItemListener {
-        public void onItemClick(View view, GoodThing goodthing);
-        public void onFavorClick(View view, GoodThing goodthing);
+        void onItemClick(View view, GoodThing goodthing);
+        void onFavorClick(View view, GoodThing goodthing);
     }
 }

@@ -13,18 +13,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import bolts.Continuation;
+import bolts.Task;
 import com.flurry.android.FlurryAgent;
+import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
+import goodthingmap.android.prada.lab.goodthingmap.component.GoodThingAdapter;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
-import goodthingmap.android.prada.lab.goodthingmap.component.GoodThingAdapter;
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
+import java.util.concurrent.Callable;
 
 public class GoodListActivity extends BaseActivity {
 
@@ -49,7 +50,7 @@ public class GoodListActivity extends BaseActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends BaseServiceFragment
-            implements GoodThingAdapter.GoodThingItemListener, Callback<GoodThingsData> {
+            implements GoodThingAdapter.GoodThingItemListener {
 
         private HomeActivity.PlaceholderFragment.GoodThingType mType;
         private GoodThingAdapter mAdapter;
@@ -93,46 +94,47 @@ public class GoodListActivity extends BaseActivity {
             rv.setLayoutManager(lm);
             rv.setAdapter(mAdapter);
 
-            if (mLocation != null) {
+            Call<GoodThingsData> call;
+            if (mLocation == null) {
                 // FIXME refactor this later
                 if (mType == HomeActivity.PlaceholderFragment.GoodThingType.NEAR)
-                    mService.listStory(mLocation.getLatitude(), mLocation.getLongitude(), this);
+                    call = mService.listStory(mLocation.getLatitude(), mLocation.getLongitude());
                 else
-                    mService.listStory(mType.getTypeId(), mLocation.getLatitude(), mLocation.getLongitude(), this);
+                    call = mService.listStory(mType.getTypeId(), mLocation.getLatitude(), mLocation.getLongitude());
             } else {
                 if (mType == HomeActivity.PlaceholderFragment.GoodThingType.NEAR)
-                    mService.listStory(this);
+                    call = mService.listStory();
                 else
-                    mService.listStory(mType.getTypeId(), this);
+                    call = mService.listStory(mType.getTypeId());
             }
-            return rootView;
-        }
+            call.enqueue(new Callback<GoodThingsData>() {
+                @Override
+                public void onResponse(Call<GoodThingsData> call, Response<GoodThingsData> response) {
+                    List<GoodThing> goodThings = response.body().getGoodThingList();
 
-        @Override
-        public void success(GoodThingsData data, Response response) {
-            List<GoodThing> goodThings = data.getGoodThingList();
-
-            // temp: sorted by distance
-            if(mLocation != null) {
-                Collections.sort(goodThings, new Comparator<GoodThing>() {
-                    @Override
-                    public int compare(GoodThing goodThing, GoodThing goodThing2) {
-                        float dist = mLocation.distanceTo(goodThing.getLocation());
-                        float dist2 = mLocation.distanceTo(goodThing2.getLocation());
-                        return (int) (dist - dist2);
+                    // temp: sorted by distance
+                    if(mLocation != null) {
+                        Collections.sort(goodThings, new Comparator<GoodThing>() {
+                            @Override
+                            public int compare(GoodThing goodThing, GoodThing goodThing2) {
+                                float dist = mLocation.distanceTo(goodThing.getLocation());
+                                float dist2 = mLocation.distanceTo(goodThing2.getLocation());
+                                return (int) (dist - dist2);
+                            }
+                        });
                     }
-                });
-            }
 
-            for (GoodThing thing : goodThings) {
-                mAdapter.add(thing);
-            }
-            mAdapter.notifyDataSetChanged();
-        }
+                    mAdapter.addAll(goodThings);
+                    mAdapter.notifyDataSetChanged();
+                }
 
-        @Override
-        public void failure(RetrofitError error) {
-            error.printStackTrace();
+                @Override
+                public void onFailure(Call<GoodThingsData> call, Throwable t) {
+
+                }
+            });
+
+            return rootView;
         }
 
         @Override

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -15,10 +14,7 @@ import android.prada.lab.goodthingmap.model.GoodThingData;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -26,27 +22,16 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.Callable;
-
-import bolts.Continuation;
-import bolts.Task;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.PermissionException;
 import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils;
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class HomeActivity extends BaseActivity {
@@ -128,15 +113,10 @@ public class HomeActivity extends BaseActivity {
             final ImageView ivF = (ImageView) view.findViewById(R.id.cover_image);
 
             ivF.setOnClickListener(this);
-            Task.callInBackground(new Callable<GoodThingData>() {
+            mService.getTopStory().enqueue(new retrofit2.Callback<GoodThingData>() {
                 @Override
-                public GoodThingData call() throws Exception {
-                    return mService.getTopStory();
-                }
-            }).onSuccess(new Continuation<GoodThingData, Object>() {
-                @Override
-                public Object then(Task<GoodThingData> task) throws Exception {
-                    GoodThingData data = task.getResult();
+                public void onResponse(Call<GoodThingData> call, Response<GoodThingData> response) {
+                    GoodThingData data = response.body();
                     tvF.setText(data.goodThing.getStory());
                     ivF.setTag(data.goodThing);
                     Picasso.with(getActivity()).load(data.goodThing.getImageUrl()).into(ivF, new Callback.EmptyCallback() {
@@ -144,9 +124,13 @@ public class HomeActivity extends BaseActivity {
                         public void onSuccess() {
                         }
                     });
-                    return null;
                 }
-            }, Task.UI_THREAD_EXECUTOR);
+
+                @Override
+                public void onFailure(Call<GoodThingData> call, Throwable t) {
+
+                }
+            });
             view.findViewById(R.id.good_thing_01).setOnClickListener(this);
             view.findViewById(R.id.good_thing_02).setOnClickListener(this);
             view.findViewById(R.id.good_thing_03).setOnClickListener(this);

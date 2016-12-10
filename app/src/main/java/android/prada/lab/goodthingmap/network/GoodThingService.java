@@ -5,43 +5,42 @@ import android.prada.lab.goodthingmap.model.GoodThingsData;
 import android.prada.lab.goodthingmap.model.LikeResult;
 import android.prada.lab.goodthingmap.model.CheckinResult;
 
-import retrofit.Callback;
-import retrofit.http.GET;
-import retrofit.http.POST;
-import retrofit.http.Query;
+import retrofit2.Call;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by prada on 6/28/14.
  */
 public interface GoodThingService {
     @GET("/good_thing/mobile/findTopStory")
-    GoodThingData getTopStory();
+    Call<GoodThingData> getTopStory();
 
     @GET("/good_thing/mobile/findGoodThings")
-    void listStory(@Query("type") int type, Callback<GoodThingsData> callback);
+    Call<GoodThingsData> listStory(@Query("type") int type);
 
     @GET("/good_thing/mobile/findGoodThings")
-    void listStory(@Query("type") int type, @Query("lat") double latitude, @Query("lon") double longitude
-        ,Callback<GoodThingsData> callback);
+    Call<GoodThingsData> listStory(@Query("type") int type, @Query("lat") double latitude, @Query("lon") double longitude);
 
     @GET("/good_thing/mobile/findGoodThings")
-    void listStory(@Query("lat") double latitude, @Query("lon") double longitude, Callback<GoodThingsData> callback);
+    Call<GoodThingsData> listStory(@Query("lat") double latitude, @Query("lon") double longitude);
 
     @GET("/good_thing/mobile/findGoodThings")
-    void listStory(Callback<GoodThingsData> callback);
+    Call<GoodThingsData> listStory();
 
     @GET("/good_thing/mobile/getLikeNum")
-    void requestLikeNum(@Query("rid") int rid,  Callback<LikeResult> callback);
+    Call<LikeResult> requestLikeNum(@Query("rid") int rid);
 
     @GET("/good_thing/mobile/getCheckinNum")
-    void requestCheckinNum(@Query("rid") int rid, Callback<CheckinResult> callback);
+    Call<CheckinResult> requestCheckinNum(@Query("rid") int rid);
 
     @POST("/good_thing/mobile/addCheckin")
-    void reportCheckin(@Query("uid") String uid, @Query("rid") int rid, @Query("cid") int checkinId, Callback<CheckinResult> callback);
+    Call<CheckinResult> reportCheckin(@Query("uid") String uid, @Query("rid") int rid, @Query("cid") int checkinId);
 
     @POST("/good_thing/mobile/addLike")
-    void likeGoodThing(@Query("uid") String uid, @Query("rid") int rid, Callback<LikeResult> callback);
+    Call<LikeResult> likeGoodThing(@Query("uid") String uid, @Query("rid") int rid);
 
     @POST("/good_thing/mobile/post")
-    void postComment(@Query("uid") String uid, @Query("rid") int rid, @Query("message") String message, Callback<LikeResult> callback);
+    Call<LikeResult> postComment(@Query("uid") String uid, @Query("rid") int rid, @Query("message") String message);
 }
