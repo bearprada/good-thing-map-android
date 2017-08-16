@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import goodthingmap.android.prada.lab.goodthingmap.R;
+import goodthingmap.android.prada.lab.goodthingmap.util.LocationUtil;
 
 /**
  * Created by prada on 2014/7/4.
@@ -24,7 +25,7 @@ public class GoodThingAdapter extends RecyclerView.Adapter<GoodThingViewHolder> 
     private final LayoutInflater mInflater;
     private final Context mContext;
     private Location mCurrentLocation;
-    private final List<GoodThing> mGoodThings = new ArrayList<GoodThing>();
+    private final List<GoodThing> mGoodThings = new ArrayList<>();
     private final GoodThingItemListener mListener;
 
     public GoodThingAdapter(Context context, GoodThingItemListener listener) {
@@ -40,8 +41,7 @@ public class GoodThingAdapter extends RecyclerView.Adapter<GoodThingViewHolder> 
     @Override
     public GoodThingViewHolder onCreateViewHolder(final ViewGroup viewGroup, int i) {
         View view = mInflater.inflate(R.layout.item_good_thing, viewGroup, false);
-        GoodThingViewHolder vh = new GoodThingViewHolder(view);
-        return vh;
+        return new GoodThingViewHolder(view);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class GoodThingAdapter extends RecyclerView.Adapter<GoodThingViewHolder> 
         final GoodThing thing = getItem(i);
         vh.addressView.setText(thing.getAddress());
         vh.titleView.setText(thing.getTitle());
-        vh.distanceView.setText(Utility.calDistance(mCurrentLocation, thing));
+        vh.distanceView.setText(LocationUtil.calDistance(mCurrentLocation, thing));
 
         Picasso.with(mContext).load(thing.getListImageUrl()).into(vh.imageView, new Callback.EmptyCallback() {
             @Override public void onSuccess() {}

@@ -5,8 +5,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
-import java.net.URL;
-
 public class FavorContentProvider extends ContentProvider {
 
     public static final String AUTHORITY = "lab.prada.android.goodthingmap.favor";

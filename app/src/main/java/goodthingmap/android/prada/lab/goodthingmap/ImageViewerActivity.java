@@ -2,19 +2,13 @@ package goodthingmap.android.prada.lab.goodthingmap;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.v4.app.FragmentActivity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.ImageView;
 
 import com.flurry.android.FlurryAgent;
@@ -23,9 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import goodthingmap.android.prada.lab.goodthingmap.R;
-
-public class ImageViewerActivity extends ActionBarActivity {
+public class ImageViewerActivity extends BaseActivity {
 
     public static final String EXTRA_PHOTOS = "extra_photos";
     public static final String PHOTO_INDEX = "photo_index";
@@ -51,7 +43,7 @@ public class ImageViewerActivity extends ActionBarActivity {
 
         private ImagePagerAdapter mAdapter;
         private ViewPager mViewPager;
-        private List<Uri> mImages = new ArrayList<Uri>();
+        private List<Uri> mImages = new ArrayList<>();
         private int mPhotoIndex;
 
         @Override
@@ -80,7 +72,7 @@ public class ImageViewerActivity extends ActionBarActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_image_viewer, container, false);
-            mViewPager = (ViewPager) rootView.findViewById(R.id.view_pager);
+            mViewPager = rootView.findViewById(R.id.view_pager);
             mAdapter = new ImagePagerAdapter(getActivity(), mImages);
             mViewPager.setAdapter(mAdapter);
             mViewPager.setCurrentItem(mPhotoIndex);
@@ -92,7 +84,7 @@ public class ImageViewerActivity extends ActionBarActivity {
             private final Context mContext;
             private final List<Uri> mImages;
 
-            public ImagePagerAdapter(Context ctx, List<Uri> images) {
+            ImagePagerAdapter(Context ctx, List<Uri> images) {
                 mContext = ctx;
                 mImages = images;
             }
@@ -104,7 +96,7 @@ public class ImageViewerActivity extends ActionBarActivity {
 
             @Override
             public boolean isViewFromObject(View view, Object object) {
-                return view == ((ImageView) object);
+                return view == object;
             }
 
             @Override
@@ -116,13 +108,13 @@ public class ImageViewerActivity extends ActionBarActivity {
                 imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 Uri url = mImages.get(position);
                 Picasso.with(mContext).load(url).into(imageView);
-                ((ViewPager) container).addView(imageView, 0);
+                container.addView(imageView, 0);
                 return imageView;
             }
 
             @Override
             public void destroyItem(ViewGroup container, int position, Object object) {
-                ((ViewPager) container).removeView((ImageView) object);
+                container.removeView((ImageView) object);
             }
         }
     }

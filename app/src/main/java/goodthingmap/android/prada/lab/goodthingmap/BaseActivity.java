@@ -2,20 +2,17 @@ package goodthingmap.android.prada.lab.goodthingmap;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import com.amplitude.api.Amplitude;
-import com.flurry.android.FlurryAgent;
 
 import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils;
 
 /**
  * Created by prada on 2014/7/5.
  */
-public abstract class BaseActivity extends ActionBarActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedStateInstance) {

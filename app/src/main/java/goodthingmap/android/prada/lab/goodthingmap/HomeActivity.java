@@ -28,7 +28,6 @@ import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
-import goodthingmap.android.prada.lab.goodthingmap.component.PermissionException;
 import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -99,9 +98,7 @@ public class HomeActivity extends BaseActivity {
             try {
                 checkPermission(getActivity());
                 lm.removeUpdates(this);
-            } catch (PermissionException e) {
-                e.printStackTrace();
-            }
+            } catch (IllegalStateException ignored) {}
         }
 
         @Override
@@ -109,8 +106,8 @@ public class HomeActivity extends BaseActivity {
                                  Bundle savedInstanceState) {
             View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-            final TextView tvF = (TextView) view.findViewById(R.id.cover_text);
-            final ImageView ivF = (ImageView) view.findViewById(R.id.cover_image);
+            final TextView tvF = view.findViewById(R.id.cover_text);
+            final ImageView ivF = view.findViewById(R.id.cover_image);
 
             ivF.setOnClickListener(this);
             mService.getTopStory().enqueue(new retrofit2.Callback<GoodThingData>() {
@@ -137,7 +134,7 @@ public class HomeActivity extends BaseActivity {
             view.findViewById(R.id.good_thing_04).setOnClickListener(this);
             view.findViewById(R.id.good_thing_05).setOnClickListener(this);
             view.findViewById(R.id.good_thing_06).setOnClickListener(this);
-            btn_location = (ImageButton)view.findViewById(R.id.btnLocation);
+            btn_location = view.findViewById(R.id.btnLocation);
             btn_location.setOnClickListener(this);
             return view;
         }
@@ -193,10 +190,10 @@ public class HomeActivity extends BaseActivity {
             startActivity(intent);
         }
 
-        protected void checkPermission(Context context) throws PermissionException {
+        protected void checkPermission(Context context) {
             if (PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) &&
                     PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                throw new PermissionException("Location permission not granted");
+                throw new IllegalStateException("Location permission not granted");
             }
         }
 
@@ -204,9 +201,7 @@ public class HomeActivity extends BaseActivity {
         public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
             if(REQUEST_PERMISSION_GRANT == requestCode) {
-                for(int result : grantResults) {
-
-                }
+                // TODO
             }
         }
 
@@ -242,11 +237,9 @@ public class HomeActivity extends BaseActivity {
                     }else if(userClick){
                         btn_location.startAnimation(animAlpha);
                     }
-                } catch (PermissionException e) {
-                    e.printStackTrace();
+                } catch (IllegalStateException e) {
                     ActivityCompat.requestPermissions(getActivity(), LOCATION_PERMISSIONS, REQUEST_PERMISSION_GRANT);
                 }
-
             }
         }
 
@@ -257,9 +250,7 @@ public class HomeActivity extends BaseActivity {
             btn_location.setBackgroundResource(R.drawable.location_success);
             try {
                 checkPermission(getActivity());
-            } catch (PermissionException e) {
-                e.printStackTrace();
-            }
+            } catch (IllegalStateException ignored) {}
             lm.removeUpdates(this);// stop update after get current location
         }
 

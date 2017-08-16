@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import goodthingmap.android.prada.lab.goodthingmap.component.GoodThingAdapter;
-
 public class FavorActivity extends BaseActivity {
 
     @Override
@@ -40,8 +38,6 @@ public class FavorActivity extends BaseActivity {
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment implements AdapterView.OnItemClickListener {
-
-        private GoodThingAdapter mAdapter;
 
         public PlaceholderFragment() {
         }

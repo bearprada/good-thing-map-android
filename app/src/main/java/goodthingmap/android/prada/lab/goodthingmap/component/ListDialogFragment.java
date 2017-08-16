@@ -71,7 +71,6 @@ public class ListDialogFragment extends DialogFragment implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        Intent intent;
         switch(view.getId()) {
             case R.id.bn_cancel:
                 dismiss();

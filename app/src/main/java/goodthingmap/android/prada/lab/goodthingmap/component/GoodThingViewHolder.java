@@ -19,11 +19,11 @@ public class GoodThingViewHolder extends RecyclerView.ViewHolder {
 
     public GoodThingViewHolder(View view) {
         super(view);
-        addressView = ((TextView)view.findViewById(R.id.list_address));
-        titleView = ((TextView)view.findViewById(R.id.list_title));
-        distanceView = ((TextView)view.findViewById(R.id.list_distance));
+        addressView = view.findViewById(R.id.list_address);
+        titleView = view.findViewById(R.id.list_title);
+        distanceView = view.findViewById(R.id.list_distance);
         // ((ImageView)view.findViewById(R.id.list_flavor)); // FIXME
 
-        imageView = ((ImageView) view.findViewById(R.id.list_image_view));
+        imageView = view.findViewById(R.id.list_image_view);
     }
 }

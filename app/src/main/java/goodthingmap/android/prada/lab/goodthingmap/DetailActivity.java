@@ -23,8 +23,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import bolts.Continuation;
-import bolts.Task;
 import com.afollestad.materialdialogs.AlertDialogWrapper;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.amplitude.api.Amplitude;
@@ -35,16 +33,14 @@ import com.facebook.share.widget.ShareDialog;
 import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.ListDialogFragment;
-import goodthingmap.android.prada.lab.goodthingmap.component.Utility;
+import goodthingmap.android.prada.lab.goodthingmap.util.LocationUtil;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -156,26 +152,26 @@ public class DetailActivity extends BaseActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
-            ((TextView)rootView.findViewById(R.id.detail_distance)).setText(Utility.calDistance(mLocation, mGoodThing));
+            ((TextView)rootView.findViewById(R.id.detail_distance)).setText(LocationUtil.calDistance(mLocation, mGoodThing));
             ((TextView)rootView.findViewById(R.id.detail_title)).setText(mGoodThing.getTitle());
             ((TextView)rootView.findViewById(R.id.detail_memo)).setText(mGoodThing.getMemo());
 
-            mStoryText =  ((TextView)rootView.findViewById(R.id.detail_story));
+            mStoryText = rootView.findViewById(R.id.detail_story);
             mStoryText.setText(mGoodThing.getStory());
             mStoryText.setOnClickListener(this);
 
 
-            LinearLayout hsv = (LinearLayout) rootView.findViewById(R.id.detail_images);
+            LinearLayout hsv = rootView.findViewById(R.id.detail_images);
             setupImages(hsv, mGoodThing.getImages());
             Picasso.with(getActivity()).load(mGoodThing.getDetailImageUrl()).into(
                     ((ImageView) rootView.findViewById(R.id.detail_cover_image)));
-            commentList = (LinearLayout) rootView.findViewById(R.id.detail_list_comments);
+            commentList = rootView.findViewById(R.id.detail_list_comments);
             refreshCommentList(container);
 
             mLikeBtn = rootView.findViewById(R.id.btn_detail_like);
             mLikeBtn.setOnClickListener(this);
-            mLikeBtnText = (Button) rootView.findViewById(R.id.btn_detail_like_text);
-            mShareBtnText =  (Button) rootView.findViewById(R.id.btn_detail_share_text);
+            mLikeBtnText = rootView.findViewById(R.id.btn_detail_like_text);
+            mShareBtnText = rootView.findViewById(R.id.btn_detail_share_text);
 
             rootView.findViewById(R.id.btn_detail_comment).setOnClickListener(this);
             rootView.findViewById(R.id.btn_detail_map).setOnClickListener(this);

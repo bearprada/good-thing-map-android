@@ -13,19 +13,18 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import bolts.Continuation;
-import bolts.Task;
+
 import com.flurry.android.FlurryAgent;
+
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.GoodThingAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.concurrent.Callable;
 
 public class GoodListActivity extends BaseActivity {
 
@@ -88,7 +87,7 @@ public class GoodListActivity extends BaseActivity {
             View rootView = inflater.inflate(R.layout.fragment_good_list, container, false);
             mAdapter = new GoodThingAdapter(getActivity(), this);
             mAdapter.setLocation(mLocation);
-            RecyclerView rv = (RecyclerView)rootView.findViewById(R.id.list_view);
+            RecyclerView rv = rootView.findViewById(R.id.list_view);
             LinearLayoutManager lm = new LinearLayoutManager(getActivity());
             lm.setOrientation(LinearLayoutManager.VERTICAL);
             rv.setLayoutManager(lm);
