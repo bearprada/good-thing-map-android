@@ -41,9 +41,7 @@ import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.ListDialogFragment;
 import goodthingmap.android.prada.lab.goodthingmap.util.LocationUtil;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.functions.Consumer;
 
 public class DetailActivity extends BaseActivity {
 
@@ -64,9 +62,7 @@ public class DetailActivity extends BaseActivity {
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends BaseServiceFragment implements View.OnClickListener, Callback<LikeResult> {
-
-        private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
+    public static class PlaceholderFragment extends BaseServiceFragment implements View.OnClickListener {
 
         public static final int MAX_STORY_TEXT_LINES = 6;
 
@@ -186,52 +182,30 @@ public class DetailActivity extends BaseActivity {
         }
 
         private void setupLikeNum() {
-            mService.requestLikeNum(mGoodThing.getId()).enqueue(new Callback<LikeResult>() {
-                @Override
-                public void onResponse(Call<LikeResult> call, Response<LikeResult> response) {
-                    mLikeBtnText.setText(getString(R.string.like) + "(" + response.body().getResult() + ")");
-                }
-
-                @Override
-                public void onFailure(Call<LikeResult> call, Throwable t) {
-
-                }
-            });
+            mService.requestLikeNum(mGoodThing.getId())
+                .subscribe(new Consumer<LikeResult>() {
+                    @Override
+                    public void accept(LikeResult likeResult) throws Exception {
+                        mLikeBtnText.setText(getString(R.string.like) + "(" + likeResult.getResult() + ")");
+                    }
+                });
         }
 
         private void setupCheckinNum() {
-            mService.requestCheckinNum(mGoodThing.getId()).enqueue(new Callback<CheckinResult>() {
-                @Override
-                public void onResponse(Call<CheckinResult> call, Response<CheckinResult> response) {
-                    mShareBtnText.setText(getString(R.string.share) + "(" + response.body().getResult() + ")");
-                }
-
-                @Override
-                public void onFailure(Call<CheckinResult> call, Throwable t) {
-
-                }
-            });
+            mService.requestCheckinNum(mGoodThing.getId())
+                .subscribe(new Consumer<CheckinResult>() {
+                    @Override
+                    public void accept(CheckinResult checkinResult) throws Exception {
+                        mShareBtnText.setText(getString(R.string.share) + "(" + checkinResult.getResult() + ")");
+                    }
+                });
         }
 
         private void setupImages(final ViewGroup hsv, List<String> images) {
             int count = (images == null) ? 0 : images.size();
             for (int i = 0 ; i < count ; i++) {
                 String url = images.get(i);
-                final ImageView iv = (ImageView) mInflater.inflate(R.layout.item_image, null);
-                final int index = i;
-
-                /** Comment images scaling function **/
-                /*iv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(getActivity(), ImageViewerActivity.class);
-                        intent.putExtra(ImageViewerActivity.PHOTO_INDEX, index);
-                        intent.putParcelableArrayListExtra(ImageViewerActivity.EXTRA_PHOTOS, getImageUris());
-                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                getActivity(), view, getString(R.string.trans_preview_image));
-                        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
-                    }
-                });*/
+                final ImageView iv = (ImageView) mInflater.inflate(R.layout.item_image, hsv, false);
                 Picasso.with(getActivity()).load(url).placeholder(R.drawable.btn_new_image)
                         .error(R.drawable.btn_new_image).into(iv);
                 hsv.addView(iv);
@@ -363,7 +337,20 @@ public class DetailActivity extends BaseActivity {
                                 public void onInput(MaterialDialog dialog, CharSequence input) {
                                     String comment = input.toString();
                                     mCurrentComment = comment;
-                                    mService.postComment(Amplitude.getDeviceId(), mGoodThing.getId(), comment).enqueue(PlaceholderFragment.this);
+                                    mService.postComment(Amplitude.getDeviceId(), mGoodThing.getId(), comment)
+                                        .subscribe(new Consumer<LikeResult>() {
+                                            @Override
+                                            public void accept(LikeResult likeResult) throws Exception {
+                                                Toast.makeText(getActivity(), R.string.post_comment_successful, Toast.LENGTH_SHORT).show();
+                                                mGoodThing.getMessage().add(0, UserMessage.newInstance(mCurrentComment));
+                                                refreshCommentList((ViewGroup) getView());
+                                            }
+                                        }, new Consumer<Throwable>() {
+                                            @Override
+                                            public void accept(Throwable throwable) throws Exception {
+                                                Toast.makeText(getActivity(), R.string.post_comment_fail, Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                 }
                             })
                             .build();
@@ -373,18 +360,19 @@ public class DetailActivity extends BaseActivity {
                     FlurryAgent.logEvent("Event_Click_Detail_Like", false);
                     mLikeBtn.setSelected(true);
 
-                    mService.likeGoodThing(Amplitude.getDeviceId(), mGoodThing.getId()).enqueue(new Callback<LikeResult>() {
-                        @Override
-                        public void onResponse(Call<LikeResult> call, Response<LikeResult> response) {
-                            Toast.makeText(getActivity(), R.string.msg_like_successful, Toast.LENGTH_SHORT).show();
-                            mLikeBtnText.setText(getString(R.string.like) + "(" + response.body().getResult() + ")");
-                        }
-
-                        @Override
-                        public void onFailure(Call<LikeResult> call, Throwable t) {
-                            Toast.makeText(getActivity(), R.string.add_like_fail + ":" + t.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    mService.likeGoodThing(Amplitude.getDeviceId(), mGoodThing.getId())
+                        .subscribe(new Consumer<LikeResult>() {
+                            @Override
+                            public void accept(LikeResult likeResult) throws Exception {
+                                Toast.makeText(getActivity(), R.string.msg_like_successful, Toast.LENGTH_SHORT).show();
+                                mLikeBtnText.setText(getString(R.string.like) + "(" + likeResult.getResult() + ")");
+                            }
+                        }, new Consumer<Throwable>() {
+                            @Override
+                            public void accept(Throwable t) throws Exception {
+                                Toast.makeText(getActivity(), R.string.add_like_fail + ":" + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     break;
                 case R.id.btn_detail_map:
                     FlurryAgent.logEvent("Event_Click_Detail_Map", false);
@@ -453,18 +441,6 @@ public class DetailActivity extends BaseActivity {
             for (UserMessage message : mGoodThing.getMessage()) {
                 commentList.addView(getCommentView(count++, container, message));
             }
-        }
-
-        @Override
-        public void onResponse(Call<LikeResult> call, Response<LikeResult> response) {
-            Toast.makeText(getActivity(), R.string.post_comment_successful, Toast.LENGTH_SHORT).show();
-            mGoodThing.getMessage().add(0, UserMessage.newInstance(mCurrentComment));
-            refreshCommentList((ViewGroup) getView());
-        }
-
-        @Override
-        public void onFailure(Call<LikeResult> call, Throwable t) {
-            Toast.makeText(getActivity(), R.string.post_comment_fail, Toast.LENGTH_SHORT).show();
         }
     }
 }

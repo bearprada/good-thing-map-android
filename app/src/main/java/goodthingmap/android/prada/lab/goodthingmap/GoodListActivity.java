@@ -22,6 +22,8 @@ import java.util.List;
 
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.GoodThingAdapter;
+import io.reactivex.Observable;
+import io.reactivex.functions.Consumer;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -93,23 +95,23 @@ public class GoodListActivity extends BaseActivity {
             rv.setLayoutManager(lm);
             rv.setAdapter(mAdapter);
 
-            Call<GoodThingsData> call;
+            Observable<GoodThingsData> obs;
             if (mLocation == null) {
                 // FIXME refactor this later
                 if (mType == HomeActivity.PlaceholderFragment.GoodThingType.NEAR)
-                    call = mService.listStory(mLocation.getLatitude(), mLocation.getLongitude());
+                    obs = mService.listStory(mLocation.getLatitude(), mLocation.getLongitude());
                 else
-                    call = mService.listStory(mType.getTypeId(), mLocation.getLatitude(), mLocation.getLongitude());
+                    obs = mService.listStory(mType.getTypeId(), mLocation.getLatitude(), mLocation.getLongitude());
             } else {
                 if (mType == HomeActivity.PlaceholderFragment.GoodThingType.NEAR)
-                    call = mService.listStory();
+                    obs = mService.listStory();
                 else
-                    call = mService.listStory(mType.getTypeId());
+                    obs = mService.listStory(mType.getTypeId());
             }
-            call.enqueue(new Callback<GoodThingsData>() {
+            obs.subscribe(new Consumer<GoodThingsData>() {
                 @Override
-                public void onResponse(Call<GoodThingsData> call, Response<GoodThingsData> response) {
-                    List<GoodThing> goodThings = response.body().getGoodThingList();
+                public void accept(GoodThingsData data) throws Exception {
+                    List<GoodThing> goodThings = data.getGoodThingList();
 
                     // temp: sorted by distance
                     if(mLocation != null) {
@@ -125,11 +127,6 @@ public class GoodListActivity extends BaseActivity {
 
                     mAdapter.addAll(goodThings);
                     mAdapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onFailure(Call<GoodThingsData> call, Throwable t) {
-
                 }
             });
 

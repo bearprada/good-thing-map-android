@@ -29,6 +29,7 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
 import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils;
+import io.reactivex.functions.Consumer;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -110,24 +111,17 @@ public class HomeActivity extends BaseActivity {
             final ImageView ivF = view.findViewById(R.id.cover_image);
 
             ivF.setOnClickListener(this);
-            mService.getTopStory().enqueue(new retrofit2.Callback<GoodThingData>() {
-                @Override
-                public void onResponse(Call<GoodThingData> call, Response<GoodThingData> response) {
-                    GoodThingData data = response.body();
-                    tvF.setText(data.goodThing.getStory());
-                    ivF.setTag(data.goodThing);
-                    Picasso.with(getActivity()).load(data.goodThing.getImageUrl()).into(ivF, new Callback.EmptyCallback() {
-                        @Override
-                        public void onSuccess() {
-                        }
-                    });
-                }
-
-                @Override
-                public void onFailure(Call<GoodThingData> call, Throwable t) {
-
-                }
-            });
+            mService.getTopStory()
+                .subscribe(new Consumer<GoodThingData>() {
+                    @Override
+                    public void accept(GoodThingData data) throws Exception {
+                        tvF.setText(data.goodThing.getStory());
+                        ivF.setTag(data.goodThing);
+                        Picasso.with(getActivity())
+                            .load(data.goodThing.getImageUrl())
+                            .into(ivF);
+                    }
+                });
             view.findViewById(R.id.good_thing_01).setOnClickListener(this);
             view.findViewById(R.id.good_thing_02).setOnClickListener(this);
             view.findViewById(R.id.good_thing_03).setOnClickListener(this);

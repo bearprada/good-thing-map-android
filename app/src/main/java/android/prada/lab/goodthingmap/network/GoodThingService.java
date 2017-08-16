@@ -5,7 +5,7 @@ import android.prada.lab.goodthingmap.model.GoodThingsData;
 import android.prada.lab.goodthingmap.model.LikeResult;
 import android.prada.lab.goodthingmap.model.CheckinResult;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -15,32 +15,32 @@ import retrofit2.http.Query;
  */
 public interface GoodThingService {
     @GET("/good_thing/mobile/findTopStory")
-    Call<GoodThingData> getTopStory();
+    Observable<GoodThingData> getTopStory();
 
     @GET("/good_thing/mobile/findGoodThings")
-    Call<GoodThingsData> listStory(@Query("type") int type);
+    Observable<GoodThingsData> listStory(@Query("type") int type);
 
     @GET("/good_thing/mobile/findGoodThings")
-    Call<GoodThingsData> listStory(@Query("type") int type, @Query("lat") double latitude, @Query("lon") double longitude);
+    Observable<GoodThingsData> listStory(@Query("type") int type, @Query("lat") double latitude, @Query("lon") double longitude);
 
     @GET("/good_thing/mobile/findGoodThings")
-    Call<GoodThingsData> listStory(@Query("lat") double latitude, @Query("lon") double longitude);
+    Observable<GoodThingsData> listStory(@Query("lat") double latitude, @Query("lon") double longitude);
 
     @GET("/good_thing/mobile/findGoodThings")
-    Call<GoodThingsData> listStory();
+    Observable<GoodThingsData> listStory();
 
     @GET("/good_thing/mobile/getLikeNum")
-    Call<LikeResult> requestLikeNum(@Query("rid") int rid);
+    Observable<LikeResult> requestLikeNum(@Query("rid") int rid);
 
     @GET("/good_thing/mobile/getCheckinNum")
-    Call<CheckinResult> requestCheckinNum(@Query("rid") int rid);
+    Observable<CheckinResult> requestCheckinNum(@Query("rid") int rid);
 
     @POST("/good_thing/mobile/addCheckin")
-    Call<CheckinResult> reportCheckin(@Query("uid") String uid, @Query("rid") int rid, @Query("cid") int checkinId);
+    Observable<CheckinResult> reportCheckin(@Query("uid") String uid, @Query("rid") int rid, @Query("cid") int checkinId);
 
     @POST("/good_thing/mobile/addLike")
-    Call<LikeResult> likeGoodThing(@Query("uid") String uid, @Query("rid") int rid);
+    Observable<LikeResult> likeGoodThing(@Query("uid") String uid, @Query("rid") int rid);
 
     @POST("/good_thing/mobile/post")
-    Call<LikeResult> postComment(@Query("uid") String uid, @Query("rid") int rid, @Query("message") String message);
+    Observable<LikeResult> postComment(@Query("uid") String uid, @Query("rid") int rid, @Query("message") String message);
 }
