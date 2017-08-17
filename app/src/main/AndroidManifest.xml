@@ -43,13 +43,6 @@
             android:screenOrientation="portrait" >
         </activity>
 
-        <provider
-            android:name=".FavorContentProvider"
-            android:authorities="lab.prada.android.goodthingmap.favor"
-            android:enabled="true"
-            android:exported="false" >
-        </provider>
-
         <activity
             android:name=".ImageViewerActivity"
             android:label="@string/title_activity_image_viewer"

@@ -11,301 +11,244 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingData;
+import android.prada.lab.goodthingmap.model.GoodThingType;
+import android.prada.lab.goodthingmap.network.GoodThingService;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.afollestad.materialdialogs.DialogAction;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.flurry.android.FlurryAgent;
-import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
-import goodthingmap.android.prada.lab.goodthingmap.component.BaseServiceFragment;
+
 import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils;
 import io.reactivex.functions.Consumer;
-import retrofit2.Call;
-import retrofit2.Response;
 
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements View.OnClickListener, LocationListener {
 
     protected final static String[] LOCATION_PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_COARSE_LOCATION,
             Manifest.permission.ACCESS_FINE_LOCATION,
     };
+
+    private Location mCurrentLocation = null;
+    private LocationManager lm;
+    private ImageButton btn_location;
+    private Animation animAlpha;
+
     protected final static int REQUEST_PERMISSION_GRANT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.fragment_home);
         getSupportActionBar().setDisplayShowTitleEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
-        }
+        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        animAlpha = AnimationUtils.loadAnimation(this,R.anim.anim_alpha);
 
+        final TextView tvF = findViewById(R.id.cover_text);
+        final ImageView ivF = findViewById(R.id.cover_image);
+
+        ivF.setOnClickListener(this);
+        mService.getTopStory()
+            .subscribe(new Consumer<GoodThingData>() {
+                @Override
+                public void accept(GoodThingData data) throws Exception {
+                    tvF.setText(data.goodThing.getStory());
+                    ivF.setTag(data.goodThing);
+                    Picasso.with(getBaseContext())
+                        .load(data.goodThing.getImageUrl())
+                        .into(ivF);
+                }
+            });
+        findViewById(R.id.good_thing_01).setOnClickListener(this);
+        findViewById(R.id.good_thing_02).setOnClickListener(this);
+        findViewById(R.id.good_thing_03).setOnClickListener(this);
+        findViewById(R.id.good_thing_04).setOnClickListener(this);
+        findViewById(R.id.good_thing_05).setOnClickListener(this);
+        findViewById(R.id.good_thing_06).setOnClickListener(this);
+        findViewById(R.id.btnLocation).setOnClickListener(this);
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends BaseServiceFragment implements View.OnClickListener
-            , LocationListener {
-        private Location mCurrentLocation = null;
-        private LocationManager lm;
-        private ImageButton btn_location;
-        private Animation animAlpha;
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FlurryAgent.logEvent("PageHome", true);
+    }
 
-        public PlaceholderFragment() {
-            super();
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FlurryAgent.endTimedEvent("PageHome");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getCurrentLocation(false); // auto get location
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            checkPermission(this);
+            lm.removeUpdates(this);
+        } catch (IllegalStateException ignored) {}
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()) {
+            case R.id.cover_image:
+                Object tag = view.getTag();
+                if (tag != null && tag instanceof GoodThing) {
+                    Intent intent = new Intent(this, DetailActivity.class);
+                    intent.putExtra(GoodThing.EXTRA_GOODTHING, (GoodThing)tag);
+                    intent.putExtra(GoodListActivity.EXTRA_LOCATION, mCurrentLocation);
+                    ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            this, view, getString(R.string.trans_cover_image));
+                    ActivityCompat.startActivity(this, intent, options.toBundle());
+                }
+                break;
+            case R.id.good_thing_01:
+                LogEventUtils.sendEvent("Event_Click_Home_Main");
+                moveList(GoodThingType.MAIN);
+                break;
+            case R.id.good_thing_02:
+                LogEventUtils.sendEvent("Event_Click_Home_Snack");
+                moveList(GoodThingType.SNACK);
+                break;
+            case R.id.good_thing_03:
+                LogEventUtils.sendEvent("Event_Click_Home_Fruit");
+                moveList(GoodThingType.FRUIT);
+                break;
+            case R.id.good_thing_04:
+                LogEventUtils.sendEvent("Event_Click_Home_Other");
+                moveList(GoodThingType.OTHER);
+                break;
+            case R.id.good_thing_05:
+                LogEventUtils.sendEvent("Event_Click_Home_TBI");
+                moveList(GoodThingType.TBI);
+                break;
+            case R.id.good_thing_06:
+                LogEventUtils.sendEvent("Event_Click_Home_Near");
+                moveList(GoodThingType.NEAR);
+                break;
+            case R.id.btnLocation:
+                getCurrentLocation(true);
+                break;
         }
+    }
 
-        public void onCreate(Bundle savedStateInstance) {
-            super.onCreate(savedStateInstance);
-            lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-            animAlpha = AnimationUtils.loadAnimation(getActivity(),R.anim.anim_alpha);
+    private void moveList(GoodThingType type) {
+        Intent intent = new Intent(this, GoodListActivity.class);
+        intent.putExtra(GoodListActivity.EXTRA_TYPE, type.ordinal());
+        intent.putExtra(GoodListActivity.EXTRA_LOCATION, mCurrentLocation);
+        startActivity(intent);
+    }
+
+    protected void checkPermission(Context context) {
+        if (PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) &&
+                PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)) {
+            throw new IllegalStateException("Location permission not granted");
         }
+    }
 
-        @Override
-        public void onStart() {
-            super.onStart();
-            FlurryAgent.logEvent("PageHome", true);
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(REQUEST_PERMISSION_GRANT == requestCode) {
+            // TODO
         }
+    }
 
-        @Override
-        public void onStop() {
-            super.onStop();
-            FlurryAgent.endTimedEvent("PageHome");
+    private void getCurrentLocation(boolean userClick) {
+
+        boolean isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+        if (!(isGPSEnabled || isNetworkEnabled)){
+            if(userClick){// user click R.id.btnLocation open gps_setting page
+                displayPromptForEnablingGPS(this);
+            }
         }
-
-        public void onResume() {
-            super.onResume();
-            getCurrentLocation(false); // auto get location
-        }
-
-        public void onPause() {
-            super.onPause();
+        else {
             try {
-                checkPermission(getActivity());
-                lm.removeUpdates(this);
-            } catch (IllegalStateException ignored) {}
+                checkPermission(this);
+
+                if (isNetworkEnabled) {
+                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
+                    Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+                    if(location != null)
+                        mCurrentLocation  = location;
+                }
+                if (isGPSEnabled) {
+                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+                    Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    if(location != null)
+                        mCurrentLocation  = location;
+                }
+                if(mCurrentLocation != null){
+                    btn_location.setBackgroundResource(R.drawable.location_success);
+                    btn_location.clearAnimation();
+                }else if(userClick){
+                    btn_location.startAnimation(animAlpha);
+                }
+            } catch (IllegalStateException e) {
+                ActivityCompat.requestPermissions(this, LOCATION_PERMISSIONS, REQUEST_PERMISSION_GRANT);
+            }
         }
+    }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.fragment_home, container, false);
+    @Override
+    public void onLocationChanged(Location location) {
+        mCurrentLocation = location;
+        btn_location.clearAnimation();
+        btn_location.setBackgroundResource(R.drawable.location_success);
+        try {
+            checkPermission(this);
+        } catch (IllegalStateException ignored) {}
+        lm.removeUpdates(this);// stop update after get current location
+    }
 
-            final TextView tvF = view.findViewById(R.id.cover_text);
-            final ImageView ivF = view.findViewById(R.id.cover_image);
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+    }
 
-            ivF.setOnClickListener(this);
-            mService.getTopStory()
-                .subscribe(new Consumer<GoodThingData>() {
+    @Override
+    public void onProviderEnabled(String s) {
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+    }
+
+    public static void displayPromptForEnablingGPS(final Activity activity)
+    {
+        final MaterialDialog.Builder builder =  new MaterialDialog.Builder(activity);
+        final String action = Settings.ACTION_LOCATION_SOURCE_SETTINGS;
+
+        builder.content(R.string.warning_open_gps)
+                .positiveText(R.string.confirm)
+                .negativeText(R.string.cancel)
+                .onPositive(new MaterialDialog.SingleButtonCallback() {
                     @Override
-                    public void accept(GoodThingData data) throws Exception {
-                        tvF.setText(data.goodThing.getStory());
-                        ivF.setTag(data.goodThing);
-                        Picasso.with(getActivity())
-                            .load(data.goodThing.getImageUrl())
-                            .into(ivF);
+                    public void onClick(MaterialDialog dialog, DialogAction which) {
+                        activity.startActivity(new Intent(action));
                     }
-                });
-            view.findViewById(R.id.good_thing_01).setOnClickListener(this);
-            view.findViewById(R.id.good_thing_02).setOnClickListener(this);
-            view.findViewById(R.id.good_thing_03).setOnClickListener(this);
-            view.findViewById(R.id.good_thing_04).setOnClickListener(this);
-            view.findViewById(R.id.good_thing_05).setOnClickListener(this);
-            view.findViewById(R.id.good_thing_06).setOnClickListener(this);
-            btn_location = view.findViewById(R.id.btnLocation);
-            btn_location.setOnClickListener(this);
-            return view;
-        }
-
-        @Override
-        public void onClick(View view) {
-            switch(view.getId()) {
-                case R.id.cover_image:
-                    Object tag = view.getTag();
-                    if (tag != null && tag instanceof GoodThing) {
-                        Intent intent = new Intent(getActivity(), DetailActivity.class);
-                        intent.putExtra(GoodThing.EXTRA_GOODTHING, (GoodThing)tag);
-                        intent.putExtra(GoodListActivity.EXTRA_LOCATION, mCurrentLocation);
-                        ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                                getActivity(), view, getString(R.string.trans_cover_image));
-                        ActivityCompat.startActivity(getActivity(), intent, options.toBundle());
-                    }
-                    break;
-                case R.id.good_thing_01:
-                    LogEventUtils.sendEvent("Event_Click_Home_Main");
-                    moveList(GoodThingType.MAIN);
-                    break;
-                case R.id.good_thing_02:
-                    LogEventUtils.sendEvent("Event_Click_Home_Snack");
-                    moveList(GoodThingType.SNACK);
-                    break;
-                case R.id.good_thing_03:
-                    LogEventUtils.sendEvent("Event_Click_Home_Fruit");
-                    moveList(GoodThingType.FRUIT);
-                    break;
-                case R.id.good_thing_04:
-                    LogEventUtils.sendEvent("Event_Click_Home_Other");
-                    moveList(GoodThingType.OTHER);
-                    break;
-                case R.id.good_thing_05:
-                    LogEventUtils.sendEvent("Event_Click_Home_TBI");
-                    moveList(GoodThingType.TBI);
-                    break;
-                case R.id.good_thing_06:
-                    LogEventUtils.sendEvent("Event_Click_Home_Near");
-                    moveList(GoodThingType.NEAR);
-                    break;
-                case R.id.btnLocation:
-                    getCurrentLocation(true);
-                    break;
-            }
-        }
-
-        private void moveList(GoodThingType type) {
-            Intent intent = new Intent(getActivity(), GoodListActivity.class);
-            intent.putExtra(GoodListActivity.EXTRA_TYPE, type.ordinal());
-            intent.putExtra(GoodListActivity.EXTRA_LOCATION, mCurrentLocation);
-            startActivity(intent);
-        }
-
-        protected void checkPermission(Context context) {
-            if (PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) &&
-                    PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-                throw new IllegalStateException("Location permission not granted");
-            }
-        }
-
-        @Override
-        public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-            if(REQUEST_PERMISSION_GRANT == requestCode) {
-                // TODO
-            }
-        }
-
-        private void getCurrentLocation(boolean userClick) {
-
-            boolean isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-            boolean isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-            if (!(isGPSEnabled || isNetworkEnabled)){
-                if(userClick){// user click R.id.btnLocation open gps_setting page
-                    displayPromptForEnablingGPS(getActivity());
-                }
-            }
-            else {
-                try {
-                    checkPermission(getActivity());
-
-                    if (isNetworkEnabled) {
-                        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
-                        Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        if(location != null)
-                            mCurrentLocation  = location;
-                    }
-                    if (isGPSEnabled) {
-                        lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
-                        Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                        if(location != null)
-                            mCurrentLocation  = location;
-                    }
-                    if(mCurrentLocation != null){
-                        btn_location.setBackgroundResource(R.drawable.location_success);
-                        btn_location.clearAnimation();
-                    }else if(userClick){
-                        btn_location.startAnimation(animAlpha);
-                    }
-                } catch (IllegalStateException e) {
-                    ActivityCompat.requestPermissions(getActivity(), LOCATION_PERMISSIONS, REQUEST_PERMISSION_GRANT);
-                }
-            }
-        }
-
-        @Override
-        public void onLocationChanged(Location location) {
-            mCurrentLocation = location;
-            btn_location.clearAnimation();
-            btn_location.setBackgroundResource(R.drawable.location_success);
-            try {
-                checkPermission(getActivity());
-            } catch (IllegalStateException ignored) {}
-            lm.removeUpdates(this);// stop update after get current location
-        }
-
-        @Override
-        public void onStatusChanged(String s, int i, Bundle bundle) {
-        }
-
-        @Override
-        public void onProviderEnabled(String s) {
-        }
-
-        @Override
-        public void onProviderDisabled(String s) {
-        }
-
-        public static void displayPromptForEnablingGPS(final Activity activity)
-        {
-            final MaterialDialog.Builder builder =  new MaterialDialog.Builder(activity);
-            final String action = Settings.ACTION_LOCATION_SOURCE_SETTINGS;
-
-            builder.content(R.string.warning_open_gps)
-                    .positiveText(R.string.confirm)
-                    .negativeText(R.string.cancel)
-                    .onPositive(new MaterialDialog.SingleButtonCallback() {
-                        @Override
-                        public void onClick(MaterialDialog dialog, DialogAction which) {
-                            activity.startActivity(new Intent(action));
-                        }
-                    }).build();
-            builder.show();
-        }
-
-        public enum GoodThingType {
-            MAIN,
-            SNACK,
-            FRUIT,
-            OTHER,
-            TBI,
-            NEAR;
-
-            public int getTypeId() {
-                return ordinal() + 1;
-            }
-
-            public String getName() {
-                switch(this) {
-                    case MAIN:
-                        return "主食";
-                    case SNACK:
-                        return "小吃";
-                    case FRUIT:
-                        return "冰品/水果";
-                    case OTHER:
-                        return "其他";
-                    case TBI:
-                        return "大誌雜誌";
-                    case NEAR:
-                    default:
-                        return "綜合搜尋";
-                }
-            }
-        }
+                }).build();
+        builder.show();
     }
 }

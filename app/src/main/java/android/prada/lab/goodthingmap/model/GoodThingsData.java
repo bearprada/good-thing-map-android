@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class GoodThingsData {
     @SerializedName("results")
-    private List<GoodThing> goodThingList = new ArrayList<GoodThing>();
+    private List<GoodThing> goodThingList = new ArrayList<>();
 
     public List<GoodThing> getGoodThingList() {
         return goodThingList;

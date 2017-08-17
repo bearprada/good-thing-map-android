@@ -51,9 +51,6 @@ public class GoodThing implements Parcelable {
     @SerializedName("images")
     private List<String> images = new ArrayList<String>();
 
-    public GoodThing() {
-    }
-
     public Location getLocation() {
         Location loc = new Location(getTitle());
         loc.setLongitude(getLongtitude());

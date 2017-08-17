@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.jakewharton.butterknife'
 
 android {
     compileSdkVersion 26
@@ -42,7 +43,7 @@ dependencies {
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.squareup.okhttp3:okhttp:3.7.0'
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.amplitude:android-sdk:2.13.4'
@@ -50,4 +51,7 @@ dependencies {
     compile('com.github.afollestad.material-dialogs:core:0.8.5.7@aar') {
         transitive = true
     }
+    compile 'com.airbnb.android:epoxy:2.3.0'
+    // Add the annotation processor if you are using Epoxy's annotations (recommended)
+    annotationProcessor 'com.airbnb.android:epoxy-processor:2.3.0'
 }

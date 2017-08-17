@@ -2,22 +2,33 @@ package goodthingmap.android.prada.lab.goodthingmap;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.prada.lab.goodthingmap.network.GoodThingService;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by prada on 2014/7/5.
  */
 public abstract class BaseActivity extends AppCompatActivity {
+    public static final String AUTHORITY = "http://goodthing.tw:8080/";
+    protected GoodThingService mService;
 
     @Override
     protected void onCreate(Bundle savedStateInstance) {
         super.onCreate(savedStateInstance);
         LogEventUtils.init(this);
+
+        mService = new Retrofit.Builder()
+            .baseUrl(AUTHORITY)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(GoodThingService.class);
     }
 
     @Override
