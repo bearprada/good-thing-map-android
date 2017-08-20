@@ -22,7 +22,9 @@ import java.util.List;
 import goodthingmap.android.prada.lab.goodthingmap.component.GTController;
 import goodthingmap.android.prada.lab.goodthingmap.component.GTPlaceModel;
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class GoodListActivity extends BaseActivity {
 
@@ -67,13 +69,14 @@ public class GoodListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_good_list);
+        int typeId = getIntent().getIntExtra(EXTRA_TYPE, 0);
+        mType = GoodThingType.values()[typeId];
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(mType.getName());
 
-        int typeId = getIntent().getIntExtra(EXTRA_TYPE, 0);
-        mType = GoodThingType.values()[typeId];
-        mLocation = getIntent().getParcelableExtra(EXTRA_LOCATION);
 
+        mLocation = getIntent().getParcelableExtra(EXTRA_LOCATION);
         mController.setLocation(mLocation);
         RecyclerView rv = findViewById(R.id.list_view);
         LinearLayoutManager lm = new LinearLayoutManager(this);
@@ -94,7 +97,9 @@ public class GoodListActivity extends BaseActivity {
             else
                 obs = mService.listStory(mType.getTypeId());
         }
-        obs.subscribe(new Consumer<GoodThingsData>() {
+        obs.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(new Consumer<GoodThingsData>() {
             @Override
             public void accept(GoodThingsData data) throws Exception {
                 List<GoodThing> goodThings = data.getGoodThingList();

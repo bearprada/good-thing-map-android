@@ -12,14 +12,12 @@ import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingData;
 import android.prada.lab.goodthingmap.model.GoodThingType;
-import android.prada.lab.goodthingmap.network.GoodThingService;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +27,9 @@ import com.flurry.android.FlurryAgent;
 import com.squareup.picasso.Picasso;
 
 import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener, LocationListener {
@@ -41,7 +41,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     private Location mCurrentLocation = null;
     private LocationManager lm;
-    private ImageButton btn_location;
     private Animation animAlpha;
 
     protected final static int REQUEST_PERMISSION_GRANT = 1;
@@ -61,6 +60,8 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
         ivF.setOnClickListener(this);
         mService.getTopStory()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Consumer<GoodThingData>() {
                 @Override
                 public void accept(GoodThingData data) throws Exception {
@@ -77,7 +78,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.good_thing_04).setOnClickListener(this);
         findViewById(R.id.good_thing_05).setOnClickListener(this);
         findViewById(R.id.good_thing_06).setOnClickListener(this);
-        findViewById(R.id.btnLocation).setOnClickListener(this);
+
     }
 
     @Override
@@ -90,12 +91,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     protected void onStop() {
         super.onStop();
         FlurryAgent.endTimedEvent("PageHome");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getCurrentLocation(false); // auto get location
     }
 
     @Override
@@ -146,9 +141,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 LogEventUtils.sendEvent("Event_Click_Home_Near");
                 moveList(GoodThingType.NEAR);
                 break;
-            case R.id.btnLocation:
-                getCurrentLocation(true);
-                break;
+//            case R.id.btnLocation:
+//                getCurrentLocation(true);
+//                break;
         }
     }
 
@@ -200,12 +195,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                     if(location != null)
                         mCurrentLocation  = location;
                 }
-                if(mCurrentLocation != null){
-                    btn_location.setBackgroundResource(R.drawable.location_success);
-                    btn_location.clearAnimation();
-                }else if(userClick){
-                    btn_location.startAnimation(animAlpha);
-                }
             } catch (IllegalStateException e) {
                 ActivityCompat.requestPermissions(this, LOCATION_PERMISSIONS, REQUEST_PERMISSION_GRANT);
             }
@@ -215,8 +204,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
-        btn_location.clearAnimation();
-        btn_location.setBackgroundResource(R.drawable.location_success);
         try {
             checkPermission(this);
         } catch (IllegalStateException ignored) {}

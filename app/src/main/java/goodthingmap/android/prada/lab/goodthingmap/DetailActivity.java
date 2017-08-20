@@ -37,7 +37,9 @@ import java.util.List;
 import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment;
 import goodthingmap.android.prada.lab.goodthingmap.component.ListDialogFragment;
 import goodthingmap.android.prada.lab.goodthingmap.util.LocationUtil;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 public class DetailActivity extends BaseActivity implements View.OnClickListener {
     public static final int MAX_STORY_TEXT_LINES = 6;
@@ -120,24 +122,10 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
         FlurryAgent.endTimedEvent("PageDetail");
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        // Logs 'install' and 'app activate' App Events.
-        AppEventsLogger.activateApp(this);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        // Logs 'app deactivate' App Event.
-        AppEventsLogger.deactivateApp(this);
-    }
-
     private void setupLikeNum() {
         mService.requestLikeNum(mGoodThing.getId())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Consumer<LikeResult>() {
                 @Override
                 public void accept(LikeResult likeResult) throws Exception {
@@ -148,6 +136,8 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
 
     private void setupCheckinNum() {
         mService.requestCheckinNum(mGoodThing.getId())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(new Consumer<CheckinResult>() {
                 @Override
                 public void accept(CheckinResult checkinResult) throws Exception {
@@ -283,6 +273,8 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
                             String comment = input.toString();
                             mCurrentComment = comment;
                             mService.postComment(Amplitude.getDeviceId(), mGoodThing.getId(), comment)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe(new Consumer<LikeResult>() {
                                     @Override
                                     public void accept(LikeResult likeResult) throws Exception {
@@ -306,6 +298,8 @@ public class DetailActivity extends BaseActivity implements View.OnClickListener
                 mLikeBtn.setSelected(true);
 
                 mService.likeGoodThing(Amplitude.getDeviceId(), mGoodThing.getId())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Consumer<LikeResult>() {
                         @Override
                         public void accept(LikeResult likeResult) throws Exception {

@@ -22,13 +22,14 @@ public class GTController extends TypedEpoxyController<List<GoodThing>> {
     }
 
     @Override
-    protected void buildModels(List<GoodThing> things) {
-        for (GoodThing thing : things) {
+    protected void buildModels(List<GoodThing> places) {
+        for (GoodThing place : places) {
             new GTPlaceModel_()
-                .id(thing.getId())
-                .address(thing.getAddress())
-                .distance(LocationUtil.calDistance(mCurrentLocation, thing))
-                .imageUrl(thing.getListImageUrl())
+                .id(place.getId())
+                .title(place.getTitle())
+                .address(place.getAddress())
+                .distance(LocationUtil.calDistance(mCurrentLocation, place))
+                .imageUrl(place.getListImageUrl())
                 .clickListener(mItemClickListener)
                 .addTo(this);
         }
@@ -36,6 +37,5 @@ public class GTController extends TypedEpoxyController<List<GoodThing>> {
 
     public void setLocation(Location location) {
         mCurrentLocation = location;
-        requestModelBuild();
     }
 }
