@@ -4,9 +4,9 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent">
 
-    <fragment android:layout_height="fill_parent"
-              android:layout_width="fill_parent"
-              android:id="@+id/facebook_login_fragment"
-              android:name="com.facebook.widget.UserSettingsFragment" />
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebook_login_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -1,29 +1,30 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.jakewharton.butterknife'
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.1'
+    namespace 'goodthingmap.android.prada.lab.goodthingmap'
+    // API 35 is the newest standard platform package available to the build tools.
+    compileSdk 35
     defaultConfig {
         applicationId 'lab.prada.android.goodthingsmap'
         minSdkVersion 15
         versionCode 10
         versionName '1.1.5'
-        targetSdkVersion 26
+        targetSdkVersion 35
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
     buildTypes {
         release {
             minifyEnabled true
-            zipAlignEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     productFlavors {
     }
 
-    dexOptions {
-        preDexLibraries = false
-    }
 }
 
 repositories {
@@ -33,30 +34,32 @@ repositories {
 dependencies {
     def supportVer = "26.0.1"
 
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     //noinspection GradleCompatible
-    compile "com.android.support:appcompat-v7:${supportVer}"
-    compile "com.android.support:cardview-v7:${supportVer}"
-    compile "com.android.support:recyclerview-v7:${supportVer}"
+    implementation "com.android.support:appcompat-v7:${supportVer}"
+    implementation "com.android.support:cardview-v7:${supportVer}"
+    implementation "com.android.support:recyclerview-v7:${supportVer}"
 
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     // Because RxAndroid releases are few and far between, it is recommended you also
     // explicitly depend on RxJava's latest version for bug fixes and new features.
-    compile 'io.reactivex.rxjava2:rxjava:2.1.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
 
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    compile 'com.squareup.okhttp3:okhttp:3.8.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.amplitude:android-sdk:2.13.4'
-    compile 'com.facebook.android:facebook-android-sdk:4.18.0'
-    compile('com.github.afollestad.material-dialogs:core:0.8.5.7@aar') {
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+    implementation 'com.google.code.findbugs:jsr305:3.0.2'
+    implementation 'org.codehaus.mojo:animal-sniffer-annotations:1.23'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.amplitude:android-sdk:2.13.4'
+    implementation 'com.facebook.android:facebook-android-sdk:4.18.0'
+    implementation('com.github.afollestad.material-dialogs:core:0.8.5.7@aar') {
         transitive = true
     }
-    compile 'com.airbnb.android:epoxy:2.3.0'
+    implementation 'com.airbnb.android:epoxy:2.3.0'
     // Add the annotation processor if you are using Epoxy's annotations (recommended)
     annotationProcessor 'com.airbnb.android:epoxy-processor:2.3.0'
 }
