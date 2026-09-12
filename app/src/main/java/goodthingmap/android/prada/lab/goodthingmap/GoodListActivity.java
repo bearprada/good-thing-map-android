@@ -100,16 +100,13 @@ public class GoodListActivity extends BaseActivity {
                 mController.setData(places);
             }
         };
-        listViewModel.getPlaces().observeForever(placesObserver);
+        listViewModel.getPlaces().observe(this, placesObserver);
         listViewModel.load(mType, mLocation);
 
     }
 
     @Override
     protected void onDestroy() {
-        if (listViewModel != null && placesObserver != null) {
-            listViewModel.getPlaces().removeObserver(placesObserver);
-        }
         viewModelStore.clear();
         super.onDestroy();
     }

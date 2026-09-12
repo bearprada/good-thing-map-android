@@ -81,7 +81,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 Picasso.with(getBaseContext()).load(goodThing.getImageUrl()).into(ivF);
             }
         };
-        homeViewModel.getTopStory().observeForever(topStoryObserver);
+        homeViewModel.getTopStory().observe(this, topStoryObserver);
         homeViewModel.loadTopStory();
 
         ivF.setOnClickListener(this);
@@ -96,9 +96,6 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onDestroy() {
-        if (homeViewModel != null && topStoryObserver != null) {
-            homeViewModel.getTopStory().removeObserver(topStoryObserver);
-        }
         viewModelStore.clear();
         super.onDestroy();
     }
