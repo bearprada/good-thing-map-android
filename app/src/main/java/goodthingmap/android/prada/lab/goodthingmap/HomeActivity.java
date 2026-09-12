@@ -16,6 +16,7 @@ import android.prada.lab.goodthingmap.model.GoodThingRepository;
 import android.provider.Settings;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelStore;
@@ -104,6 +105,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     protected void onStart() {
         super.onStart();
         FlurryAgent.logEvent("PageHome", true);
+        if (hasLocationPermission()) {
+            getCurrentLocation(false);
+        }
     }
 
     @Override
@@ -115,10 +119,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onPause() {
         super.onPause();
-        try {
-            checkPermission(this);
+        if (hasLocationPermission()) {
             lm.removeUpdates(this);
-        } catch (IllegalStateException ignored) {}
+        }
     }
 
 
@@ -158,11 +161,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case R.id.good_thing_06:
                 LogEventUtils.sendEvent("Event_Click_Home_Near");
+                getCurrentLocation(true);
                 moveList(GoodThingType.NEAR);
                 break;
-//            case R.id.btnLocation:
-//                getCurrentLocation(true);
-//                break;
         }
     }
 
@@ -173,22 +174,32 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         startActivity(intent);
     }
 
-    protected void checkPermission(Context context) {
-        if (PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) &&
-                PackageManager.PERMISSION_GRANTED != ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION)) {
-            throw new IllegalStateException("Location permission not granted");
-        }
+    private boolean hasLocationPermission() {
+        return LocationPermissionPolicy.hasLocationPermission(
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION),
+                ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION));
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if(REQUEST_PERMISSION_GRANT == requestCode) {
-            // TODO
+            if (hasLocationPermission()) {
+                getCurrentLocation(false);
+            }
         }
     }
 
     private void getCurrentLocation(boolean userClick) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (userClick) {
+                ActivityCompat.requestPermissions(this, LOCATION_PERMISSIONS, REQUEST_PERMISSION_GRANT);
+            }
+            return;
+        }
 
         boolean isGPSEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
         boolean isNetworkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
@@ -199,23 +210,19 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
             }
         }
         else {
-            try {
-                checkPermission(this);
-
                 if (isNetworkEnabled) {
-                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
+                    lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this,
+                            android.os.Looper.getMainLooper());
                     Location location = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
                     if(location != null)
                         mCurrentLocation  = location;
                 }
                 if (isGPSEnabled) {
-                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+                    lm.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this,
+                            android.os.Looper.getMainLooper());
                     Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
                     if(location != null)
                         mCurrentLocation  = location;
-                }
-            } catch (IllegalStateException e) {
-                ActivityCompat.requestPermissions(this, LOCATION_PERMISSIONS, REQUEST_PERMISSION_GRANT);
             }
         }
     }
@@ -223,10 +230,12 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
-        try {
-            checkPermission(this);
-        } catch (IllegalStateException ignored) {}
-        lm.removeUpdates(this);// stop update after get current location
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            lm.removeUpdates(this);// stop update after get current location
+        }
     }
 
     @Override
