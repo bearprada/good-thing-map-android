@@ -8,6 +8,9 @@ import android.prada.lab.goodthingmap.model.GoodThingType;
 import android.prada.lab.goodthingmap.model.GoodThingsData;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelStore;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +28,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import goodthingmap.android.prada.lab.goodthingmap.viewmodel.GoodListViewModel;
 
 public class GoodListActivity extends BaseActivity {
 
@@ -64,6 +68,9 @@ public class GoodListActivity extends BaseActivity {
     }
 
     private List<GoodThing> mPlaces = Collections.emptyList();
+    private GoodListViewModel listViewModel;
+    private final ViewModelStore viewModelStore = new ViewModelStore();
+    private Observer<List<GoodThing>> placesObserver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +91,24 @@ public class GoodListActivity extends BaseActivity {
         rv.setLayoutManager(lm);
         rv.setAdapter(mController.getAdapter());
 
+        listViewModel = new ViewModelProvider(viewModelStore, new ViewModelProvider.Factory() {
+            @Override
+            public <T extends android.arch.lifecycle.ViewModel> T create(Class<T> modelClass) {
+                return (T) new GoodListViewModel(mService);
+            }
+        }).get(GoodListViewModel.class);
+        placesObserver = new Observer<List<GoodThing>>() {
+            @Override
+            public void onChanged(List<GoodThing> places) {
+                if (places == null) return;
+                mPlaces = places;
+                mController.setData(places);
+            }
+        };
+        listViewModel.getPlaces().observeForever(placesObserver);
+        listViewModel.load(mType, mLocation);
+
+        if (listViewModel == null) {
         Observable<GoodThingsData> obs;
         if (mLocation == null) {
             // FIXME refactor this later
@@ -119,7 +144,17 @@ public class GoodListActivity extends BaseActivity {
                 mController.setData(goodThings);
             }
         });
+        }
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (listViewModel != null && placesObserver != null) {
+            listViewModel.getPlaces().removeObserver(placesObserver);
+        }
+        viewModelStore.clear();
+        super.onDestroy();
     }
 
     @Override
