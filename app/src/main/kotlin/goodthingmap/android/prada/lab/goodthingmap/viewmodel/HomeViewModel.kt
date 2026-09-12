@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.prada.lab.goodthingmap.model.GoodThing
+import android.prada.lab.goodthingmap.model.GoodThingRepository
 import android.prada.lab.goodthingmap.network.GoodThingService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -11,15 +12,23 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.Scheduler
 
 class HomeViewModel(
-    private val service: GoodThingService,
+    private val repository: GoodThingRepository,
     private val subscribeScheduler: Scheduler = Schedulers.io(),
     private val observeScheduler: Scheduler = AndroidSchedulers.mainThread()
 ) : ViewModel() {
-    constructor(service: GoodThingService) : this(
-        service,
+    constructor(repository: GoodThingRepository) : this(
+        repository,
         Schedulers.io(),
         AndroidSchedulers.mainThread()
     )
+
+    constructor(service: GoodThingService) : this(GoodThingRepository(service))
+
+    constructor(
+        service: GoodThingService,
+        subscribeScheduler: Scheduler,
+        observeScheduler: Scheduler
+    ) : this(GoodThingRepository(service), subscribeScheduler, observeScheduler)
 
     private val disposables = CompositeDisposable()
     private val _topStory = MutableLiveData<GoodThing>()
@@ -32,7 +41,7 @@ class HomeViewModel(
         if (_topStory.value != null) return
 
         disposables.add(
-            service.topStory
+            repository.topStory()
                 .subscribeOn(subscribeScheduler)
                 .observeOn(observeScheduler)
                 .subscribe(

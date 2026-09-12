@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModel
 import android.location.Location
 import android.prada.lab.goodthingmap.model.GoodThing
 import android.prada.lab.goodthingmap.model.GoodThingType
+import android.prada.lab.goodthingmap.model.GoodThingRepository
 import android.prada.lab.goodthingmap.network.GoodThingService
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -13,17 +14,31 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.Scheduler
 
 class GoodListViewModel(
-    private val service: GoodThingService,
+    private val repository: GoodThingRepository,
     private val subscribeScheduler: Scheduler = Schedulers.io(),
     private val observeScheduler: Scheduler = AndroidSchedulers.mainThread(),
     private val distanceCalculator: (Location, GoodThing) -> Float = { current, place ->
         current.distanceTo(place.location)
     }
 ) : ViewModel() {
-    constructor(service: GoodThingService) : this(
-        service,
+    constructor(repository: GoodThingRepository) : this(
+        repository,
         Schedulers.io(),
         AndroidSchedulers.mainThread()
+    )
+
+    constructor(service: GoodThingService) : this(GoodThingRepository(service))
+
+    constructor(
+        service: GoodThingService,
+        subscribeScheduler: Scheduler,
+        observeScheduler: Scheduler,
+        distanceCalculator: (Location, GoodThing) -> Float
+    ) : this(
+        GoodThingRepository(service),
+        subscribeScheduler,
+        observeScheduler,
+        distanceCalculator
     )
 
     private val disposables = CompositeDisposable()
@@ -34,12 +49,7 @@ class GoodListViewModel(
     val error: LiveData<Throwable> = _error
 
     fun load(type: GoodThingType, location: Location?) {
-        val request = when {
-            location == null && type == GoodThingType.NEAR -> service.listStory()
-            location == null -> service.listStory(type.typeId)
-            type == GoodThingType.NEAR -> service.listStory(location.latitude, location.longitude)
-            else -> service.listStory(type.typeId, location.latitude, location.longitude)
-        }
+        val request = repository.listPlaces(type, location)
 
         disposables.add(
             request.subscribeOn(subscribeScheduler)

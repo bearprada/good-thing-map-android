@@ -4,8 +4,8 @@ import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
+import android.prada.lab.goodthingmap.model.GoodThingRepository;
 import android.prada.lab.goodthingmap.model.GoodThingType;
-import android.prada.lab.goodthingmap.model.GoodThingsData;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.arch.lifecycle.ViewModelProvider;
@@ -19,15 +19,10 @@ import android.view.View;
 import com.flurry.android.FlurryAgent;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import goodthingmap.android.prada.lab.goodthingmap.component.GTController;
 import goodthingmap.android.prada.lab.goodthingmap.component.GTPlaceModel;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
-import io.reactivex.schedulers.Schedulers;
 import goodthingmap.android.prada.lab.goodthingmap.viewmodel.GoodListViewModel;
 
 public class GoodListActivity extends BaseActivity {
@@ -94,7 +89,7 @@ public class GoodListActivity extends BaseActivity {
         listViewModel = new ViewModelProvider(viewModelStore, new ViewModelProvider.Factory() {
             @Override
             public <T extends android.arch.lifecycle.ViewModel> T create(Class<T> modelClass) {
-                return (T) new GoodListViewModel(mService);
+                return (T) new GoodListViewModel(new GoodThingRepository(mService));
             }
         }).get(GoodListViewModel.class);
         placesObserver = new Observer<List<GoodThing>>() {
@@ -107,44 +102,6 @@ public class GoodListActivity extends BaseActivity {
         };
         listViewModel.getPlaces().observeForever(placesObserver);
         listViewModel.load(mType, mLocation);
-
-        if (listViewModel == null) {
-        Observable<GoodThingsData> obs;
-        if (mLocation == null) {
-            // FIXME refactor this later
-            if (mType == GoodThingType.NEAR)
-                obs = mService.listStory(mLocation.getLatitude(), mLocation.getLongitude());
-            else
-                obs = mService.listStory(mType.getTypeId(), mLocation.getLatitude(), mLocation.getLongitude());
-        } else {
-            if (mType == GoodThingType.NEAR)
-                obs = mService.listStory();
-            else
-                obs = mService.listStory(mType.getTypeId());
-        }
-        obs.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Consumer<GoodThingsData>() {
-            @Override
-            public void accept(GoodThingsData data) throws Exception {
-                List<GoodThing> goodThings = data.getGoodThingList();
-                mPlaces = goodThings;
-
-                // temp: sorted by distance
-                if(mLocation != null) {
-                    Collections.sort(goodThings, new Comparator<GoodThing>() {
-                        @Override
-                        public int compare(GoodThing goodThing, GoodThing goodThing2) {
-                            float dist = mLocation.distanceTo(goodThing.getLocation());
-                            float dist2 = mLocation.distanceTo(goodThing2.getLocation());
-                            return (int) (dist - dist2);
-                        }
-                    });
-                }
-                mController.setData(goodThings);
-            }
-        });
-        }
 
     }
 
