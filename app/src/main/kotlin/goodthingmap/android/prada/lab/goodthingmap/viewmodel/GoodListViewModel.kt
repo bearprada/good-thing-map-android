@@ -18,7 +18,7 @@ class GoodListViewModel(
     private val subscribeScheduler: Scheduler = Schedulers.io(),
     private val observeScheduler: Scheduler = AndroidSchedulers.mainThread(),
     private val distanceCalculator: (Location, GoodThing) -> Float = { current, place ->
-        current.distanceTo(place.location)
+        current.distanceTo(place.getLocation())
     }
 ) : ViewModel() {
     constructor(repository: GoodThingRepository) : this(
