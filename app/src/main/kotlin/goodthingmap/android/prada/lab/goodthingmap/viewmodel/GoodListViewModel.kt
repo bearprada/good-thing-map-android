@@ -1,8 +1,8 @@
 package goodthingmap.android.prada.lab.goodthingmap.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import android.location.Location
 import android.prada.lab.goodthingmap.model.GoodThing
 import android.prada.lab.goodthingmap.model.GoodThingType

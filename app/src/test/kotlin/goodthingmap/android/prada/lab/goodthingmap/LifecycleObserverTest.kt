@@ -1,11 +1,11 @@
 package goodthingmap.android.prada.lab.goodthingmap
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.LifecycleRegistry
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
@@ -32,7 +32,8 @@ class LifecycleObserverTest {
     private class TestOwner : LifecycleOwner {
         private val registry = LifecycleRegistry(this)
 
-        override fun getLifecycle(): Lifecycle = registry
+        override val lifecycle: Lifecycle
+            get() = registry
 
         fun start() = registry.handleLifecycleEvent(Lifecycle.Event.ON_START)
 
