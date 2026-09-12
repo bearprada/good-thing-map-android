@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +48,14 @@ public class ListDialogFragment extends DialogFragment implements View.OnClickLi
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES);
+        File externalPictures = requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if (externalPictures == null) {
+            throw new IOException("Pictures directory is unavailable");
+        }
+        File storageDir = new File(externalPictures, "captures");
+        if (!storageDir.exists() && !storageDir.mkdirs()) {
+            throw new IOException("Unable to create pictures directory");
+        }
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -63,8 +70,14 @@ public class ListDialogFragment extends DialogFragment implements View.OnClickLi
     private void dispatchTakePictureIntent() throws IOException {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            mCameraOutputFile = Uri.fromFile(createImageFile());
+            File imageFile = createImageFile();
+            mCameraOutputFile = FileProvider.getUriForFile(
+                    requireContext(),
+                    requireContext().getPackageName() + ".fileprovider",
+                    imageFile);
             takePictureIntent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT, mCameraOutputFile);
+            takePictureIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
         }
     }
@@ -83,7 +96,7 @@ public class ListDialogFragment extends DialogFragment implements View.OnClickLi
                 }
                 break;
             case R.id.bn_from_gallery:
-                Intent i = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Intent i = ImagePickerIntentFactory.create();
                 startActivityForResult(i, IMAGE_PICKER_SELECT);
                 break;
             default:
@@ -113,6 +126,7 @@ public class ListDialogFragment extends DialogFragment implements View.OnClickLi
 
     private void sendEmail(Uri uri) {
         Intent intent = new Intent(Intent.ACTION_SENDTO);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setData(Uri.fromParts("mailto", "goodmaps2013@gmail.com", null));
         intent.putExtra(Intent.EXTRA_SUBJECT, "提供好事圖片");
         intent.putExtra(Intent.EXTRA_STREAM, uri);
