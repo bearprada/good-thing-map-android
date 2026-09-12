@@ -3,34 +3,24 @@ package goodthingmap.android.prada.lab.goodthingmap.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import android.prada.lab.goodthingmap.model.GoodThing
 import android.prada.lab.goodthingmap.model.GoodThingRepository
 import android.prada.lab.goodthingmap.network.GoodThingService
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.Scheduler
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeViewModel(
     private val repository: GoodThingRepository,
-    private val subscribeScheduler: Scheduler = Schedulers.io(),
-    private val observeScheduler: Scheduler = AndroidSchedulers.mainThread()
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
-    constructor(repository: GoodThingRepository) : this(
-        repository,
-        Schedulers.io(),
-        AndroidSchedulers.mainThread()
+    constructor(service: GoodThingService, ioDispatcher: CoroutineDispatcher = Dispatchers.IO) : this(
+        GoodThingRepository(service), ioDispatcher
     )
 
-    constructor(service: GoodThingService) : this(GoodThingRepository(service))
-
-    constructor(
-        service: GoodThingService,
-        subscribeScheduler: Scheduler,
-        observeScheduler: Scheduler
-    ) : this(GoodThingRepository(service), subscribeScheduler, observeScheduler)
-
-    private val disposables = CompositeDisposable()
     private val _topStory = MutableLiveData<GoodThing>()
     private val _error = MutableLiveData<Throwable>()
 
@@ -39,20 +29,15 @@ class HomeViewModel(
 
     fun loadTopStory() {
         if (_topStory.value != null) return
-
-        disposables.add(
-            repository.topStory()
-                .subscribeOn(subscribeScheduler)
-                .observeOn(observeScheduler)
-                .subscribe(
-                    { data -> data.goodThing?.let(_topStory::setValue) },
-                    _error::setValue
-                )
-        )
-    }
-
-    override fun onCleared() {
-        disposables.clear()
-        super.onCleared()
+        viewModelScope.launch {
+            try {
+                val data = withContext(ioDispatcher) { repository.topStory() }
+                data.goodThing?.let(_topStory::setValue)
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Throwable) {
+                _error.value = error
+            }
+        }
     }
 }

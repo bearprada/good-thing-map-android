@@ -31,8 +31,11 @@ import com.squareup.picasso.Picasso
 import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment
 import goodthingmap.android.prada.lab.goodthingmap.component.ListDialogFragment
 import goodthingmap.android.prada.lab.goodthingmap.util.LocationUtil
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailActivity : BaseActivity(), View.OnClickListener {
     companion object {
@@ -103,17 +106,17 @@ class DetailActivity : BaseActivity(), View.OnClickListener {
         }
 
     private fun setupLikeNum() {
-        mService.requestLikeNum(goodThing.id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result -> likeButtonText.text = getString(R.string.like) + "(${result.result})" }, {})
+        lifecycleScope.launch {
+            runCatching { withContext(Dispatchers.IO) { mService.requestLikeNum(goodThing.id) } }
+                .onSuccess { result -> likeButtonText.text = getString(R.string.like) + "(${result.result})" }
+        }
     }
 
     private fun setupCheckinNum() {
-        mService.requestCheckinNum(goodThing.id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result -> shareButtonText.text = getString(R.string.share) + "(${result.result})" }, {})
+        lifecycleScope.launch {
+            runCatching { withContext(Dispatchers.IO) { mService.requestCheckinNum(goodThing.id) } }
+                .onSuccess { result -> shareButtonText.text = getString(R.string.share) + "(${result.result})" }
+        }
     }
 
     private fun setupImages(container: ViewGroup, images: List<String>) {
@@ -215,17 +218,21 @@ class DetailActivity : BaseActivity(), View.OnClickListener {
             .negativeText(R.string.cancel)
             .input(null, null, false) { _, input ->
                 val comment = input.toString()
-                mService.postComment(Amplitude.getDeviceId(), goodThing.id, comment)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({
-                        Toast.makeText(this, R.string.post_comment_successful, Toast.LENGTH_SHORT).show()
+                lifecycleScope.launch {
+                    try {
+                        withContext(Dispatchers.IO) {
+                            mService.postComment(Amplitude.getDeviceId(), goodThing.id, comment)
+                        }
+                        Toast.makeText(this@DetailActivity, R.string.post_comment_successful, Toast.LENGTH_SHORT).show()
                         if (goodThing.message == null) goodThing.message = mutableListOf()
                         goodThing.message?.add(0, UserMessage.newInstance(comment))
                         refreshCommentList()
-                    }, {
-                        Toast.makeText(this, R.string.post_comment_fail, Toast.LENGTH_SHORT).show()
-                    })
+                    } catch (error: CancellationException) {
+                        throw error
+                    } catch (error: Throwable) {
+                        Toast.makeText(this@DetailActivity, R.string.post_comment_fail, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
             .build()
             .show()
@@ -234,15 +241,19 @@ class DetailActivity : BaseActivity(), View.OnClickListener {
     private fun likeGoodThing() {
         FlurryAgent.logEvent("Event_Click_Detail_Like", false)
         likeButton.isSelected = true
-        mService.likeGoodThing(Amplitude.getDeviceId(), goodThing.id)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ result ->
-                Toast.makeText(this, R.string.msg_like_successful, Toast.LENGTH_SHORT).show()
+        lifecycleScope.launch {
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    mService.likeGoodThing(Amplitude.getDeviceId(), goodThing.id)
+                }
+                Toast.makeText(this@DetailActivity, R.string.msg_like_successful, Toast.LENGTH_SHORT).show()
                 likeButtonText.text = getString(R.string.like) + "(${result.result})"
-            }, { error ->
-                Toast.makeText(this, "${getString(R.string.add_like_fail)}:${error.message}", Toast.LENGTH_SHORT).show()
-            })
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Throwable) {
+                Toast.makeText(this@DetailActivity, "${getString(R.string.add_like_fail)}:${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun showMapDialog() {

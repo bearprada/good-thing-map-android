@@ -4,54 +4,53 @@ import android.prada.lab.goodthingmap.model.CheckinResult
 import android.prada.lab.goodthingmap.model.GoodThingData
 import android.prada.lab.goodthingmap.model.GoodThingsData
 import android.prada.lab.goodthingmap.model.LikeResult
-import io.reactivex.Observable
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface GoodThingService {
     @GET("/good_thing/mobile/findTopStory")
-    fun getTopStory(): Observable<GoodThingData>
+    suspend fun getTopStory(): GoodThingData
 
     @GET("/good_thing/mobile/findGoodThings")
-    fun listStory(@Query("type") type: Int): Observable<GoodThingsData>
+    suspend fun listStory(@Query("type") type: Int): GoodThingsData
 
     @GET("/good_thing/mobile/findGoodThings")
-    fun listStory(
+    suspend fun listStory(
         @Query("type") type: Int,
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double
-    ): Observable<GoodThingsData>
+    ): GoodThingsData
 
     @GET("/good_thing/mobile/findGoodThings")
-    fun listStory(
+    suspend fun listStory(
         @Query("lat") latitude: Double,
         @Query("lon") longitude: Double
-    ): Observable<GoodThingsData>
+    ): GoodThingsData
 
     @GET("/good_thing/mobile/findGoodThings")
-    fun listStory(): Observable<GoodThingsData>
+    suspend fun listStory(): GoodThingsData
 
     @GET("/good_thing/mobile/getLikeNum")
-    fun requestLikeNum(@Query("rid") rid: Int): Observable<LikeResult>
+    suspend fun requestLikeNum(@Query("rid") rid: Int): LikeResult
 
     @GET("/good_thing/mobile/getCheckinNum")
-    fun requestCheckinNum(@Query("rid") rid: Int): Observable<CheckinResult>
+    suspend fun requestCheckinNum(@Query("rid") rid: Int): CheckinResult
 
     @POST("/good_thing/mobile/addCheckin")
-    fun reportCheckin(
+    suspend fun reportCheckin(
         @Query("uid") uid: String,
         @Query("rid") rid: Int,
         @Query("cid") checkinId: Int
-    ): Observable<CheckinResult>
+    ): CheckinResult
 
     @POST("/good_thing/mobile/addLike")
-    fun likeGoodThing(@Query("uid") uid: String, @Query("rid") rid: Int): Observable<LikeResult>
+    suspend fun likeGoodThing(@Query("uid") uid: String, @Query("rid") rid: Int): LikeResult
 
     @POST("/good_thing/mobile/post")
-    fun postComment(
+    suspend fun postComment(
         @Query("uid") uid: String,
         @Query("rid") rid: Int,
         @Query("message") message: String
-    ): Observable<LikeResult>
+    ): LikeResult
 }
