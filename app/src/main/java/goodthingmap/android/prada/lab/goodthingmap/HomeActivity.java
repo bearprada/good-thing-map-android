@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingData;
 import android.prada.lab.goodthingmap.model.GoodThingType;
+import android.prada.lab.goodthingmap.model.GoodThingRepository;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -68,7 +69,7 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         homeViewModel = new ViewModelProvider(viewModelStore, new ViewModelProvider.Factory() {
             @Override
             public <T extends android.arch.lifecycle.ViewModel> T create(Class<T> modelClass) {
-                return (T) new HomeViewModel(mService);
+                return (T) new HomeViewModel(new GoodThingRepository(mService));
             }
         }).get(HomeViewModel.class);
         topStoryObserver = new Observer<GoodThing>() {
