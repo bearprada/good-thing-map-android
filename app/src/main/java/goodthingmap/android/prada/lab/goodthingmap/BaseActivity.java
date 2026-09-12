@@ -21,11 +21,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public abstract class BaseActivity extends AppCompatActivity implements LifecycleOwner {
     public static final String AUTHORITY = "https://goodthing.tw:8080/";
-    private final LifecycleRegistry lifecycleRegistry = new LifecycleRegistry(this);
+    private LifecycleRegistry lifecycleRegistry;
     protected GoodThingService mService;
 
     @Override
     public Lifecycle getLifecycle() {
+        if (lifecycleRegistry == null) {
+            lifecycleRegistry = new LifecycleRegistry(this);
+        }
         return lifecycleRegistry;
     }
 
