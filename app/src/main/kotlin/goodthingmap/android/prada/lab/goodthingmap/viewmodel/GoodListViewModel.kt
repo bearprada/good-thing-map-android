@@ -49,6 +49,8 @@ class GoodListViewModel(
     val error: LiveData<Throwable> = _error
 
     fun load(type: GoodThingType, location: Location?) {
+        if (_places.value != null) return
+
         val request = repository.listPlaces(type, location)
 
         disposables.add(

@@ -3,6 +3,7 @@ package goodthingmap.android.prada.lab.goodthingmap.viewmodel
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.location.Location
 import android.prada.lab.goodthingmap.model.GoodThingType
+import android.prada.lab.goodthingmap.model.GoodThingRepository
 import android.prada.lab.goodthingmap.network.GoodThingService
 import com.google.gson.Gson
 import io.reactivex.Observable
@@ -69,6 +70,29 @@ class ViewModelTest {
         viewModel.loadTopStory()
 
         assertSame(failure, viewModel.error.value)
+    }
+
+    @Test
+    fun goodListViewModel_doesNotReloadCompletedResults() {
+        var requests = 0
+        val service = fakeService { method ->
+            if (method.name == "listStory") {
+                requests += 1
+                Observable.just(android.prada.lab.goodthingmap.model.GoodThingsData())
+            } else {
+                error("Unexpected call: ${method.name}")
+            }
+        }
+        val viewModel = GoodListViewModel(
+            GoodThingRepository(service),
+            Schedulers.trampoline(),
+            Schedulers.trampoline()
+        ) { _, _ -> 0f }
+
+        viewModel.load(GoodThingType.MAIN, null)
+        viewModel.load(GoodThingType.MAIN, null)
+
+        assertEquals(1, requests)
     }
 
     private fun fakeService(handler: (java.lang.reflect.Method) -> Any): GoodThingService {
