@@ -11,7 +11,7 @@ class GTController(
     private var currentLocation: Location? = null
 
     override fun buildModels(places: List<GoodThing>) {
-        places.forEach { place ->
+        for (place in places) {
             GTPlaceModel_()
                 .id(place.id.toLong())
                 .title(place.title.orEmpty())

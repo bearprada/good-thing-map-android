@@ -38,7 +38,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.2.10'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:2.4.10'
     implementation 'androidx.appcompat:appcompat:1.8.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.core:core:1.16.0'
@@ -57,19 +57,19 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
 
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     // Because RxAndroid releases are few and far between, it is recommended you also
     // explicitly depend on RxJava's latest version for bug fixes and new features.
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
 
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
+    implementation 'com.squareup.retrofit2:retrofit:3.0.0'
+    implementation 'com.squareup.retrofit2:converter-gson:3.0.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:3.0.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
     implementation 'com.google.code.findbugs:jsr305:3.0.2'
     implementation 'org.codehaus.mojo:animal-sniffer-annotations:1.23'
-    implementation 'com.squareup.picasso:picasso:2.5.2'
-    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.picasso:picasso:2.8'
+    implementation 'com.google.code.gson:gson:2.14.0'
     implementation 'com.amplitude:android-sdk:2.13.4'
     implementation 'com.facebook.android:facebook-android-sdk:4.18.0'
     implementation('com.github.afollestad.material-dialogs:core:0.8.5.7@aar') {

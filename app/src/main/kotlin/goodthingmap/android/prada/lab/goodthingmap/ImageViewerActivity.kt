@@ -49,7 +49,7 @@ class ImageViewerActivity : BaseActivity() {
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val imageView = LayoutInflater.from(context)
                 .inflate(R.layout.item_preview_image, container, false) as ImageView
-            Picasso.with(context).load(images[position]).into(imageView)
+            Picasso.get().load(images[position]).into(imageView)
             container.addView(imageView)
             return imageView
         }
