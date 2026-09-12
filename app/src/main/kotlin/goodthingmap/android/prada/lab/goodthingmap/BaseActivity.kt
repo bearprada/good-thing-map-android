@@ -6,7 +6,6 @@ import android.prada.lab.goodthingmap.network.GoodThingService
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils
 
@@ -23,7 +22,6 @@ abstract class BaseActivity : AppCompatActivity() {
         mService = Retrofit.Builder()
             .baseUrl(AUTHORITY)
             .addConverterFactory(GsonConverterFactory.create())
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
             .create(GoodThingService::class.java)
     }

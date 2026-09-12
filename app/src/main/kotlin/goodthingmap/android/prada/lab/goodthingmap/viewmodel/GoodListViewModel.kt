@@ -3,45 +3,29 @@ package goodthingmap.android.prada.lab.goodthingmap.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import android.location.Location
 import android.prada.lab.goodthingmap.model.GoodThing
-import android.prada.lab.goodthingmap.model.GoodThingType
 import android.prada.lab.goodthingmap.model.GoodThingRepository
+import android.prada.lab.goodthingmap.model.GoodThingType
 import android.prada.lab.goodthingmap.network.GoodThingService
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import io.reactivex.Scheduler
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class GoodListViewModel(
     private val repository: GoodThingRepository,
-    private val subscribeScheduler: Scheduler = Schedulers.io(),
-    private val observeScheduler: Scheduler = AndroidSchedulers.mainThread(),
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
     private val distanceCalculator: (Location, GoodThing) -> Float = { current, place ->
         current.distanceTo(place.getLocation())
     }
 ) : ViewModel() {
-    constructor(repository: GoodThingRepository) : this(
-        repository,
-        Schedulers.io(),
-        AndroidSchedulers.mainThread()
+    constructor(service: GoodThingService, ioDispatcher: CoroutineDispatcher = Dispatchers.IO) : this(
+        GoodThingRepository(service), ioDispatcher
     )
 
-    constructor(service: GoodThingService) : this(GoodThingRepository(service))
-
-    constructor(
-        service: GoodThingService,
-        subscribeScheduler: Scheduler,
-        observeScheduler: Scheduler,
-        distanceCalculator: (Location, GoodThing) -> Float
-    ) : this(
-        GoodThingRepository(service),
-        subscribeScheduler,
-        observeScheduler,
-        distanceCalculator
-    )
-
-    private val disposables = CompositeDisposable()
     private val _places = MutableLiveData<List<GoodThing>>()
     private val _error = MutableLiveData<Throwable>()
 
@@ -50,27 +34,17 @@ class GoodListViewModel(
 
     fun load(type: GoodThingType, location: Location?) {
         if (_places.value != null) return
-
-        val request = repository.listPlaces(type, location)
-
-        disposables.add(
-            request.subscribeOn(subscribeScheduler)
-                .observeOn(observeScheduler)
-                .subscribe(
-                    { data ->
-                        val result = data.goodThingList.toMutableList()
-                        location?.let { current ->
-                            result.sortBy { distanceCalculator(current, it) }
-                        }
-                        _places.value = result
-                    },
-                    _error::setValue
-                )
-        )
-    }
-
-    override fun onCleared() {
-        disposables.clear()
-        super.onCleared()
+        viewModelScope.launch {
+            try {
+                val data = withContext(ioDispatcher) { repository.listPlaces(type, location) }
+                val result = data.goodThingList.toMutableList()
+                location?.let { current -> result.sortBy { distanceCalculator(current, it) } }
+                _places.value = result
+            } catch (error: CancellationException) {
+                throw error
+            } catch (error: Throwable) {
+                _error.value = error
+            }
+        }
     }
 }
