@@ -1,6 +1,6 @@
 package goodthingmap.android.prada.lab.goodthingmap.viewmodel
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import android.location.Location
 import android.prada.lab.goodthingmap.model.GoodThingType
 import android.prada.lab.goodthingmap.model.GoodThingRepository

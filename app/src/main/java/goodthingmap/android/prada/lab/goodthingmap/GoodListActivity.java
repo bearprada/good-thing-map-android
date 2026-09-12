@@ -6,14 +6,14 @@ import android.os.Bundle;
 import android.prada.lab.goodthingmap.model.GoodThing;
 import android.prada.lab.goodthingmap.model.GoodThingRepository;
 import android.prada.lab.goodthingmap.model.GoodThingType;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelStore;
-import android.support.v4.util.Pair;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelStore;
+import androidx.core.util.Pair;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import com.flurry.android.FlurryAgent;
@@ -88,7 +88,7 @@ public class GoodListActivity extends BaseActivity {
 
         listViewModel = new ViewModelProvider(viewModelStore, new ViewModelProvider.Factory() {
             @Override
-            public <T extends android.arch.lifecycle.ViewModel> T create(Class<T> modelClass) {
+            public <T extends androidx.lifecycle.ViewModel> T create(Class<T> modelClass) {
                 return (T) new GoodListViewModel(new GoodThingRepository(mService));
             }
         }).get(GoodListViewModel.class);

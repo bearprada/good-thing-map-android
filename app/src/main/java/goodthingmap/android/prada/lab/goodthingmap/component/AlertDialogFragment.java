@@ -7,7 +7,7 @@ package goodthingmap.android.prada.lab.goodthingmap.component;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+import androidx.fragment.app.DialogFragment;
 import android.text.TextUtils;
 
 import com.afollestad.materialdialogs.AlertDialogWrapper;
