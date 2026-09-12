@@ -33,7 +33,7 @@ abstract class GTPlaceModel : EpoxyModelWithHolder<GTPlaceModel.GTViewHolder>() 
         holder.addressView.text = address
         holder.titleView.text = title
         holder.distanceView.text = distance
-        Picasso.with(holder.imageView.context).load(imageUrl).into(holder.imageView)
+        Picasso.get().load(imageUrl).into(holder.imageView)
         holder.rootView.setOnClickListener { view -> clickListener?.onPlaceClick(view, id()) }
     }
 

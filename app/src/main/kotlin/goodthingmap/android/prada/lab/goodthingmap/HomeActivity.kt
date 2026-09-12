@@ -74,7 +74,7 @@ class HomeActivity : BaseActivity(), View.OnClickListener, LocationListener {
         homeViewModel.topStory.observe(this) { goodThing ->
             storyText.text = goodThing.story
             coverImage.tag = goodThing
-            Picasso.with(this@HomeActivity).load(goodThing.imageUrl).into(coverImage)
+            Picasso.get().load(goodThing.imageUrl).into(coverImage)
         }
         homeViewModel.loadTopStory()
 

@@ -67,7 +67,7 @@ class DetailActivity : BaseActivity(), View.OnClickListener {
         storyText.setOnClickListener(this)
 
         setupImages(findViewById(R.id.detail_images), goodThing.images)
-        Picasso.with(this).load(goodThing.detailImageUrl).into(findViewById<ImageView>(R.id.detail_cover_image))
+        Picasso.get().load(goodThing.detailImageUrl).into(findViewById<ImageView>(R.id.detail_cover_image))
         commentList = findViewById(R.id.detail_list_comments)
         refreshCommentList()
         likeButton = findViewById(R.id.btn_detail_like)
@@ -117,10 +117,10 @@ class DetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun setupImages(container: ViewGroup, images: List<String>) {
-        images.forEach { url ->
+        for (url in images) {
             val imageView = LayoutInflater.from(this)
                 .inflate(R.layout.item_image, container, false) as ImageView
-            Picasso.with(this).load(url)
+            Picasso.get().load(url)
                 .placeholder(R.drawable.btn_new_image)
                 .error(R.drawable.btn_new_image)
                 .into(imageView)
