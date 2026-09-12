@@ -20,9 +20,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
+import androidx.lifecycle.lifecycleScope
 import com.afollestad.materialdialogs.AlertDialogWrapper
 import com.afollestad.materialdialogs.MaterialDialog
 import com.amplitude.api.Amplitude
+import com.facebook.FacebookException
 import com.facebook.FacebookSdk
 import com.facebook.share.model.ShareLinkContent
 import com.facebook.share.widget.ShareDialog
@@ -31,7 +34,6 @@ import com.squareup.picasso.Picasso
 import goodthingmap.android.prada.lab.goodthingmap.component.AlertDialogFragment
 import goodthingmap.android.prada.lab.goodthingmap.component.ListDialogFragment
 import goodthingmap.android.prada.lab.goodthingmap.util.LocationUtil
-import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,6 +42,12 @@ import kotlinx.coroutines.withContext
 class DetailActivity : BaseActivity(), View.OnClickListener {
     companion object {
         const val MAX_STORY_TEXT_LINES = 6
+
+        @VisibleForTesting
+        var facebookShareAvailability: (() -> Boolean)? = null
+
+        @VisibleForTesting
+        var facebookShareLauncher: ((ShareLinkContent) -> Unit)? = null
     }
 
     private lateinit var goodThing: GoodThing
@@ -169,15 +177,23 @@ class DetailActivity : BaseActivity(), View.OnClickListener {
     }
 
     private fun shareToFacebook() {
-        if (ShareDialog.canShow(ShareLinkContent::class.java)) {
+        if (facebookShareAvailability?.invoke() ?: ShareDialog.canShow(ShareLinkContent::class.java)) {
             val content = ShareLinkContent.Builder()
                 .setContentTitle(goodThing.title)
                 .setContentUrl(Uri.parse(googleMapUri()))
                 .setImageUrl(Uri.parse(goodThing.imageUrl))
                 .setContentDescription("${goodThing.memo.orEmpty()}   ${goodThing.story.orEmpty()}")
                 .build()
-            shareDialog?.show(content)
+            launchFacebookShare(content)
         } else {
+            shareToAppNotFound("com.facebook.katana")
+        }
+    }
+
+    private fun launchFacebookShare(content: ShareLinkContent) {
+        try {
+            (facebookShareLauncher ?: { shareDialog?.show(it) })(content)
+        } catch (error: FacebookException) {
             shareToAppNotFound("com.facebook.katana")
         }
     }
