@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.prada.lab.goodthingmap.network.GoodThingService
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.annotation.VisibleForTesting
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils
@@ -12,6 +13,9 @@ import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils
 abstract class BaseActivity : AppCompatActivity() {
     companion object {
         const val AUTHORITY = "https://goodthing.tw:8080/"
+
+        @VisibleForTesting
+        var serviceFactory: (() -> GoodThingService)? = null
     }
 
     protected lateinit var mService: GoodThingService
@@ -19,7 +23,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LogEventUtils.init(this)
-        mService = Retrofit.Builder()
+        mService = serviceFactory?.invoke() ?: Retrofit.Builder()
             .baseUrl(AUTHORITY)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
