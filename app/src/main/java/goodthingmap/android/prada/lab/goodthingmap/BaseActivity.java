@@ -17,7 +17,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by prada on 2014/7/5.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    public static final String AUTHORITY = "http://goodthing.tw:8080/";
+    public static final String AUTHORITY = "https://goodthing.tw:8080/";
     protected GoodThingService mService;
 
     @Override
