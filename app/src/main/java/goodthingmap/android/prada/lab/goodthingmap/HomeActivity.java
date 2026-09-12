@@ -15,6 +15,9 @@ import android.prada.lab.goodthingmap.model.GoodThingType;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelStore;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -30,6 +33,7 @@ import goodthingmap.android.prada.lab.goodthingmap.util.LogEventUtils;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import goodthingmap.android.prada.lab.goodthingmap.viewmodel.HomeViewModel;
 
 
 public class HomeActivity extends BaseActivity implements View.OnClickListener, LocationListener {
@@ -42,6 +46,9 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
     private Location mCurrentLocation = null;
     private LocationManager lm;
     private Animation animAlpha;
+    private HomeViewModel homeViewModel;
+    private final ViewModelStore viewModelStore = new ViewModelStore();
+    private Observer<GoodThing> topStoryObserver;
 
     protected final static int REQUEST_PERMISSION_GRANT = 1;
 
@@ -58,20 +65,25 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         final TextView tvF = findViewById(R.id.cover_text);
         final ImageView ivF = findViewById(R.id.cover_image);
 
+        homeViewModel = new ViewModelProvider(viewModelStore, new ViewModelProvider.Factory() {
+            @Override
+            public <T extends android.arch.lifecycle.ViewModel> T create(Class<T> modelClass) {
+                return (T) new HomeViewModel(mService);
+            }
+        }).get(HomeViewModel.class);
+        topStoryObserver = new Observer<GoodThing>() {
+            @Override
+            public void onChanged(GoodThing goodThing) {
+                if (goodThing == null) return;
+                tvF.setText(goodThing.getStory());
+                ivF.setTag(goodThing);
+                Picasso.with(getBaseContext()).load(goodThing.getImageUrl()).into(ivF);
+            }
+        };
+        homeViewModel.getTopStory().observeForever(topStoryObserver);
+        homeViewModel.loadTopStory();
+
         ivF.setOnClickListener(this);
-        mService.getTopStory()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(new Consumer<GoodThingData>() {
-                @Override
-                public void accept(GoodThingData data) throws Exception {
-                    tvF.setText(data.goodThing.getStory());
-                    ivF.setTag(data.goodThing);
-                    Picasso.with(getBaseContext())
-                        .load(data.goodThing.getImageUrl())
-                        .into(ivF);
-                }
-            });
         findViewById(R.id.good_thing_01).setOnClickListener(this);
         findViewById(R.id.good_thing_02).setOnClickListener(this);
         findViewById(R.id.good_thing_03).setOnClickListener(this);
@@ -79,6 +91,15 @@ public class HomeActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.good_thing_05).setOnClickListener(this);
         findViewById(R.id.good_thing_06).setOnClickListener(this);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (homeViewModel != null && topStoryObserver != null) {
+            homeViewModel.getTopStory().removeObserver(topStoryObserver);
+        }
+        viewModelStore.clear();
+        super.onDestroy();
     }
 
     @Override
